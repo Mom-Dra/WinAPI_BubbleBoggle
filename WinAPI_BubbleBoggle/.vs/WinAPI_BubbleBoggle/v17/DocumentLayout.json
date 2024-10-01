@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\inha\\source\\repos\\WinAPI_BubbleBoggle\\WinAPI_BubbleBoggle\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B8F8608E-FA73-4606-8243-974E28F372B4}|WinAPI_BubbleBoggle\\WinAPI_BubbleBoggle.vcxproj|C:\\Users\\inha\\source\\repos\\WinAPI_BubbleBoggle\\WinAPI_BubbleBoggle\\WinAPI_BubbleBoggle\\WinAPI_BubbleBoggle.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B8F8608E-FA73-4606-8243-974E28F372B4}|WinAPI_BubbleBoggle\\WinAPI_BubbleBoggle.vcxproj|solutionrelative:WinAPI_BubbleBoggle\\WinAPI_BubbleBoggle.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 226,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "WinAPI_BubbleBoggle.cpp",
+              "DocumentMoniker": "C:\\Users\\inha\\source\\repos\\WinAPI_BubbleBoggle\\WinAPI_BubbleBoggle\\WinAPI_BubbleBoggle\\WinAPI_BubbleBoggle.cpp",
+              "RelativeDocumentMoniker": "WinAPI_BubbleBoggle\\WinAPI_BubbleBoggle.cpp",
+              "ToolTip": "C:\\Users\\inha\\source\\repos\\WinAPI_BubbleBoggle\\WinAPI_BubbleBoggle\\WinAPI_BubbleBoggle\\WinAPI_BubbleBoggle.cpp",
+              "RelativeToolTip": "WinAPI_BubbleBoggle\\WinAPI_BubbleBoggle.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAA2AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-10-01T02:48:34.019Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
