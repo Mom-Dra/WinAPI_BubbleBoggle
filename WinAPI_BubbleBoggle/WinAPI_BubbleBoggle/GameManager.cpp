@@ -4,6 +4,7 @@
 #include "ImageCache.h"
 #include "TimeManager.h"
 #include "KeyManager.h"
+#include "SceneManager.h"
 
 namespace MomDra
 {
@@ -101,6 +102,8 @@ namespace MomDra
 
         // Manager √ ±‚»≠
         TimeManager::GetInstance().Initialize();
+        SceneManager::GetInstance().Initialize();
+        KeyManager::GetInstance().Initialize();
         ImageCache::InitGDIPlus();
         
         AddImg();

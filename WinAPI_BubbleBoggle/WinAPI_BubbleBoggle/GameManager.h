@@ -50,4 +50,3 @@ namespace MomDra
 		void Render(const HDC& hdc) const noexcept;
 	};
 }
-

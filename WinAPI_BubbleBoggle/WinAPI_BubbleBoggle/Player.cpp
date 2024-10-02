@@ -22,7 +22,7 @@ void Player::Update() noexcept
 	{
 		moveVec += Vector2::UnitX;
 	}
-
+	
 	if (KeyManager::GetInstance().GetKey(Key::S))
 	{
 		moveVec += Vector2::UnitY;
@@ -38,7 +38,6 @@ void Player::Update() noexcept
 
 	SetPos(currPos + moveVec * TimeManager::GetInstance().GetDeltaTime());
 	//SetPos(currPos + moveVec);
-
 }
 
 void Player::Render(const HDC& hdc) const noexcept

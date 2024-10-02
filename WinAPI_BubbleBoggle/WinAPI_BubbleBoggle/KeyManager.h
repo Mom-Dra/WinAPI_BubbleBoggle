@@ -48,7 +48,6 @@ namespace MomDra
 	{
 	private:
 		static std::array<int, static_cast<int>(Key::LAST)> keyArr;
-
 		std::array<KeyInfo, static_cast<int>(Key::LAST)> keyStates;
 
 	public:

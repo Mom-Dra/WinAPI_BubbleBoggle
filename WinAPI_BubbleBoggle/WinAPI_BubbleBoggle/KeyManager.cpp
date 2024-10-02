@@ -1,5 +1,6 @@
 #include "KeyManager.h"
 #include "framework.h"
+#include "GameManager.h"
 
 namespace MomDra
 {
@@ -38,33 +39,55 @@ namespace MomDra
 
 	void KeyManager::Update() noexcept
 	{
-		for (int i = 0; i < static_cast<int>(Key::LAST); ++i)
+		// 윈도우 포커싱 알아내기
+		//HWND hMainWnd{ GameManager::GetInstance().GetHwnd() };
+		HWND hWnd = GetFocus();
+
+		// 윈도우가 포커싱일 때
+		if (hWnd != nullptr)
 		{
-			if (GetAsyncKeyState(keyArr[i]) & 0x8000)
+			for (int i = 0; i < static_cast<int>(Key::LAST); ++i)
 			{
-				if (keyStates[i].prevPush)
+				if (GetAsyncKeyState(keyArr[i]) & 0x8000)
 				{
-					keyStates[i].state = KeyState::HOLD;
+					if (keyStates[i].prevPush)
+					{
+						keyStates[i].state = KeyState::HOLD;
+					}
+					else
+					{
+						keyStates[i].state = KeyState::TAP;
+					}
+
+					keyStates[i].prevPush = true;
 				}
 				else
 				{
-					keyStates[i].state = KeyState::TAP;
-				}
+					if (keyStates[i].prevPush)
+					{
+						keyStates[i].state = KeyState::AWAY;
+					}
+					else
+					{
+						keyStates[i].state = KeyState::NONE;
+					}
 
-				keyStates[i].prevPush = true;
+					keyStates[i].prevPush = false;
+				}
 			}
-			else
+		}
+		else
+		{
+			for (int i = 0; i < static_cast<int>(Key::LAST); ++i)
 			{
-				if (keyStates[i].prevPush)
-				{
-					keyStates[i].state = KeyState::AWAY;
-				}
-				else
-				{
-					keyStates[i].state = KeyState::NONE;
-				}
-
 				keyStates[i].prevPush = false;
+				
+				KeyState keyState{ keyStates[i].state };
+
+				if (keyState == KeyState::TAP || keyState == KeyState::HOLD)
+					keyStates[i].state = KeyState::AWAY;
+				else if (keyState == KeyState::AWAY)
+					keyStates[i].state = KeyState::NONE;
 			}
 		}
 	}
