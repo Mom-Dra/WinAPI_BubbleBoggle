@@ -130,7 +130,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
-    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Core.h" />
     <ClInclude Include="ImageCache.h" />
     <ClInclude Include="ImageObject.h" />
     <ClInclude Include="KeyManager.h" />
@@ -150,7 +150,7 @@
     <ClInclude Include="WinAPI_BubbleBoggle.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Core.cpp" />
     <ClCompile Include="ImageCache.cpp" />
     <ClCompile Include="ImageObject.cpp" />
     <ClCompile Include="KeyManager.cpp" />

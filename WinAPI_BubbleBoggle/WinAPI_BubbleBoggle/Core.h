@@ -6,20 +6,22 @@
 
 namespace MomDra
 {
-	class GameManager
+	class Core
 	{
 	private:
 		POINT resolution;
 		RECT rect;
 
+		// Main
 		HWND hWnd;
 		HDC hdc;
 
+		// Double를 위한
 		HBITMAP hBit;
 		HDC memDC;
 
 	public:
-		static GameManager& GetInstance() noexcept;
+		static Core& GetInstance() noexcept;
 
 		// 화면 크기
 		static constexpr int WINDOW_WIDTH{ 800 };
@@ -27,15 +29,23 @@ namespace MomDra
 
 		void Initialize(const HWND& hWnd, const POINT& resolution) noexcept;
 		void Progress() const noexcept;
-		const HWND& GetHwnd() const noexcept;
+		inline const HWND& GetMainHwnd() const noexcept
+		{
+			return hWnd;
+		}
+
+		inline const HDC& GetMainDC() const noexcept
+		{
+			return hdc;
+		}
 
 	private:
-		explicit GameManager() noexcept;
-		explicit GameManager(const GameManager& other) = delete;
-		~GameManager() noexcept;
+		explicit Core() noexcept = default;
+		explicit Core(const Core& other) = delete;
+		~Core() noexcept;
 
-		GameManager& operator=(const GameManager& other) = delete;
-		
+		Core& operator=(const Core& other) = delete;
+
 		void Update() const noexcept;
 		void Render(const HDC& hdc) const noexcept;
 	};

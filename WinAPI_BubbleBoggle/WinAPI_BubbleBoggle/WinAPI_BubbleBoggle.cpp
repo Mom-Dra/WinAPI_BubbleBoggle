@@ -3,7 +3,7 @@
 
 #include "framework.h"
 #include "WinAPI_BubbleBoggle.h"
-#include "GameManager.h"
+#include "Core.h"
 #include "ImageCache.h"
 #include "TimeManager.h"
 
@@ -48,7 +48,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     MSG msg;
 
-    GameManager::GetInstance().Initialize(hWnd, POINT{ GameManager::WINDOW_WIDTH, GameManager::WINDOW_HEIGHT });
+    Core::GetInstance().Initialize(hWnd, POINT{ Core::WINDOW_WIDTH, Core::WINDOW_HEIGHT });
 
     // 기본 메시지 루프입니다:
     while (true)
@@ -66,7 +66,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         else
         {
-            GameManager::GetInstance().Progress();
+            Core::GetInstance().Progress();
         }
     }
 
@@ -177,7 +177,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-            //GameManager::GetInstance().Render(hdc);
+            //Core::GetInstance().Render(hdc);
 
             EndPaint(hWnd, &ps);
         }

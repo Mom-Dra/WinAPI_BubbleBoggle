@@ -21,7 +21,7 @@ namespace MomDra
 		static TimeManager& GetInstance() noexcept;
 		void Initialize() noexcept;
 
-		float GetDeltaTime() noexcept;
+		float GetDeltaTime() const noexcept;
 		void Update() noexcept;
 
 	private:

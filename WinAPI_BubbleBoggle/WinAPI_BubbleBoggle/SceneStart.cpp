@@ -8,14 +8,10 @@ namespace MomDra
 {	
 	void SceneStart::Enter() noexcept
 	{
-		AddObject(new Player{ Vector2{640.0f, 384.0f}, Vector2{100.0f, 100.0f}, ImageCache::playerImgPath }, Tag::PLAYER);
-		
-		Texture tex;
-
-		std::wstring filePath{ PathManager::GetInstance().GetContentPath() };
-
+		std::wstring filePath{ PathManager::GetContentPath() };
 		filePath.append(L"\\texture\\player.bmp");
-		tex.Load(filePath);
+
+		AddObject(new Player{ Vector2{640.0f, 384.0f}, Vector2{100.0f, 100.0f}, filePath }, Tag::PLAYER);
 	}
 
 	void SceneStart::Exit() noexcept

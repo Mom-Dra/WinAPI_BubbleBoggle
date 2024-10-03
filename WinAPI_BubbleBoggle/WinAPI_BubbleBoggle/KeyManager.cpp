@@ -1,6 +1,6 @@
 #include "KeyManager.h"
 #include "framework.h"
-#include "GameManager.h"
+#include "Core.h"
 
 namespace MomDra
 {
@@ -40,7 +40,7 @@ namespace MomDra
 	void KeyManager::Update() noexcept
 	{
 		// 윈도우 포커싱 알아내기
-		//HWND hMainWnd{ GameManager::GetInstance().GetHwnd() };
+		//HWND hMainWnd{ Core::GetInstance().GetHwnd() };
 		HWND hWnd = GetFocus();
 
 		// 윈도우가 포커싱일 때

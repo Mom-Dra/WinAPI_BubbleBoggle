@@ -7,14 +7,13 @@ namespace MomDra
 	class PathManager
 	{
 	private:
-		std::wstring path;
+		static inline std::wstring path;
 		static inline constexpr int pathLength{ 255 };
 
 	public:
-		static PathManager& GetInstance() noexcept;
-
-		void Initialize() noexcept;
-		inline const std::wstring& GetContentPath() { return path; }
+		//static PathManager& GetInstance() noexcept;
+		static void Initialize() noexcept;
+		static inline const std::wstring& GetContentPath() { return path; }
 
 	private:
 		explicit PathManager() = default;

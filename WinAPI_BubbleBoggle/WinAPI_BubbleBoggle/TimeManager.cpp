@@ -1,7 +1,7 @@
 #include "TimeManager.h"
 #include "framework.h"
 #include <string>
-#include "GameManager.h"
+#include "Core.h"
 
 namespace MomDra
 {
@@ -21,7 +21,7 @@ namespace MomDra
 		QueryPerformanceFrequency(&frequency);
 	}
 
-	float TimeManager::GetDeltaTime() noexcept
+	float TimeManager::GetDeltaTime() const noexcept
 	{
 		return static_cast<float>(deltaTime);
 	}
@@ -48,7 +48,7 @@ namespace MomDra
 
 			std::wstring buffer;
 			buffer.append(L"FPS: " + std::to_wstring(fps) + L" Deltatime: " + std::to_wstring(deltaTime));
-			SetWindowText(GameManager::GetInstance().GetHwnd(), buffer.data());
+			SetWindowText(Core::GetInstance().GetMainHwnd(), buffer.data());
 		}
 	}
 }

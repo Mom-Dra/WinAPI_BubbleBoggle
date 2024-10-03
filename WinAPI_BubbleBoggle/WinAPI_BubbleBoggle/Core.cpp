@@ -1,4 +1,4 @@
-#include "GameManager.h"
+#include "Core.h"
 #include "framework.h"
 #include "Player.h"
 #include "ImageCache.h"
@@ -9,14 +9,14 @@
 
 namespace MomDra
 {
-    GameManager& GameManager::GetInstance() noexcept
+    Core& Core::GetInstance() noexcept
     {
-        static GameManager instance;
+        static Core instance;
 
         return instance;
     }
 
-    void GameManager::Progress() const noexcept
+    void Core::Progress() const noexcept
     {
         Update();
 
@@ -25,29 +25,19 @@ namespace MomDra
         BitBlt(hdc, 0, 0, resolution.x, resolution.y, memDC, 0, 0, SRCCOPY);
     }
 
-    void GameManager::Update() const noexcept
+    void Core::Update() const noexcept
     {
         TimeManager::GetInstance().Update();
         KeyManager::GetInstance().Update();
         SceneManager::GetInstance().Update();
     }
 
-    void GameManager::Render(const HDC& hdc) const noexcept
+    void Core::Render(const HDC& hdc) const noexcept
     {
         SceneManager::GetInstance().Render(memDC);
     }
 
-    const HWND& GameManager::GetHwnd() const noexcept
-    {
-        return hWnd;
-    }
-
-    GameManager::GameManager() noexcept : resolution{ 0, 0 }, rect{ 0, 0, 0, 0 }, hWnd{ 0 }, hdc{ 0 }, hBit{ 0 }, memDC{ 0 }
-    {
-        
-    }
-
-    GameManager::~GameManager() noexcept
+    Core::~Core() noexcept
     {
         ReleaseDC(hWnd, hdc);
 
@@ -55,7 +45,7 @@ namespace MomDra
         DeleteObject(hBit);
     }
 
-    void GameManager::Initialize(const HWND& hWnd, const POINT& resolution) noexcept
+    void Core::Initialize(const HWND& hWnd, const POINT& resolution) noexcept
     {
         this->hWnd = hWnd;
         this->resolution = resolution;
@@ -86,7 +76,7 @@ namespace MomDra
 
         // Manager √ ±‚»≠
         //PathManager::GetInstance().Initialize();
-        PathManager::GetInstance().Initialize();
+        PathManager::Initialize();
         KeyManager::GetInstance().Initialize();
         TimeManager::GetInstance().Initialize();
         SceneManager::GetInstance().Initialize();

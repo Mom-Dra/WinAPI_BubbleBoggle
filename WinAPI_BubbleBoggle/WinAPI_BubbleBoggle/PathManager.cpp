@@ -1,15 +1,15 @@
 #include "PathManager.h"
 #include "framework.h"
-#include "GameManager.h"
+#include "Core.h"
 
 namespace MomDra
 {
-	PathManager& PathManager::GetInstance() noexcept
+	/*PathManager& PathManager::GetInstance() noexcept
 	{
 		static PathManager instance;
 
 		return instance;
-	}
+	}*/
 
 	void PathManager::Initialize() noexcept
 	{
@@ -20,6 +20,6 @@ namespace MomDra
 	
 		path.append(L"\\contents");
 
-		//SetWindowText(GameManager::GetInstance().GetHwnd(), path.data());
+		//SetWindowText(Core::GetInstance().GetHwnd(), path.data());
 	}
 }
