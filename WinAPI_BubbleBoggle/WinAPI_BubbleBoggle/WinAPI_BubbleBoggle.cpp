@@ -49,9 +49,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MSG msg;
 
     GameManager::GetInstance().Initialize(hWnd, POINT{ GameManager::WINDOW_WIDTH, GameManager::WINDOW_HEIGHT });
-    ImageCache::InitGDIPlus();
-    TimeManager::GetInstance().Initialize();
-    
 
     // 기본 메시지 루프입니다:
     while (true)

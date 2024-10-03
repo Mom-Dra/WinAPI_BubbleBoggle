@@ -44,8 +44,8 @@ void Player::Render(const HDC& hdc) const noexcept
 {
 	ImageObject::Render(hdc);
 
-	const Vector2& currPos{ GetPos() };
-	const Vector2& currScale{ GetScale() };
+	const Vector2& pos{ GetPos() };
+	const Vector2& scale{ GetScale() };
 
-	Rectangle(hdc, currPos.X - currScale.X, currPos.Y - currScale.Y, currPos.X + currScale.X, currPos.Y + currScale.Y);
+	Rectangle(hdc, static_cast<int>(pos.X - scale.X / 2), static_cast<int>(pos.Y - scale.Y / 2), static_cast<int> (pos.X + scale.X / 2), static_cast<int>(pos.Y + scale.Y / 2));
 }

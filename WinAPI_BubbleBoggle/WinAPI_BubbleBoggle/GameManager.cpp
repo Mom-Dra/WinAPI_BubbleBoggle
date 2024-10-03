@@ -5,6 +5,7 @@
 #include "TimeManager.h"
 #include "KeyManager.h"
 #include "SceneManager.h"
+#include "PathManager.h"
 
 namespace MomDra
 {
@@ -18,39 +19,22 @@ namespace MomDra
     void GameManager::Progress() const noexcept
     {
         Update();
+
+        FillRect(memDC, &rect, (HBRUSH)((COLOR_WINDOW)+1));
         Render(hdc);
+        BitBlt(hdc, 0, 0, resolution.x, resolution.y, memDC, 0, 0, SRCCOPY);
     }
 
     void GameManager::Update() const noexcept
     {
         TimeManager::GetInstance().Update();
         KeyManager::GetInstance().Update();
-
-        for (const auto& object : objects)
-        {
-            object->Update();
-        }
+        SceneManager::GetInstance().Update();
     }
 
     void GameManager::Render(const HDC& hdc) const noexcept
     {
-        // 화면 Clear
-        //Rectangle(memDC, -1, -1, resolution.x + 1, resolution.y + 1);
-
-        FillRect(memDC, &rect, (HBRUSH)((COLOR_WINDOW)+1));
-
-        // 그리기
-        for (const auto& object : objects)
-        {
-            object->Render(memDC);
-        }
-
-        BitBlt(hdc, 0, 0, resolution.x, resolution.y, memDC, 0, 0, SRCCOPY);
-    }
-
-    void GameManager::AddImg() noexcept
-    {
-        objects.emplace_back(std::make_unique<Player>(Vector2{ 100, 100 }, Vector2{ 20, 20 }, ImageCache::LoadImg(ImageCache::playerImgPath)));
+        SceneManager::GetInstance().Render(memDC);
     }
 
     const HWND& GameManager::GetHwnd() const noexcept
@@ -101,11 +85,11 @@ namespace MomDra
         DeleteObject(hOldBit);
 
         // Manager 초기화
+        //PathManager::GetInstance().Initialize();
+        PathManager::GetInstance().Initialize();
+        KeyManager::GetInstance().Initialize();
         TimeManager::GetInstance().Initialize();
         SceneManager::GetInstance().Initialize();
-        KeyManager::GetInstance().Initialize();
         ImageCache::InitGDIPlus();
-        
-        AddImg();
     }
 }

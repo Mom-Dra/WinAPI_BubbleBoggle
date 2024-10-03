@@ -1,7 +1,16 @@
 #pragma once
 #include "Scene.h"
-class SceneStart : public Scene
+
+namespace MomDra
 {
+	class SceneStart : public Scene
+	{
+	private:
 
 
-};
+	public:
+
+		virtual void Enter() noexcept override;
+		virtual void Exit() noexcept override;
+	};
+}

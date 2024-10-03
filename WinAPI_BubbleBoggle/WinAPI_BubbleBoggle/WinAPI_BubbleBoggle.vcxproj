@@ -119,6 +119,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -134,13 +135,16 @@
     <ClInclude Include="ImageObject.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="PathManager.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Res.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SceneStart.h" />
     <ClInclude Include="Tag.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="WinAPI_BubbleBoggle.h" />
@@ -151,10 +155,13 @@
     <ClCompile Include="ImageObject.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="PathManager.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Res.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneStart.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="WinAPI_BubbleBoggle.cpp" />

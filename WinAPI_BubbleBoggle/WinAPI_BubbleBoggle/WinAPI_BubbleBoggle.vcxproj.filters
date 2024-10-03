@@ -25,6 +25,12 @@
     <Filter Include="헤더 파일\Scene">
       <UniqueIdentifier>{160ea1c4-53c7-4461-845e-ba2977a9beac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Resource">
+      <UniqueIdentifier>{be5962ec-0746-479e-b38c-90d9caab68f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Resource">
+      <UniqueIdentifier>{4d433e89-9ad6-40b6-8077-e205ae627b72}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -75,6 +81,15 @@
     <ClInclude Include="SceneStart.h">
       <Filter>헤더 파일\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Res.h">
+      <Filter>헤더 파일\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>헤더 파일\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="PathManager.h">
+      <Filter>헤더 파일\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI_BubbleBoggle.cpp">
@@ -112,6 +127,15 @@
     </ClCompile>
     <ClCompile Include="SceneStart.cpp">
       <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Res.cpp">
+      <Filter>소스 파일\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>소스 파일\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="PathManager.cpp">
+      <Filter>소스 파일\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

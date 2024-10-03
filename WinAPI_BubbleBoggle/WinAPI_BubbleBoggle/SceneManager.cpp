@@ -1,17 +1,22 @@
 #include "SceneManager.h"
 #include "SceneStart.h"
 
-SceneManager& SceneManager::GetInstance() noexcept
+namespace MomDra
 {
-	static SceneManager instance;
+	SceneManager& SceneManager::GetInstance() noexcept
+	{
+		static SceneManager instance;
 
-	return instance;
-}
+		return instance;
+	}
 
-void SceneManager::Initialize() noexcept
-{
-	// 纠 积己
-	Scenes[static_cast<int> (SceneType::START)] = std::make_unique<SceneStart>();
+	void SceneManager::Initialize() noexcept
+	{
+		// 纠 积己
+		Scenes[static_cast<int> (SceneType::START)] = std::make_unique<SceneStart>();
+		Scenes[static_cast<int> (SceneType::START)]->SetName(L"StartScene");
 
-	currScene = Scenes[static_cast<int> (SceneType::START)].get();
+		currScene = Scenes[static_cast<int> (SceneType::START)].get();
+		currScene->Enter();
+	}
 }
