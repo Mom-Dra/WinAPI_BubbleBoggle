@@ -1,11 +1,27 @@
 #pragma once
 
-enum class Tag
+namespace MomDra
 {
-	DEFAULT,
-	PLAYER,
-	MISSILE,
-	MONSTER,
-	LAST
-};
+	enum class Layer
+	{
+		DEFAULT,
+		PLAYER,
+		MISSILE,
+		MONSTER,
+		LAST
+	};
 
+	enum class BrushType
+	{
+		HOLLOW,
+		LAST
+	};
+
+	enum class PenType
+	{
+		RED,
+		GREEN,
+		BLUE,
+		LAST
+	};
+}

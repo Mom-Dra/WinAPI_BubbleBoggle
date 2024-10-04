@@ -1,23 +1,37 @@
 #include "Scene.h"
 
-void Scene::Update() const noexcept
+namespace MomDra
 {
-	for (const auto& objVec : objects)
+	void Scene::Update() const noexcept
 	{
-		for (const auto& obj : objVec)
+		for (const auto& objVec : objects)
 		{
-			obj->Update();
+			for (const auto& obj : objVec)
+			{
+				obj->Update();
+			}
 		}
 	}
-}
 
-void Scene::Render(const HDC& hdc) const noexcept
-{
-	for (const auto& objVec : objects)
+	void Scene::LateUpdate() const noexcept
 	{
-		for (const auto& obj : objVec)
+		for (const auto& objVec : objects)
 		{
-			obj->Render(hdc);
+			for (const auto& obj : objVec)
+			{
+				obj->LateUpdate();
+			}
+		}
+	}
+
+	void Scene::Render(const HDC& hdc) const noexcept
+	{
+		for (const auto& objVec : objects)
+		{
+			for (const auto& obj : objVec)
+			{
+				obj->Render(hdc);
+			}
 		}
 	}
 }

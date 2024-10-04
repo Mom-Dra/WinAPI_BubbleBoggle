@@ -1,11 +1,13 @@
 #include "Core.h"
 #include "framework.h"
 #include "Player.h"
-#include "ImageCache.h"
 #include "TimeManager.h"
 #include "KeyManager.h"
 #include "SceneManager.h"
 #include "PathManager.h"
+#include "ResourceManager.h"
+#include "CollisionManager.h"
+#include <iostream>
 
 namespace MomDra
 {
@@ -30,11 +32,23 @@ namespace MomDra
         TimeManager::GetInstance().Update();
         KeyManager::GetInstance().Update();
         SceneManager::GetInstance().Update();
+        CollisionManager::GetInstance().Update();
     }
 
     void Core::Render(const HDC& hdc) const noexcept
     {
         SceneManager::GetInstance().Render(memDC);
+    }
+
+    void Core::CreateBrushPen() noexcept
+    {
+        // hollow brush
+        brushes[static_cast <int> (BrushType::HOLLOW)] = static_cast<HBRUSH> (GetStockObject(HOLLOW_BRUSH));
+
+        // red pen
+        pens[static_cast<int>(PenType::RED)] = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
+        pens[static_cast<int>(PenType::GREEN)] = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
+        pens[static_cast<int>(PenType::BLUE)] = CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
     }
 
     Core::~Core() noexcept
@@ -43,6 +57,11 @@ namespace MomDra
 
         DeleteDC(memDC);
         DeleteObject(hBit);
+
+        for (HPEN pen : pens)
+        {
+            DeleteObject(pen);
+        }
     }
 
     void Core::Initialize(const HWND& hWnd, const POINT& resolution) noexcept
@@ -74,12 +93,16 @@ namespace MomDra
         HBITMAP hOldBit = static_cast<HBITMAP>(SelectObject(memDC, hBit));
         DeleteObject(hOldBit);
 
+        // 자주 사용할 펜 및 브러쉬
+        CreateBrushPen();
+
         // Manager 초기화
         //PathManager::GetInstance().Initialize();
         PathManager::Initialize();
         KeyManager::GetInstance().Initialize();
         TimeManager::GetInstance().Initialize();
         SceneManager::GetInstance().Initialize();
-        ImageCache::InitGDIPlus();
+        //ResourceManager::GetInstance().
+        SceneManager::GetInstance().Initialize();
     }
 }

@@ -2,7 +2,9 @@
 
 #include <list>
 #include <memory>
+#include <array>
 #include "Object.h"
+#include "Tag.h"
 
 namespace MomDra
 {
@@ -20,6 +22,10 @@ namespace MomDra
 		HBITMAP hBit;
 		HDC memDC;
 
+		// 자주 사용하는 GDI Object
+		std::array<HBRUSH, static_cast<int>(BrushType::LAST)> brushes;
+		std::array<HPEN, static_cast<int>(PenType::LAST)> pens;
+
 	public:
 		static Core& GetInstance() noexcept;
 
@@ -29,15 +35,11 @@ namespace MomDra
 
 		void Initialize(const HWND& hWnd, const POINT& resolution) noexcept;
 		void Progress() const noexcept;
-		inline const HWND& GetMainHwnd() const noexcept
-		{
-			return hWnd;
-		}
 
-		inline const HDC& GetMainDC() const noexcept
-		{
-			return hdc;
-		}
+		inline const HWND& GetMainHwnd() const noexcept { return hWnd; }
+		inline const HDC& GetMainDC() const noexcept { return hdc; }
+		inline const HBRUSH& GetBrush(BrushType brushType) { return brushes[static_cast<int>(brushType)]; }
+		inline const HPEN& GetPen(PenType penType) { return pens[static_cast<int>(penType)]; }
 
 	private:
 		explicit Core() noexcept = default;
@@ -48,5 +50,7 @@ namespace MomDra
 
 		void Update() const noexcept;
 		void Render(const HDC& hdc) const noexcept;
+
+		void CreateBrushPen() noexcept;
 	};
 }

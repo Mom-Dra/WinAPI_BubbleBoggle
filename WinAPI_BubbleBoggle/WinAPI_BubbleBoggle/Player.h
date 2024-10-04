@@ -1,11 +1,14 @@
 #pragma once
 #include "ImageObject.h"
 
-class Player : public ImageObject
+namespace MomDra
 {
-public:
-	using ImageObject::ImageObject;
+	class Player : public ImageObject
+	{
+	public:
+		explicit Player(const Vector2& pos, const Vector2& scale, const std::wstring& imgPath);
 
-	virtual void Update() noexcept override;
-	virtual void Render(const HDC& hdc) const noexcept override;
-};
+		virtual void Update() noexcept override;
+		virtual void Render(const HDC& hdc) const noexcept override;
+	};
+}

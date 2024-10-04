@@ -129,9 +129,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Collider.h" />
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Core.h" />
-    <ClInclude Include="ImageCache.h" />
     <ClInclude Include="ImageObject.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="Object.h" />
@@ -143,6 +144,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SceneStart.h" />
+    <ClInclude Include="SelectGDI.h" />
     <ClInclude Include="Tag.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
@@ -151,8 +153,9 @@
     <ClInclude Include="WinAPI_BubbleBoggle.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Core.cpp" />
-    <ClCompile Include="ImageCache.cpp" />
     <ClCompile Include="ImageObject.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -163,6 +166,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneStart.cpp" />
+    <ClCompile Include="SelectGDI.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Vector2.cpp" />

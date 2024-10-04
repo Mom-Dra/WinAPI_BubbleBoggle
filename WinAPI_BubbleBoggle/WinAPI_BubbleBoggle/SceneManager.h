@@ -30,12 +30,10 @@ namespace MomDra
 		inline void Update() const noexcept
 		{
 			currScene->Update();
+			currScene->LateUpdate();
 		}
 
-		inline void Render(const HDC& hdc) const noexcept
-		{
-			currScene->Render(hdc);
-		}
+		inline void Render(const HDC& hdc) const noexcept { currScene->Render(hdc); }
 
 	private:
 		explicit SceneManager() noexcept = default;

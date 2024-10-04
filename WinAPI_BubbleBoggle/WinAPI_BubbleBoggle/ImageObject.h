@@ -4,21 +4,18 @@
 #include <string>
 #include <memory>
 
-class ImageObject : public Object
+namespace MomDra
 {
-private:
-    Texture texture;
+    class ImageObject : public Object
+    {
+    private:
+        std::shared_ptr<Texture> texture;
 
-public:
-    explicit ImageObject(const Vector2& pos, const Vector2& scale, const std::wstring& imgPath);
+    public:
+        explicit ImageObject(const Vector2& pos, const Vector2& scale, const std::wstring& imgPath);
+        virtual ~ImageObject() = default;
 
-    //explicit ImageObject(ImageObject&& other) noexcept;
-
-    //explicit ImageObject(const ImageObject& other) noexcept = delete;
-    virtual ~ImageObject() = default;
-
-    //ImageObject& operator=(ImageObject&& other) noexcept;
-
-    void Render(const HDC& hdc) const noexcept override;
-    virtual void Update() noexcept override;
-};
+        void Render(const HDC& hdc) const noexcept override;
+        virtual void Update() noexcept override;
+    };
+}

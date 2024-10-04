@@ -4,7 +4,6 @@
 #include "framework.h"
 #include "WinAPI_BubbleBoggle.h"
 #include "Core.h"
-#include "ImageCache.h"
 #include "TimeManager.h"
 
 using namespace MomDra;
