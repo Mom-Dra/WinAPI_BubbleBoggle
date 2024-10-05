@@ -14,8 +14,8 @@ namespace MomDra
 
 		void Initialize() noexcept;
 		void Update() noexcept;
-		void CheckGroup(const Layer& layer1, const Layer& layer2) const noexcept;
-		void Reset() const noexcept;
+		void CheckGroup(const Layer& layer1, const Layer& layer2) noexcept;
+		void Reset() noexcept;
 
 	private:
 		explicit CollisionManager() noexcept = default;

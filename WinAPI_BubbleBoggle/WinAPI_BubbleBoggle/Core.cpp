@@ -103,6 +103,5 @@ namespace MomDra
         TimeManager::GetInstance().Initialize();
         SceneManager::GetInstance().Initialize();
         //ResourceManager::GetInstance().
-        SceneManager::GetInstance().Initialize();
     }
 }
