@@ -42,7 +42,7 @@ namespace MomDra
 		}
 
 		moveVec.Normalize();
-		moveVec *= 10;
+		moveVec *= 100;
 
 		SetPos(currPos + moveVec * TimeManager::GetInstance().GetDeltaTime());
 	}

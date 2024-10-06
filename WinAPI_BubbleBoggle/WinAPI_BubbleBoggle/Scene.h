@@ -28,6 +28,8 @@ namespace MomDra
 		void LateUpdate() const noexcept;
 		void Render(const HDC& hdc) const noexcept;
 
+		inline const std::vector<std::unique_ptr<Object>>& GetGroupObject(const Layer& layer) const noexcept { return objects[static_cast<int>(layer)]; }
+
 	protected:
 		inline void AddObject(Object* obj, Layer type) noexcept { objects[static_cast<int>(type)].emplace_back(obj); }
 	};

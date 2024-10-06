@@ -34,6 +34,7 @@ namespace MomDra
 		}
 
 		inline void Render(const HDC& hdc) const noexcept { currScene->Render(hdc); }
+		inline Scene* GetCurrentScene() { return currScene; }
 
 	private:
 		explicit SceneManager() noexcept = default;
