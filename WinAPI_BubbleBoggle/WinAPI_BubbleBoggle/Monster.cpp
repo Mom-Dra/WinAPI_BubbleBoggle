@@ -2,10 +2,18 @@
 
 namespace MomDra
 {
-	Monster::Monster(const Vector2& pos, const Vector2& scale, const std::wstring& imgPath) : ImageObject{ pos, scale, imgPath }
+	Monster::Monster(const Vector2& pos, const Vector2& scale, const std::wstring& imgPath, const Layer& layer) : ImageObject{ pos, scale, imgPath, layer }
 	{
-		CreateCollider();
-		Collider* collider{ GetCollider() };
-		collider->SetScale(Vector2{ 100.0f, 100.0f });
+		CreateCollider(Vector2{ 100.0f, 100.0f });
+	}
+
+	void Monster::OnCollisionEnter(const Collider* other)
+	{
+		const Object* otherObject{ other->GetObj() };
+
+		if (otherObject->GetLayer() == Layer::PROJECTILE)
+		{
+			EventManager::GetInstance().Destory(this);
+		}
 	}
 }

@@ -23,6 +23,7 @@ namespace MomDra
 
 		float GetDeltaTime() const noexcept;
 		void Update() noexcept;
+		void Render() noexcept;
 
 	private:
 		explicit TimeManager() = default;

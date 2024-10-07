@@ -24,13 +24,13 @@ namespace MomDra
 		virtual void Enter() noexcept = 0;
 		virtual void Exit() noexcept = 0;
 
-		void Update() const noexcept;
+		virtual void Update() const noexcept;
 		void LateUpdate() const noexcept;
-		void Render(const HDC& hdc) const noexcept;
+		void Render(const HDC& hdc) noexcept;
 
 		inline const std::vector<std::unique_ptr<Object>>& GetGroupObject(const Layer& layer) const noexcept { return objects[static_cast<int>(layer)]; }
-
-	protected:
-		inline void AddObject(Object* obj, Layer type) noexcept { objects[static_cast<int>(type)].emplace_back(obj); }
+		inline void AddObject(Object* obj) noexcept { objects[static_cast<int>(obj->GetLayer())].emplace_back(obj); }
+		inline void DeleteLayerObject(const Layer& layer) noexcept { objects[static_cast<int>(layer)].clear(); }
+		inline void DeleteAllObject() noexcept { for (auto& objVec : objects) objVec.clear(); }
 	};
 }

@@ -85,16 +85,32 @@ namespace MomDra
                     if(it->second)
                     {
                         // 이전에도 충돌 하고 있었다
-                        collider1->OnCollisionStay(collider2);
-                        collider2->OnCollisionStay(collider1);
+
+                        if (layer1Obj->IsDead() || layer2Obj->IsDead())
+                        {
+                            // 둘 중하나가 삭제 예정이라면, 충돌 해제시켜준다
+                            collider1->OnCollisionExit(collider2);
+                            collider2->OnCollisionExit(collider1);
+
+                            it->second = false;
+                        }
+                        else
+                        {
+                            collider1->OnCollisionStay(collider2);
+                            collider2->OnCollisionStay(collider1);
+                        }
                     }
                     else
-                    {
-                        // 충돌을 막 시작하는 시점
-                        collider1->OnCollisionEnter(collider2);
-                        collider2->OnCollisionEnter(collider1);
+                    { // 충돌을 막 시작하는 시점
+                        
+                        if (!layer1Obj->IsDead() && !layer2Obj->IsDead())
+                        {
+                            // 둘 중하나가 삭제 예정이라면, 충돌하지 않은것으로 취급
+                            collider1->OnCollisionEnter(collider2);
+                            collider2->OnCollisionEnter(collider1);
 
-                        it->second = true;
+                            it->second = true;
+                        }
                     }
                 }
                 else

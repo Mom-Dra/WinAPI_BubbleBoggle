@@ -3,14 +3,10 @@
 
 namespace MomDra
 {
-	class SceneStart : public Scene
+	class SceneTool : public Scene
 	{
-	private:
-
-
 	public:
 		virtual void Enter() noexcept override;
-		virtual void Update() const noexcept;
 		virtual void Exit() noexcept override;
 	};
 }

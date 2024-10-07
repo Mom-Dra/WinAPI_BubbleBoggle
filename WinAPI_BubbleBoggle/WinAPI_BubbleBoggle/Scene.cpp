@@ -8,7 +8,8 @@ namespace MomDra
 		{
 			for (const auto& obj : objVec)
 			{
-				obj->Update();
+				if (!obj->IsDead())
+					obj->Update();
 			}
 		}
 	}
@@ -24,13 +25,23 @@ namespace MomDra
 		}
 	}
 
-	void Scene::Render(const HDC& hdc) const noexcept
+	void Scene::Render(const HDC& hdc) noexcept
 	{
-		for (const auto& objVec : objects)
+		for (auto& objVec : objects)
 		{
-			for (const auto& obj : objVec)
+			std::vector<std::unique_ptr<Object>>::iterator it{ objVec.begin() };
+
+			for (; it != objVec.end();)
 			{
-				obj->Render(hdc);
+				if (!(*it)->IsDead())
+				{
+					(*it)->Render(hdc);
+					++it;
+				}
+				else
+				{
+					it = objVec.erase(it);
+				}
 			}
 		}
 	}

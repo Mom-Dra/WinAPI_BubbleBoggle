@@ -19,4 +19,12 @@ namespace MomDra
 		currScene = Scenes[static_cast<int> (SceneType::START)].get();
 		currScene->Enter();
 	}
+
+	void SceneManager::ChangeScene(const SceneType& sceneType) noexcept
+	{
+		// ¾À ÁøÀÔ, ¾À ºüÁ® ³ª°¥ ¶§
+		currScene->Exit();
+
+		currScene = Scenes[static_cast<int>(sceneType)].get();
+	}
 }

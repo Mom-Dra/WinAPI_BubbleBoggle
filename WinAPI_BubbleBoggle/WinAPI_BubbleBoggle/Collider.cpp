@@ -10,6 +10,11 @@ namespace MomDra
 
 	}
 
+	Collider::Collider(Object* owner, const Vector2& scale) noexcept : owner{ owner }, scale{ scale }, id{ sID++ }, colCount{ 0 }
+	{
+
+	}
+
 	Collider::Collider(const Collider& other) noexcept : owner{ nullptr }, offSetPos{ other.offSetPos }, scale{ other.scale }, id{ sID++ }, colCount{ 0 }
 	{
 
@@ -37,18 +42,20 @@ namespace MomDra
 
 	void Collider::OnCollisionStay(const Collider* other) noexcept
 	{
-		std::cout << "OnCollisionStay\n";
+		owner->OnCollisionStay(other);
 	}
 
 	void Collider::OnCollisionEnter(const Collider* other) noexcept
 	{
-		std::cout << "OnCollisionEnter\n";
 		++colCount;
+
+		owner->OnCollisionEnter(other);
 	}
 
 	void Collider::OnCollisionExit(const Collider* other) noexcept
 	{
-		std::cout << "OnCollisionExit\n";
 		--colCount;
+
+		owner->OnCollisionExit(other);
 	}
 }

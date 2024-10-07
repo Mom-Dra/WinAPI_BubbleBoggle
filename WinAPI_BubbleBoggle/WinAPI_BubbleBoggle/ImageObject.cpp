@@ -4,7 +4,7 @@
 
 namespace MomDra
 {
-    ImageObject::ImageObject(const Vector2& pos, const Vector2& scale, const std::wstring& imgPath) : Object{ pos, scale }
+    ImageObject::ImageObject(const Vector2& pos, const Vector2& scale, const std::wstring& imgPath, const Layer& layer) : Object{ pos, scale, layer }
     {
         texture = ResourceManager::GetInstance().LoadTexture(imgPath);
     }

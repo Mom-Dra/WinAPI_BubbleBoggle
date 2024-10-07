@@ -7,6 +7,7 @@
 #include "PathManager.h"
 #include "ResourceManager.h"
 #include "CollisionManager.h"
+#include "EventManager.h"
 #include <iostream>
 
 namespace MomDra
@@ -20,11 +21,16 @@ namespace MomDra
 
     void Core::Progress() const noexcept
     {
+        // Update
         Update();
 
+        // Render
         FillRect(memDC, &rect, (HBRUSH)((COLOR_WINDOW)+1));
         Render(hdc);
         BitBlt(hdc, 0, 0, resolution.x, resolution.y, memDC, 0, 0, SRCCOPY);
+
+        // Event
+        EventManager::GetInstance().Update();
     }
 
     void Core::Update() const noexcept
@@ -37,6 +43,7 @@ namespace MomDra
 
     void Core::Render(const HDC& hdc) const noexcept
     {
+        TimeManager::GetInstance().Render();
         SceneManager::GetInstance().Render(memDC);
     }
 

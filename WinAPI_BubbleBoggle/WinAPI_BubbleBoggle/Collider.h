@@ -25,6 +25,7 @@ namespace MomDra
 
 	public:
 		explicit Collider(Object* owner) noexcept;
+		explicit Collider(Object* owner, const Vector2& scale) noexcept;
 		explicit Collider(const Collider& other) noexcept;
 		Collider& operator=(const Collider& other) noexcept = delete;
 
@@ -36,6 +37,8 @@ namespace MomDra
 		inline const Vector2& GetFinalPos() const noexcept { return finalPos; }
 
 		inline unsigned int GetId() const noexcept { return id; }
+
+		inline Object* GetObj() const noexcept { return owner; }
 
 		void LateUpdate() noexcept;
 		void Render(const HDC& hdc) noexcept;

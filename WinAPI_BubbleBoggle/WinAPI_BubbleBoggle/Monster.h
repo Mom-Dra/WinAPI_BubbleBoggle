@@ -7,7 +7,10 @@ namespace MomDra
 	{
 	private:
 
+
 	public:
-		explicit Monster(const Vector2& pos, const Vector2& scale, const std::wstring& imgPath);
+		explicit Monster(const Vector2& pos, const Vector2& scale, const std::wstring& imgPath, const Layer& layer = Layer::DEFAULT);
+
+		virtual void OnCollisionEnter(const Collider* other) override;
 	};
 }

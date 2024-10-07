@@ -2,29 +2,9 @@
 
 namespace MomDra
 {
-	Object::Object(const Vector2& pos, const Vector2& scale) noexcept : pos{ pos }, scale{ scale }
+	Object::Object(const Vector2& pos, const Vector2& scale, const Layer& layer) noexcept : pos{ pos }, scale{ scale }, isAlive{ true }, layer{ layer }
 	{
 
-	}
-
-	void Object::SetPos(Vector2 pos) noexcept
-	{
-		this->pos = pos;
-	}
-
-	void Object::SetScale(Vector2 scale) noexcept
-	{
-		this->scale = scale;
-	}
-
-	const Vector2& Object::GetPos() const noexcept
-	{
-		return pos;
-	}
-
-	const Vector2& Object::GetScale() const noexcept
-	{
-		return scale;
 	}
 
 	void Object::LateUpdate() noexcept
@@ -49,8 +29,8 @@ namespace MomDra
 		return collider.get();
 	}
 
-	void Object::CreateCollider() noexcept
+	void Object::CreateCollider(const Vector2& scale) noexcept
 	{
-		collider = std::make_unique<Collider>(this);
+		collider = std::make_unique<Collider>(this, scale);
 	}
 }

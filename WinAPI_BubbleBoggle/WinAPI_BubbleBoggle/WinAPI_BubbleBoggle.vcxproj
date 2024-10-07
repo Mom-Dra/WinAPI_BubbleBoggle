@@ -131,6 +131,7 @@
   <ItemGroup>
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionManager.h" />
+    <ClInclude Include="EventManager.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="ImageObject.h" />
@@ -139,12 +140,14 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="PathManager.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="Res.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SceneStart.h" />
+    <ClInclude Include="SceneTool.h" />
     <ClInclude Include="SelectGDI.h" />
     <ClInclude Include="Tag.h" />
     <ClInclude Include="targetver.h" />
@@ -157,17 +160,20 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="ImageObject.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="PathManager.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Res.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneStart.cpp" />
+    <ClCompile Include="SceneTool.cpp" />
     <ClCompile Include="SelectGDI.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeManager.cpp" />

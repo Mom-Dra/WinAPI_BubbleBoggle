@@ -37,6 +37,14 @@ namespace MomDra
 
 		prevCount = currCount;
 
+#ifdef _DEBUG
+		if (deltaTime > (1.0f / 60.0f))
+			deltaTime = 1.0f / 60.0f;
+#endif // _DEBUG
+	}
+
+	void TimeManager::Render() noexcept
+	{
 		++updateCallCount;
 		time += deltaTime;
 
@@ -52,4 +60,3 @@ namespace MomDra
 		}
 	}
 }
-

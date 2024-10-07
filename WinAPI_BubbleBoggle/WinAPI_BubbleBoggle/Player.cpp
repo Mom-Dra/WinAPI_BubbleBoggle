@@ -3,15 +3,15 @@
 #include "framework.h"
 #include "TimeManager.h"
 #include "KeyManager.h"
+#include "EventManager.h"
+#include "Projectile.h"
+#include "PathManager.h"
 
 namespace MomDra
 {
-	Player::Player(const Vector2& pos, const Vector2& scale, const std::wstring& imgPath) : ImageObject{ pos, scale, imgPath }
+	Player::Player(const Vector2& pos, const Vector2& scale, const std::wstring& imgPath, const Layer& layer) : ImageObject{ pos, scale, imgPath, layer }
 	{
-		CreateCollider();
-		Collider* collider{ GetCollider() };
-		collider->SetScale(Vector2{ 100.0f, 100.0f });
-		collider->SetOffSetPos(Vector2{ 100.0f, 0.0f });
+		CreateCollider(Vector2{ 100.0f, 100.0f });
 	}
 
 	void Player::Update() noexcept
@@ -41,6 +41,11 @@ namespace MomDra
 			moveVec -= Vector2::UnitY;
 		}
 
+		if (KeyManager::GetInstance().GetKeyDown(Key::SPACE))
+		{
+			Attack();
+		}
+
 		moveVec.Normalize();
 		moveVec *= 100;
 
@@ -55,5 +60,15 @@ namespace MomDra
 		Rectangle(hdc, static_cast<int>(pos.X - scale.X / 2), static_cast<int>(pos.Y - scale.Y / 2), static_cast<int> (pos.X + scale.X / 2), static_cast<int>(pos.Y + scale.Y / 2));
 
 		ImageObject::Render(hdc);
+	}
+
+	void Player::Attack() const noexcept
+	{
+		// Projectile 积己!
+		std::wstring filePath{ PathManager::GetContentPath() };
+		filePath.append(L"\\texture\\player.bmp");
+
+		// EventManager俊 积己 殿废!!
+		EventManager::GetInstance().Instantiate(new Projectile{ Vector2{500.0f, 200.0f}, Vector2{50.0f, 50.0f}, filePath, Layer::PROJECTILE });
 	}
 }

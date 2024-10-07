@@ -4,18 +4,10 @@
 #include "Tag.h"
 #include "framework.h"
 #include "Scene.h"
+#include "EventManager.h"
 
 namespace MomDra
 {
-	enum class SceneType
-	{
-		TOOL,
-		START,
-		STAGE_01,
-		STAGE_02,
-		LAST
-	};
-
 	class SceneManager
 	{
 	private:
@@ -40,5 +32,9 @@ namespace MomDra
 		explicit SceneManager() noexcept = default;
 		explicit SceneManager(const SceneManager& other) = delete;
 		SceneManager& operator=(const SceneManager& other) = delete;
+
+		void ChangeScene(const SceneType& sceneType) noexcept;
+
+		friend class EventManager;
 	};
 }
