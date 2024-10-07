@@ -1,10 +1,16 @@
 #include "Collider.h"
 #include "Core.h"
 #include "SelectGDI.h"
+#include <iostream>
 
 namespace MomDra
 {
-	Collider::Collider(Object* owner) noexcept : owner{ owner }
+	Collider::Collider(Object* owner) noexcept : owner{ owner }, id{ sID++ }, colCount{ 0 }
+	{
+
+	}
+
+	Collider::Collider(const Collider& other) noexcept : owner{ nullptr }, offSetPos{ other.offSetPos }, scale{ other.scale }, id{ sID++ }, colCount{ 0 }
 	{
 
 	}
@@ -17,10 +23,32 @@ namespace MomDra
 
 	void Collider::Render(const HDC& hdc) noexcept
 	{
-		SelectGDI pen{ hdc, PenType::GREEN };
+		PenType penType{ PenType::GREEN };
+
+		if (colCount)
+			penType = PenType::RED;
+
+		SelectGDI pen{ hdc, penType };
 		SelectGDI brush{ hdc, BrushType::HOLLOW };
 
 		Rectangle(hdc, static_cast<int>(finalPos.X - scale.X / 2), static_cast<int>(finalPos.Y - scale.Y / 2),
 			static_cast<int>(finalPos.X + scale.X / 2), static_cast<int>(finalPos.Y + scale.Y / 2));
+	}
+
+	void Collider::OnCollisionStay(const Collider* other) noexcept
+	{
+		std::cout << "OnCollisionStay\n";
+	}
+
+	void Collider::OnCollisionEnter(const Collider* other) noexcept
+	{
+		std::cout << "OnCollisionEnter\n";
+		++colCount;
+	}
+
+	void Collider::OnCollisionExit(const Collider* other) noexcept
+	{
+		std::cout << "OnCollisionExit\n";
+		--colCount;
 	}
 }
