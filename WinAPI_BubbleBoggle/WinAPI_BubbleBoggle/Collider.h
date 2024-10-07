@@ -31,6 +31,7 @@ namespace MomDra
 
 		inline void SetOffSetPos(const Vector2& pos) { offSetPos = pos; }
 		inline void SetScale(const Vector2& scale) { this->scale = scale; }
+		inline void SetOwner(Object* owner) { this->owner = owner; }
 
 		inline const Vector2& GetOffSetPos() const noexcept { return offSetPos; }
 		inline const Vector2& GetScale() const noexcept { return scale; }

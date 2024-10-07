@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 #include "SceneStart.h"
+#include "SceneTool.h"
 
 namespace MomDra
 {
@@ -13,11 +14,12 @@ namespace MomDra
 	void SceneManager::Initialize() noexcept
 	{
 		// ¾À »ý¼º
-		Scenes[static_cast<int> (SceneType::START)] = std::make_unique<SceneStart>();
-		Scenes[static_cast<int> (SceneType::START)]->SetName(L"StartScene");
+		Scenes[static_cast<int> (SceneType::START)] = std::make_unique<SceneStart>(L"StartScene");
 
 		currScene = Scenes[static_cast<int> (SceneType::START)].get();
 		currScene->Enter();
+
+		Scenes[static_cast<int>(SceneType::TOOL)] = std::make_unique<SceneTool>(L"ToolScene");
 	}
 
 	void SceneManager::ChangeScene(const SceneType& sceneType) noexcept
@@ -26,5 +28,7 @@ namespace MomDra
 		currScene->Exit();
 
 		currScene = Scenes[static_cast<int>(sceneType)].get();
+
+		currScene->Enter();
 	}
 }

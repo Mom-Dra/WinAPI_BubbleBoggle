@@ -16,6 +16,8 @@ namespace MomDra
 
 	public:
 		explicit Scene() noexcept = default;
+		explicit Scene(const std::wstring& name) noexcept : sceneName{ name } {}
+
 		virtual ~Scene() noexcept = default;
 
 		inline const std::wstring& GetName() { return sceneName; }

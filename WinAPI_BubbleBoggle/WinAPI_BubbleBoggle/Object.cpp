@@ -7,6 +7,12 @@ namespace MomDra
 
 	}
 
+	Object::Object(const Object& other) noexcept : pos{ other.pos }, scale{ other.scale }, isAlive{ true }, layer{ other.layer }
+	{
+		collider = std::make_unique<Collider>(*other.collider);
+		collider->SetOwner(this);
+	}
+
 	void Object::LateUpdate() noexcept
 	{
 		if (collider)

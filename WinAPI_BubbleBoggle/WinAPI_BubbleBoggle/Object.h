@@ -26,6 +26,7 @@ namespace MomDra
 
 	public:
 		explicit Object(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::DEFAULT) noexcept;
+		explicit Object(const Object& other) noexcept;
 		virtual ~Object() noexcept = default;
 
 		inline void SetPos(Vector2 pos) noexcept { this->pos = pos; }

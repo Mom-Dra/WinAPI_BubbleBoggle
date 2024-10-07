@@ -25,6 +25,11 @@ namespace MomDra
 	void SceneStart::Update() const noexcept
 	{
 		Scene::Update();
+
+		if (KeyManager::GetInstance().GetKeyDown(Key::ENTER))
+		{
+			EventManager::GetInstance().ChangeScene(SceneType::TOOL);
+		}
 	}
 
 	void SceneStart::Exit() noexcept
