@@ -28,7 +28,7 @@ namespace MomDra
 
 		void Initialize() noexcept;
 		void Update() noexcept;
-		void CheckGroup(const Layer& layer1, const Layer& layer2) noexcept;
+		void CheckLayer(const Layer& layer1, const Layer& layer2) noexcept;
 		void Reset() noexcept;
 
 	private:
@@ -36,7 +36,7 @@ namespace MomDra
 		explicit CollisionManager(const CollisionManager& other) noexcept = delete;
 		CollisionManager& operator=(const CollisionManager& other) noexcept = delete;
 
-		void CollisionGroupUpdate(const Layer& layer1, const Layer& layer2) noexcept;
+		void CollisionLayerUpdate(const Layer& layer1, const Layer& layer2) noexcept;
 		bool IsCollision(Collider* laye1Col, Collider* layer2Col) const noexcept;
 	};
 }

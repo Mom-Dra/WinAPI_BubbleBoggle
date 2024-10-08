@@ -11,7 +11,7 @@ namespace MomDra
 	class ResourceManager
 	{
 	private:
-		std::unordered_map<std::wstring, std::shared_ptr<Texture>> textureMap;
+		std::unordered_map<std::wstring, std::shared_ptr<Res>> textureMap;
 
 	public:
 		static ResourceManager& GetInstance() noexcept;

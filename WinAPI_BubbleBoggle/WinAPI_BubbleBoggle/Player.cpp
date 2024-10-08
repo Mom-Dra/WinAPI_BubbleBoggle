@@ -6,18 +6,26 @@
 #include "EventManager.h"
 #include "Projectile.h"
 #include "PathManager.h"
+#include "ResourceManager.h"
 
 namespace MomDra
 {
-	Player::Player(const Vector2& pos, const Vector2& scale, const std::wstring& imgPath, const Layer& layer) : ImageObject{ pos, scale, imgPath, layer }
+	Player::Player(const Vector2& pos, const Vector2& scale, const Layer& layer) : Object{ pos, scale, layer }
 	{
 		CreateCollider(Vector2{ 100.0f, 100.0f });
+
+
+		CreateAnimator();
+
+		std::wstring filePath{ PathManager::GetContentPath() };
+		filePath.append(L"\\texture\\player.bmp");
+
+		GetAnimator()->CreateAnimation(L"WALK", ResourceManager::GetInstance().LoadTexture(filePath), Vector2{ 0.0f, 0.0f }, Vector2{ 312.0f / 15.0f, 74.0f / 3.0f }, Vector2{ 312.0f / 15.0f, 0.0f }, 0.5f, 7);
+		GetAnimator()->Play(L"WALK");
 	}
 
 	void Player::Update() noexcept
 	{
-		ImageObject::Update();
-
 		const Vector2& currPos{ GetPos() };
 		Vector2 moveVec{ Vector2::Zero };
 
@@ -59,7 +67,7 @@ namespace MomDra
 
 		Rectangle(hdc, static_cast<int>(pos.X - scale.X / 2), static_cast<int>(pos.Y - scale.Y / 2), static_cast<int> (pos.X + scale.X / 2), static_cast<int>(pos.Y + scale.Y / 2));
 
-		ImageObject::Render(hdc);
+		Object::Render(hdc);
 	}
 
 	void Player::Attack() const noexcept
@@ -69,6 +77,6 @@ namespace MomDra
 		filePath.append(L"\\texture\\player.bmp");
 
 		// EventManager에 생성 등록!!
-		EventManager::GetInstance().Instantiate(new Projectile{ Vector2{500.0f, 200.0f}, Vector2{50.0f, 50.0f}, filePath, Layer::PROJECTILE });
+		EventManager::GetInstance().Instantiate(new Projectile{ Vector2{500.0f, 200.0f}, Vector2{50.0f, 50.0f}, Layer::PROJECTILE });
 	}
 }

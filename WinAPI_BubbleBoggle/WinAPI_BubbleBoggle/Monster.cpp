@@ -2,7 +2,7 @@
 
 namespace MomDra
 {
-	Monster::Monster(const Vector2& pos, const Vector2& scale, const std::wstring& imgPath, const Layer& layer) : ImageObject{ pos, scale, imgPath, layer }
+	Monster::Monster(const Vector2& pos, const Vector2& scale, const Layer& layer) : Object{ pos, scale, layer }
 	{
 		CreateCollider(Vector2{ 100.0f, 100.0f });
 	}
@@ -15,5 +15,10 @@ namespace MomDra
 		{
 			EventManager::GetInstance().Destory(this);
 		}
+	}
+
+	void Monster::Update() noexcept
+	{
+
 	}
 }

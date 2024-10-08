@@ -6,16 +6,13 @@ namespace MomDra
 	class Res
 	{
 	private:
-		std::wstring keyStr; // 리소스 키
-		std::wstring relativePathStr; // 리소스 상대 경로
+		std::wstring filePath; // 리소스 키
 
 	public:
+		explicit Res(const std::wstring& filePath) noexcept;
 		virtual ~Res() = default;
 
-		inline void SetKey(const std::wstring& key) { keyStr = key; }
-		inline void SetRelativePath(const std::wstring& path) { relativePathStr = path; }
-
-		inline const std::wstring& GetKey() { return keyStr; }
-		inline const std::wstring& GetRelativePath() { return relativePathStr; }
+		inline void SetFilePath(const std::wstring& filePath) { this->filePath = filePath; }
+		inline const std::wstring& GetFilePath() { return filePath; }
 	};
 }

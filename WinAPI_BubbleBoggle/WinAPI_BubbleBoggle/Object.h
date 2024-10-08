@@ -6,6 +6,7 @@
 #include <memory>
 #include "Tag.h"
 #include "EventManager.h"
+#include "Animator.h"
 
 using namespace CK;
 
@@ -17,7 +18,9 @@ namespace MomDra
 		Vector2 pos;
 		Vector2 scale;
 
+		// Component
 		std::unique_ptr<Collider> collider;
+		std::unique_ptr<Animator> animator;
 
 		Layer layer;
 		std::wstring name;
@@ -37,20 +40,22 @@ namespace MomDra
 		inline const Vector2& GetScale() const noexcept { return scale; }
 		inline const std::wstring& GetName() const noexcept { return name; }
 		inline const Layer& GetLayer() const noexcept { return layer; }
+		inline Collider* GetCollider() const noexcept { return collider.get(); }
+		inline Animator* GetAnimator() const noexcept { return animator.get(); }
 		inline bool IsDead() const noexcept { return !isAlive; }
 
 		virtual void Update() noexcept = 0;
 		virtual void LateUpdate() noexcept final;
 		virtual void Render(const HDC& hdc) const noexcept;
 
-		Collider* GetCollider() const noexcept;
-
 		virtual void OnCollisionEnter(const Collider* other) {};
 		virtual void OnCollisionStay(const Collider* other) {};
 		virtual void OnCollisionExit(const Collider* other) {};
 
 	protected:
-		void CreateCollider(const Vector2& scale) noexcept;
+		inline void CreateCollider(const Vector2& scale) noexcept { collider = std::make_unique<Collider>(this, scale); }
+		inline void CreateCollider() noexcept { collider = std::make_unique<Collider>(this); }
+		inline void CreateAnimator() noexcept { animator = std::make_unique<Animator>(this); }
 		void ComponentRender(const HDC& hdc) const noexcept;
 
 	private:

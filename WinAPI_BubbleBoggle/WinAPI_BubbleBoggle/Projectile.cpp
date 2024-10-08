@@ -3,7 +3,7 @@
 
 namespace MomDra
 {
-	Projectile::Projectile(const Vector2& pos, const Vector2& scale, const std::wstring& imgPath, const Layer& layer) : ImageObject{ pos, scale, imgPath, layer }
+	Projectile::Projectile(const Vector2& pos, const Vector2& scale, const Layer& layer) : Object{ pos, scale, layer }
 	{
 		CreateCollider(Vector2{ 100.0f, 100.0f });
 	}
@@ -18,8 +18,7 @@ namespace MomDra
 
 	void Projectile::Render(const HDC& hdc) const noexcept
 	{
-
-		ImageObject::Render(hdc);
+		Object::Render(hdc);
 	}
 
 	void Projectile::OnCollisionEnter(const Collider* other)

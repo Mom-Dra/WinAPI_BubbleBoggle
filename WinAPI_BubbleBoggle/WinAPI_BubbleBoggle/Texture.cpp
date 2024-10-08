@@ -4,7 +4,7 @@
 
 namespace MomDra
 {
-	Texture::Texture(const std::wstring& filePath) noexcept
+	Texture::Texture(const std::wstring& filePath) noexcept : Res{ filePath }
 	{
 		Load(filePath);
 	}

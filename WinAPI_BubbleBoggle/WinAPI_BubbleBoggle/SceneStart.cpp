@@ -14,12 +14,12 @@ namespace MomDra
 		std::wstring filePath{ PathManager::GetContentPath() };
 		filePath.append(L"\\texture\\player.bmp");
 
-		AddObject(new Player{ Vector2{640.0f, 384.0f}, Vector2{100.0f, 100.0f}, filePath, Layer::PLAYER });
-		AddObject(new Monster{ Vector2{200.0f, 200.0f}, Vector2{100.0f, 100.0f}, filePath, Layer::MONSTER });
+		AddObject(new Player{ Vector2{640.0f, 384.0f}, Vector2{100.0f, 100.0f}, Layer::PLAYER });
+		AddObject(new Monster{ Vector2{200.0f, 200.0f}, Vector2{100.0f, 100.0f}, Layer::MONSTER });
 
 		// 충돌 지정
-		CollisionManager::GetInstance().CheckGroup(Layer::PLAYER, Layer::MONSTER);
-		CollisionManager::GetInstance().CheckGroup(Layer::MONSTER, Layer::PROJECTILE);
+		CollisionManager::GetInstance().CheckLayer(Layer::PLAYER, Layer::MONSTER);
+		CollisionManager::GetInstance().CheckLayer(Layer::MONSTER, Layer::PROJECTILE);
 	}
 
 	void SceneStart::Update() const noexcept

@@ -22,12 +22,12 @@ namespace MomDra
             for (unsigned int col{ row }; col < static_cast<unsigned int>(Layer::LAST); ++col)
             {
                 if (checkArr[row] & (1 << col))
-                    CollisionGroupUpdate(static_cast<Layer>(row), static_cast<Layer>(col));
+                    CollisionLayerUpdate(static_cast<Layer>(row), static_cast<Layer>(col));
             }
         }
     }
 
-    void CollisionManager::CheckGroup(const Layer& layer1, const Layer& layer2) noexcept
+    void CollisionManager::CheckLayer(const Layer& layer1, const Layer& layer2) noexcept
     {
         // 더 작은 값의 그룹 타입을 행으로
         // 큰 갑을 열(비트)로 사용
@@ -47,11 +47,11 @@ namespace MomDra
         checkArr.fill(0);
     }
 
-    void CollisionManager::CollisionGroupUpdate(const Layer& layer1, const Layer& layer2) noexcept
+    void CollisionManager::CollisionLayerUpdate(const Layer& layer1, const Layer& layer2) noexcept
     {
         Scene* curScene{ SceneManager::GetInstance().GetCurrentScene() };
-        const std::vector<std::unique_ptr<Object>>& layer1Vec{ curScene->GetGroupObject(layer1) };
-        const std::vector<std::unique_ptr<Object>>& layer2Vec{ curScene->GetGroupObject(layer2) };
+        const std::vector<std::unique_ptr<Object>>& layer1Vec{ curScene->GetLayerObject(layer1) };
+        const std::vector<std::unique_ptr<Object>>& layer2Vec{ curScene->GetLayerObject(layer2) };
 
         for (const auto& layer1Obj : layer1Vec)
         {

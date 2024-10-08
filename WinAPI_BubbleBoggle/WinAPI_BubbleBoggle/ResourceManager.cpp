@@ -16,9 +16,9 @@ namespace MomDra
 		if (it == textureMap.end())
 		{
 			std::shared_ptr<Texture> texture{ std::make_shared<Texture>(filePath) };
-			textureMap.insert({ filePath, texture });
+			textureMap.emplace(filePath, texture);
 		}
 		
-		return textureMap[filePath];
+		return std::dynamic_pointer_cast<Texture>(textureMap[filePath]);
 	}
 }
