@@ -18,10 +18,10 @@ namespace MomDra
 		CreateAnimator();
 
 		std::wstring filePath{ PathManager::GetContentPath() };
-		filePath.append(L"\\texture\\player.bmp");
+		filePath.append(L"\\texture\\player2.bmp");
 
-		GetAnimator()->CreateAnimation(L"WALK", ResourceManager::GetInstance().LoadTexture(filePath), Vector2{ 0.0f, 0.0f }, Vector2{ 312.0f / 15.0f, 74.0f / 3.0f }, Vector2{ 312.0f / 15.0f, 0.0f }, 0.5f, 7);
-		GetAnimator()->Play(L"WALK");
+		GetAnimator()->CreateAnimation(L"WALK", ResourceManager::GetInstance().LoadTexture(filePath), Vector2{ 0.0f, 710.0f / 8.0f * 4.0f }, Vector2{ 820.0f / 10.0f, 710.0f / 8.0f }, Vector2{ 820.0f / 10.0f, 0.0f }, 0.1f, 10);
+		GetAnimator()->Play(L"WALK", true);
 	}
 
 	void Player::Update() noexcept

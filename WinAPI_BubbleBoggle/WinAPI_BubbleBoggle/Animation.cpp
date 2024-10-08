@@ -10,17 +10,28 @@ namespace MomDra
 
 	void Animation::Update() noexcept
 	{
+		if (isFinish) return;
+
 		time += TimeManager::GetInstance().GetDeltaTime();
 
-		if (time > frames[currFrame].duration)
+		if (frames[currFrame].duration < time)
 		{
-			time = 0.0f;
-			currFrame = (currFrame + 1) % frames.size();
+			++currFrame;
+
+			if (frames.size() == currFrame)
+			{
+				currFrame = -1;
+				isFinish = true;
+			}
+
+			time = time - frames[currFrame].duration;
 		}
 	}
 
 	void Animation::Render(const HDC& hdc) const noexcept
 	{
+		if (isFinish) return;
+
 		Object* owner{ animator->GetOwner() };
 		Vector2 pos{ owner->GetPos() };
 		

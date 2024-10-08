@@ -19,6 +19,7 @@ namespace MomDra
 		std::unordered_map<std::wstring, std::unique_ptr<Animation>> animationMap;
 		Animation* currAnimation;
 		Object* owner;
+		bool repeat;
 
 	public:
 		explicit Animator(Object* owner) noexcept;
@@ -32,7 +33,7 @@ namespace MomDra
 		void Render(const HDC& hdc) const noexcept;
 
 		Animation* FindAnimation(const std::wstring& animationName) const noexcept;
-		void CreateAnimation(const std::wstring& animationName, std::shared_ptr<Texture> texture, const Vector2& leftTop, const Vector2& sliceSize, const Vector2& step, float duration, unsigned int frameCount) noexcept;
-		void Play(const std::wstring& animationName) noexcept;
+		void CreateAnimation(const std::wstring& animationName, std::shared_ptr<Texture> texture, const Vector2& leftTop, const Vector2& sliceSize, const Vector2& step, float duration, unsigned int frameCount);
+		void Play(const std::wstring& animationName, bool repeat) noexcept;
 	};
 }

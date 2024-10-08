@@ -2,12 +2,12 @@
 
 namespace MomDra
 {
-	Animator::Animator(Object* owner) noexcept : currAnimation{ nullptr }, owner{ owner }
+	Animator::Animator(Object* owner) noexcept : currAnimation{ nullptr }, owner{ owner }, repeat{ false }
 	{
 
 	}
 
-	Animator::Animator(const Animator& other) noexcept : currAnimation{ nullptr }, owner{ nullptr }
+	Animator::Animator(const Animator& other) noexcept : currAnimation{ nullptr }, owner{ nullptr }, repeat{ other.repeat }
 	{
 		// unorderd_map은 어떻게 복사하나요?
 
@@ -16,7 +16,14 @@ namespace MomDra
 	void Animator::Update() const noexcept
 	{
 		if (currAnimation)
+		{
 			currAnimation->Update();
+
+			if (repeat && currAnimation->IsFinish())
+			{
+				currAnimation->SetFrame(0);
+			}
+		}
 	}
 
 	void Animator::Render(const HDC& hdc) const noexcept
@@ -34,7 +41,7 @@ namespace MomDra
 		return nullptr;
 	}
 
-	void Animator::CreateAnimation(const std::wstring& animationName, std::shared_ptr<Texture> texture, const Vector2& leftTop, const Vector2& sliceSize, const Vector2& step, float duration, unsigned int frameCount) noexcept
+	void Animator::CreateAnimation(const std::wstring& animationName, std::shared_ptr<Texture> texture, const Vector2& leftTop, const Vector2& sliceSize, const Vector2& step, float duration, unsigned int frameCount)
 	{
 		if (FindAnimation(animationName) != nullptr)
 			throw std::runtime_error{ "Duplicate key error: Animation already exists." };
@@ -46,8 +53,9 @@ namespace MomDra
 		animationMap.emplace(animationName, std::move(animation));
 	}
 
-	void Animator::Play(const std::wstring& animationName) noexcept
+	void Animator::Play(const std::wstring& animationName, bool repeat) noexcept
 	{
 		currAnimation = FindAnimation(animationName);
+		this->repeat = repeat;
 	}
 }

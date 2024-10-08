@@ -14,7 +14,7 @@ namespace MomDra
 		if (otherObject->GetLayer() == Layer::PROJECTILE)
 		{
 			EventManager::GetInstance().Destory(this);
-		}
+		}	
 	}
 
 	void Monster::Update() noexcept
