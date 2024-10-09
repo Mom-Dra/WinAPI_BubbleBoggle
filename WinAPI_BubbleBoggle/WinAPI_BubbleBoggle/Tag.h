@@ -8,6 +8,7 @@ namespace MomDra
 		PLAYER,
 		MONSTER,
 		PROJECTILE,
+		TILE,
 		LAST
 	};
 

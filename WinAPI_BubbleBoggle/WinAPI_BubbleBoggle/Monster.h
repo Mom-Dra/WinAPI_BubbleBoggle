@@ -9,7 +9,7 @@ namespace MomDra
 
 
 	public:
-		explicit Monster(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::DEFAULT);
+		explicit Monster(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::MONSTER);
 
 		virtual void OnCollisionEnter(const Collider* other) override;
 

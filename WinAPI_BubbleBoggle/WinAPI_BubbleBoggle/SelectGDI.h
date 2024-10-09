@@ -11,7 +11,7 @@ namespace MomDra
 		HPEN hDefaultPen;
 		HBRUSH hDefaultBrush;
 
-	public:
+	public: 
 		explicit SelectGDI(HDC hdc, PenType penType) noexcept;
 		explicit SelectGDI(HDC hdc, BrushType brushType) noexcept;
 		~SelectGDI();
