@@ -17,11 +17,24 @@ namespace MomDra
 
 		CreateAnimator();
 
-		std::wstring filePath{ PathManager::GetContentPath() };
-		filePath.append(L"\\texture\\player2.bmp");
+		/*std::wstring filePath{ PathManager::GetContentPath() };
+		filePath.append(L"\\texture\\player2.bmp");*/
 
-		GetAnimator()->CreateAnimation(L"WALK", ResourceManager::GetInstance().LoadTexture(filePath), Vector2{ 0.0f, 710.0f / 8.0f * 4.0f }, Vector2{ 820.0f / 10.0f, 710.0f / 8.0f }, Vector2{ 820.0f / 10.0f, 0.0f }, 0.1f, 10);
-		GetAnimator()->Play(L"WALK", true);
+		/*GetAnimator()->CreateAnimation(L"WALK", ResourceManager::GetInstance().LoadTexture(filePath), Vector2{ 0.0f, 710.0f / 8.0f * 4.0f }, Vector2{ 820.0f / 10.0f, 710.0f / 8.0f }, Vector2{ 820.0f / 10.0f, 0.0f }, 0.1f, 10);
+		GetAnimator()->Play(L"WALK", true);*/
+
+		std::wstring filePath{ PathManager::GetContentPath() };
+		filePath.append(L"\\texture\\player.bmp");
+
+		Animator* animator{ GetAnimator() };
+		animator->CreateAnimation(L"WALK", ResourceManager::GetInstance().LoadTexture(filePath), Vector2{ 0.0f, 0.0f }, Vector2{ 312.0f / 15.0f, 74.0f / 3.0f }, Vector2{ 312.0f / 15.0f, 0.0f }, 0.2f, 7);
+		animator->Play(L"WALK", true);
+
+		Animation* animation{ animator->FindAnimation(L"WALK") };
+		for (int i = 0; i < animation->GetMaxFrame(); ++i)
+		{
+			animation->GetFrame(i).offSet = Vector2{ 0.0f, -20.0f };
+		}
 	}
 
 	void Player::Update() noexcept

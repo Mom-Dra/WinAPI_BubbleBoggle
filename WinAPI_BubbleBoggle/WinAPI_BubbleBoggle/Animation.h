@@ -13,10 +13,13 @@ namespace MomDra
 {
 	class Animator;
 
+	// 일반적으로 플레이어의 위치가, 이미지의 발쪽에 잡아준다!
+
 	struct AnimationFrame
 	{
 		Vector2 leftTop;
 		Vector2 slice;
+		Vector2 offSet;
 		float duration;
 	};
 
@@ -41,7 +44,8 @@ namespace MomDra
 
 		inline const std::wstring& GetName() const noexcept { return name; }
 		inline bool IsFinish() const noexcept { return isFinish; }
-
+		inline AnimationFrame& GetFrame(int frameIndex) noexcept { return frames[frameIndex]; }
+		inline int GetMaxFrame() const noexcept { return frames.size(); }
 		inline void SetFrame(int frameIndex) noexcept { isFinish = false; currFrame = frameIndex; time = 0.0f; }
 
 	private:

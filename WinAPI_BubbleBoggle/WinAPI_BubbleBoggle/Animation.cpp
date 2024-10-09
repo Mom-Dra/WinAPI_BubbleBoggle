@@ -16,15 +16,16 @@ namespace MomDra
 
 		if (frames[currFrame].duration < time)
 		{
+			time = time - frames[currFrame].duration;
+
 			++currFrame;
 
 			if (frames.size() == currFrame)
 			{
 				currFrame = -1;
+				time = 0.0f;
 				isFinish = true;
 			}
-
-			time = time - frames[currFrame].duration;
 		}
 	}
 
@@ -35,8 +36,11 @@ namespace MomDra
 		Object* owner{ animator->GetOwner() };
 		Vector2 pos{ owner->GetPos() };
 		
+		const Vector2 offSet{ frames[currFrame].offSet };
 		const Vector2 slice{ frames[currFrame].slice };
 		const Vector2 leftTop{ frames[currFrame].leftTop };
+
+		pos += offSet; // Offset만큼 추가 위치 이동
 
 		TransparentBlt(hdc, pos.X - slice.X / 2.0f, pos.Y - slice.Y / 2.0f, slice.X, slice.Y, texture->GetDC(), leftTop.X, leftTop.Y, slice.X, slice.Y, RGB(255, 255, 255));
 	}
