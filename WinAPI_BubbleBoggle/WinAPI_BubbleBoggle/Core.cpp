@@ -8,6 +8,7 @@
 #include "ResourceManager.h"
 #include "CollisionManager.h"
 #include "EventManager.h"
+#include "Camera.h"
 #include <iostream>
 
 namespace MomDra
@@ -27,7 +28,7 @@ namespace MomDra
         // Render
         FillRect(memDC, &rect, (HBRUSH)((COLOR_WINDOW)+1));
         Render(hdc);
-        BitBlt(hdc, 0, 0, resolution.x, resolution.y, memDC, 0, 0, SRCCOPY);
+        BitBlt(hdc, 0, 0, static_cast<int>(resolution.X), static_cast<int>(resolution.Y), memDC, 0, 0, SRCCOPY);
 
         // Event
         EventManager::GetInstance().Update();
@@ -37,6 +38,7 @@ namespace MomDra
     {
         TimeManager::GetInstance().Update();
         KeyManager::GetInstance().Update();
+        Camera::GetInstance().Update();
         SceneManager::GetInstance().Update();
         CollisionManager::GetInstance().Update();
     }
@@ -71,12 +73,12 @@ namespace MomDra
         }
     }
 
-    void Core::Initialize(const HWND& hWnd, const POINT& resolution) noexcept
+    void Core::Initialize(const HWND& hWnd, const Vector2& resolution) noexcept
     {
         this->hWnd = hWnd;
         this->resolution = resolution;
 
-        RECT rt{ 0, 0, resolution.x, resolution.y };
+        RECT rt{ 0, 0, static_cast<int>(resolution.X), static_cast<int>(resolution.Y) };
         rect = rt;
 
         // 해상도에 맞게 윈도우 크기 조정
@@ -92,7 +94,7 @@ namespace MomDra
         hdc = GetDC(hWnd);
         
         // Create로 만든건 Delete로 지운다
-        hBit = CreateCompatibleBitmap(hdc, resolution.x, resolution.y);
+        hBit = CreateCompatibleBitmap(hdc, static_cast<int>(resolution.X), static_cast<int>(resolution.Y));
         memDC = CreateCompatibleDC(hdc);
 
         // 기본으로 1px 짜리 bitMap이 만들어짐

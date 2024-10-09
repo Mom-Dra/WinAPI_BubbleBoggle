@@ -11,7 +11,7 @@ namespace MomDra
 	class Core
 	{
 	private:
-		POINT resolution;
+		Vector2 resolution;
 		RECT rect;
 
 		// Main
@@ -33,9 +33,10 @@ namespace MomDra
 		static constexpr int WINDOW_WIDTH{ 800 };
 		static constexpr int WINDOW_HEIGHT{ 800 };
 
-		void Initialize(const HWND& hWnd, const POINT& resolution) noexcept;
+		void Initialize(const HWND& hWnd, const Vector2& resolution) noexcept;
 		void Progress() const noexcept;
 
+		inline const Vector2& GetResolution() const noexcept { return resolution; }
 		inline const HWND& GetMainHwnd() const noexcept { return hWnd; }
 		inline const HDC& GetMainDC() const noexcept { return hdc; }
 		inline const HBRUSH& GetBrush(BrushType brushType) { return brushes[static_cast<int>(brushType)]; }

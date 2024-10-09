@@ -47,7 +47,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     MSG msg;
 
-    Core::GetInstance().Initialize(hWnd, POINT{ Core::WINDOW_WIDTH, Core::WINDOW_HEIGHT });
+    Core::GetInstance().Initialize(hWnd, Vector2{ Core::WINDOW_WIDTH, Core::WINDOW_HEIGHT });
 
     // 기본 메시지 루프입니다:
     while (true)

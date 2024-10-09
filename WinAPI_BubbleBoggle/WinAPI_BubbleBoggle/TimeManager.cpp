@@ -36,7 +36,7 @@ namespace MomDra
 		deltaTime = static_cast<double>((currCount.QuadPart - prevCount.QuadPart)) / frequency.QuadPart;
 
 		prevCount = currCount;
-
+			
 #ifdef _DEBUG
 		if (deltaTime > (1.0f / 60.0f))
 			deltaTime = 1.0f / 60.0f;

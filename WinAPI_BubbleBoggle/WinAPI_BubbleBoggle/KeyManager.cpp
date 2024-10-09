@@ -18,7 +18,10 @@ namespace MomDra
 		VK_LSHIFT,
 		VK_SPACE,
 		VK_RETURN,
-		VK_ESCAPE
+		VK_ESCAPE,
+
+		VK_LBUTTON,
+		VK_RBUTTON
 	};
 
 	KeyManager& KeyManager::GetInstance() noexcept
@@ -75,6 +78,16 @@ namespace MomDra
 					keyStates[i].prevPush = false;
 				}
 			}
+
+			// Mouse 위치 계산
+			POINT cursorPos;
+			// 전체 화면 기준으로 좌표를 얻기 때문에
+			// 윈도우 기준으로 다시 계산해주어야 함
+			GetCursorPos(&cursorPos);
+			ScreenToClient(Core::GetInstance().GetMainHwnd(), &cursorPos);
+
+			abcPosition.X = static_cast<float>(cursorPos.x);
+			abcPosition.Y = static_cast<float>(cursorPos.y);
 		}
 		else
 		{

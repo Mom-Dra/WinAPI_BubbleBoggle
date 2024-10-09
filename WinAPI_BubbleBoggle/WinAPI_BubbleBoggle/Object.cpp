@@ -1,4 +1,5 @@
 #include "Object.h"
+#include "Camera.h"
 
 namespace MomDra
 {
@@ -34,6 +35,8 @@ namespace MomDra
 
 	void Object::Render(const HDC& hdc) const noexcept
 	{
+
+
 		ComponentRender(hdc);
 	}
 

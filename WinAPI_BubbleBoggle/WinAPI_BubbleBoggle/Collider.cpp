@@ -1,6 +1,7 @@
 #include "Collider.h"
 #include "Core.h"
 #include "SelectGDI.h"
+#include "Camera.h"
 #include <iostream>
 
 namespace MomDra
@@ -22,7 +23,7 @@ namespace MomDra
 
 	void Collider::LateUpdate() noexcept
 	{
-		Vector2 objectPos = owner->GetPos();
+		const Vector2& objectPos = owner->GetPos();
 		finalPos = objectPos + offSetPos;
 	}
 
@@ -36,8 +37,10 @@ namespace MomDra
 		SelectGDI pen{ hdc, penType };
 		SelectGDI brush{ hdc, BrushType::HOLLOW };
 
-		Rectangle(hdc, static_cast<int>(finalPos.X - scale.X / 2), static_cast<int>(finalPos.Y - scale.Y / 2),
-			static_cast<int>(finalPos.X + scale.X / 2), static_cast<int>(finalPos.Y + scale.Y / 2));
+		Vector2 renderPos{ Camera::GetInstance().GetRenderPos(finalPos) };
+
+		Rectangle(hdc, static_cast<int>(renderPos.X - scale.X / 2), static_cast<int>(renderPos.Y - scale.Y / 2),
+			static_cast<int>(renderPos.X + scale.X / 2), static_cast<int>(renderPos.Y + scale.Y / 2));
 	}
 
 	void Collider::OnCollisionStay(const Collider* other) noexcept

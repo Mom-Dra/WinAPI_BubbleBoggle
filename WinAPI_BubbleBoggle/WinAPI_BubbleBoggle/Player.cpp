@@ -7,13 +7,13 @@
 #include "Projectile.h"
 #include "PathManager.h"
 #include "ResourceManager.h"
+#include "Camera.h"
 
 namespace MomDra
 {
 	Player::Player(const Vector2& pos, const Vector2& scale, const Layer& layer) : Object{ pos, scale, layer }
 	{
 		CreateCollider(Vector2{ 100.0f, 100.0f });
-
 
 		CreateAnimator();
 
@@ -31,7 +31,7 @@ namespace MomDra
 		animator->Play(L"WALK", true);
 
 		Animation* animation{ animator->FindAnimation(L"WALK") };
-		for (int i = 0; i < animation->GetMaxFrame(); ++i)
+		for (unsigned int i = 0; i < animation->GetMaxFrame(); ++i)
 		{
 			animation->GetFrame(i).offSet = Vector2{ 0.0f, -20.0f };
 		}
@@ -77,8 +77,12 @@ namespace MomDra
 	{
 		const Vector2& pos{ GetPos() };
 		const Vector2& scale{ GetScale() };
+	
+		Vector2 renderPos{ Camera::GetInstance().GetRenderPos(pos) };
 
-		Rectangle(hdc, static_cast<int>(pos.X - scale.X / 2), static_cast<int>(pos.Y - scale.Y / 2), static_cast<int> (pos.X + scale.X / 2), static_cast<int>(pos.Y + scale.Y / 2));
+		// 여기에 RenderPos 업데이트!
+
+		Rectangle(hdc, static_cast<int>(renderPos.X - scale.X / 2), static_cast<int>(renderPos.Y - scale.Y / 2), static_cast<int> (renderPos.X + scale.X / 2), static_cast<int>(renderPos.Y + scale.Y / 2));
 
 		Object::Render(hdc);
 	}

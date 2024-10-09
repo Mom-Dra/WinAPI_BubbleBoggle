@@ -2,6 +2,9 @@
 
 #include <vector>
 #include <array>
+#include "Vector2.h"
+
+using namespace CK;
 
 // 프레임 동기화
 // 동일 프레임 내에서 같은 키에 대해, 동일한 이벤트를 가져간다
@@ -35,6 +38,9 @@ namespace MomDra
 		ENTER,
 		ESC,
 
+		LBUTTON,
+		RBUTTON,
+
 		LAST
 	};
 
@@ -49,6 +55,8 @@ namespace MomDra
 	private:
 		static std::array<int, static_cast<int>(Key::LAST)> keyArr;
 		std::array<KeyInfo, static_cast<int>(Key::LAST)> keyStates;
+
+		Vector2 abcPosition;
 
 	public:
 		static KeyManager& GetInstance() noexcept;
@@ -75,11 +83,11 @@ namespace MomDra
 			return keyStates[static_cast<int>(key)].state == KeyState::HOLD;
 		}
 
+		inline const Vector2& GetMousePos() const noexcept { return abcPosition; }
+
 	private:
 		explicit KeyManager() noexcept = default;
 		explicit KeyManager(const KeyManager& other) = delete;
 		KeyManager& operator=(const KeyManager& other) = delete;
 	};
 }
-
-

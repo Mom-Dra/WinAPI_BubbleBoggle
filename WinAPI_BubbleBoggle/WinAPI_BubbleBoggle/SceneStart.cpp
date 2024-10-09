@@ -6,6 +6,8 @@
 #include "CollisionManager.h"
 #include "KeyManager.h"
 #include "SceneManager.h"
+#include "Core.h"
+#include "Camera.h"
 
 namespace MomDra
 {	
@@ -14,12 +16,17 @@ namespace MomDra
 		std::wstring filePath{ PathManager::GetContentPath() };
 		filePath.append(L"\\texture\\player.bmp");
 
-		AddObject(new Player{ Vector2{640.0f, 384.0f}, Vector2{100.0f, 100.0f}, Layer::PLAYER });
+		Object* player{ new Player{ Vector2{640.0f, 384.0f}, Vector2{100.0f, 100.0f}, Layer::PLAYER } };
+		AddObject(player);
 		AddObject(new Monster{ Vector2{200.0f, 200.0f}, Vector2{100.0f, 100.0f}, Layer::MONSTER });
 
 		// 충돌 지정
 		CollisionManager::GetInstance().CheckLayer(Layer::PLAYER, Layer::MONSTER);
 		CollisionManager::GetInstance().CheckLayer(Layer::MONSTER, Layer::PROJECTILE);
+
+		// Camera Look 지점
+		Vector2 resolution{ Core::GetInstance().GetResolution() };
+		Camera::GetInstance().SetLookAt(resolution / 2.0f);
 	}
 
 	void SceneStart::Update() const noexcept
@@ -29,6 +36,13 @@ namespace MomDra
 		if (KeyManager::GetInstance().GetKeyDown(Key::ENTER))
 		{
 			EventManager::GetInstance().ChangeScene(SceneType::TOOL);
+		}
+
+		if (KeyManager::GetInstance().GetKeyDown(Key::LBUTTON))
+		{
+			const Vector2& mousePos{ KeyManager::GetInstance().GetMousePos() };
+			const Vector2& lookAt{ Camera::GetInstance().GetRealPos(mousePos) };
+			Camera::GetInstance().SetLookAt(lookAt);
 		}
 	}
 

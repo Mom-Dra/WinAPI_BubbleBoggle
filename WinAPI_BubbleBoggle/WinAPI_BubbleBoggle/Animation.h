@@ -45,7 +45,7 @@ namespace MomDra
 		inline const std::wstring& GetName() const noexcept { return name; }
 		inline bool IsFinish() const noexcept { return isFinish; }
 		inline AnimationFrame& GetFrame(int frameIndex) noexcept { return frames[frameIndex]; }
-		inline int GetMaxFrame() const noexcept { return frames.size(); }
+		inline unsigned int GetMaxFrame() const noexcept { return static_cast<unsigned int> (frames.size()); }
 		inline void SetFrame(int frameIndex) noexcept { isFinish = false; currFrame = frameIndex; time = 0.0f; }
 
 	private:
