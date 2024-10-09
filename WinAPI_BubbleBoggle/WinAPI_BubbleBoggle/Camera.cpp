@@ -4,7 +4,7 @@
 
 namespace MomDra
 {
-    Camera::Camera() noexcept : targetObject{ nullptr }, followingTime{ 0.5f }, accTime{ 0.0f }
+    Camera::Camera() noexcept : targetObject{ nullptr }, followingTime{ 0.5f }, followingSpeed{ 0.0f }, accTime{ 0.0f }
     {
        
     }

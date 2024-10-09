@@ -20,7 +20,7 @@ namespace MomDra
 	class CollisionManager
 	{
 	private:
-		std::array<unsigned int, static_cast<int>(Layer::LAST)> checkArr;
+		std::array<unsigned int, static_cast<int>(Layer::LAST)> checkArr{};
 		std::unordered_map<unsigned long long, bool> ColliderInfoMap;
 		
 	public:
