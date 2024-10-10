@@ -14,7 +14,7 @@ namespace MomDra
 	void SceneManager::Initialize() noexcept
 	{
 		// ¾À »ý¼º
-		Scenes[static_cast<int> (SceneType::TOOL)] = std::make_unique<SceneStart>(L"StartScene");
+		Scenes[static_cast<int> (SceneType::START)] = std::make_unique<SceneStart>(L"StartScene");
 		Scenes[static_cast<int>(SceneType::TOOL)] = std::make_unique<SceneTool>(L"ToolScene");
 
 		currScene = Scenes[static_cast<int> (SceneType::TOOL)].get();

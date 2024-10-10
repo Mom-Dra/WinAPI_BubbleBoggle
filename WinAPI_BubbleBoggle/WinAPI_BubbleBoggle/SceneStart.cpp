@@ -33,11 +33,6 @@ namespace MomDra
 	{
 		Scene::Update();
 
-		if (KeyManager::GetInstance().GetKeyDown(Key::ENTER))
-		{
-			EventManager::GetInstance().ChangeScene(SceneType::TOOL);
-		}
-
 		if (KeyManager::GetInstance().GetKeyDown(Key::LBUTTON))
 		{
 			const Vector2& mousePos{ KeyManager::GetInstance().GetMousePos() };

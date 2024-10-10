@@ -86,8 +86,8 @@ namespace MomDra
 			GetCursorPos(&cursorPos);
 			ScreenToClient(Core::GetInstance().GetMainHwnd(), &cursorPos);
 
-			abcPosition.X = static_cast<float>(cursorPos.x);
-			abcPosition.Y = static_cast<float>(cursorPos.y);
+			mousePosition.X = static_cast<float>(cursorPos.x);
+			mousePosition.Y = static_cast<float>(cursorPos.y);
 		}
 		else
 		{

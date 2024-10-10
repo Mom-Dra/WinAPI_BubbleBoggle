@@ -1,7 +1,17 @@
 #include "Scene.h"
+#include "Tile.h"
+#include "Vector2.h"
+#include "ResourceManager.h"
+
+using namespace CK;
 
 namespace MomDra
 {
+	Scene::Scene(const std::wstring& name) noexcept : sceneName{ name }
+	{
+
+	}
+
 	void Scene::Update() const noexcept
 	{
 		for (const auto& objVec : objects)
@@ -42,6 +52,21 @@ namespace MomDra
 				{
 					it = objVec.erase(it);
 				}
+			}
+		}
+	}
+
+	void Scene::CreateTile(unsigned int xCount, unsigned int yCount)
+	{
+		tileXY.first = xCount;
+		tileXY.second = yCount;
+
+		// 타일 생성
+		for (unsigned int i{ 0 }; i < yCount; ++i)
+		{
+			for (unsigned int j{ 0 }; j < xCount; ++j)
+			{
+				AddObject(new Tile{ Vector2{static_cast<int> (j * Tile::TILE_SIZE), static_cast<int>(i * Tile::TILE_SIZE)}, ResourceManager::GetInstance().LoadTexture(L"\\texture\\tileMap.bmp"), Layer::TILE });
 			}
 		}
 	}

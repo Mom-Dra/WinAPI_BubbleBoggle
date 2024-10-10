@@ -56,7 +56,7 @@ namespace MomDra
 		static std::array<int, static_cast<int>(Key::LAST)> keyArr;
 		std::array<KeyInfo, static_cast<int>(Key::LAST)> keyStates;
 
-		Vector2 abcPosition;
+		Vector2 mousePosition;
 
 	public:
 		static KeyManager& GetInstance() noexcept;
@@ -83,7 +83,7 @@ namespace MomDra
 			return keyStates[static_cast<int>(key)].state == KeyState::HOLD;
 		}
 
-		inline const Vector2& GetMousePos() const noexcept { return abcPosition; }
+		inline const Vector2& GetMousePos() const noexcept { return mousePosition; }
 
 	private:
 		explicit KeyManager() noexcept = default;

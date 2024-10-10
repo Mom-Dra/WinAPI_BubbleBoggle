@@ -3,7 +3,7 @@
 
 namespace MomDra
 {
-	Tile::Tile(const Vector2& pos, std::shared_ptr<Texture> texture, const Layer& layer) noexcept : Object{ pos, Vector2{TILE_SIZE, TILE_SIZE}, layer }, texture{ texture }, index{ 1 }
+	Tile::Tile(const Vector2& pos, std::shared_ptr<Texture> texture, const Layer& layer) noexcept : Object{ pos, Vector2{TILE_SIZE, TILE_SIZE}, layer }, texture{ texture }, imgIndex{ 0 }
 	{
 
 	}
@@ -23,8 +23,8 @@ namespace MomDra
 		int maxCol{ width / TILE_SIZE };
 		int maxRow{ height / TILE_SIZE };
 
-		int curRow{ index / maxCol };
-		int currCol{ index % maxCol };
+		int curRow{ imgIndex / maxCol };
+		int currCol{ imgIndex % maxCol };
 
 		if (maxRow <= curRow)
 			return;
@@ -32,7 +32,7 @@ namespace MomDra
 		const Vector2& renderPos{ Camera::GetInstance().GetRenderPos(GetPos()) };
 		const Vector2& scale{ GetScale() };
 
-		BitBlt(hdc, renderPos.X, renderPos.Y, scale.X, scale.Y, texture->GetDC(), currCol * TILE_SIZE, curRow * TILE_SIZE, SRCCOPY);
+		BitBlt(hdc, static_cast<int>(renderPos.X), static_cast<int>(renderPos.Y), static_cast<int>(scale.X), static_cast<int>(scale.Y), texture->GetDC(), currCol * TILE_SIZE, curRow * TILE_SIZE, SRCCOPY);
 
 		Object::Render(hdc);
 	}

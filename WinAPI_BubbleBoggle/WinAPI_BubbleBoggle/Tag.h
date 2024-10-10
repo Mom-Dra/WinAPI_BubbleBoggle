@@ -9,6 +9,7 @@ namespace MomDra
 		MONSTER,
 		PROJECTILE,
 		TILE,
+		UI,
 		LAST
 	};
 

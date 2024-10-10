@@ -11,16 +11,22 @@ namespace MomDra
 	class Scene
 	{
 	private:
+		using Pair = std::pair<unsigned int, unsigned int>;
+
 		std::array<std::vector<std::unique_ptr<Object>>, static_cast<int>(Layer::LAST)> objects;
 		std::wstring sceneName;
 
+		Pair tileXY;
+
 	public:
 		explicit Scene() noexcept = default;
-		explicit Scene(const std::wstring& name) noexcept : sceneName{ name } {}
+		explicit Scene(const std::wstring& name) noexcept;
 
 		virtual ~Scene() noexcept = default;
 
-		inline const std::wstring& GetName() { return sceneName; }
+		inline const std::wstring& GetName() const noexcept { return sceneName; }
+		inline const Pair& GetTileXY() const noexcept { return tileXY; }
+
 		inline void SetName(const std::wstring& sceneName) noexcept { this->sceneName = sceneName; }
 
 		virtual void Enter() noexcept = 0;
@@ -34,5 +40,7 @@ namespace MomDra
 		inline void AddObject(Object* obj) noexcept { objects[static_cast<int>(obj->GetLayer())].emplace_back(obj); }
 		inline void DeleteLayerObject(const Layer& layer) noexcept { objects[static_cast<int>(layer)].clear(); }
 		inline void DeleteAllObject() noexcept { for (auto& objVec : objects) objVec.clear(); }
+
+		void CreateTile(unsigned int xCount, unsigned int yCount);
 	};
 }

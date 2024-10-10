@@ -12,5 +12,7 @@ namespace MomDra
 		virtual void Update() const noexcept override;
 		virtual void Enter() noexcept override;
 		virtual void Exit() noexcept override;
+
+		void SetTileIndex() const noexcept;
 	};
 }
