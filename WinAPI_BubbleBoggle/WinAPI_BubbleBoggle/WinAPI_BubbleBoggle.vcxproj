@@ -135,6 +135,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Animator.h" />
+    <ClInclude Include="BtnUI.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionManager.h" />
@@ -145,6 +146,7 @@
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="Monster.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="PanelUI.h" />
     <ClInclude Include="PathManager.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
@@ -162,12 +164,14 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="UI.h" />
+    <ClInclude Include="UIManager.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="WinAPI_BubbleBoggle.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animator.cpp" />
+    <ClCompile Include="BtnUI.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
@@ -177,6 +181,7 @@
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="PanelUI.cpp" />
     <ClCompile Include="PathManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Projectile.cpp" />
@@ -191,6 +196,7 @@
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="WinAPI_BubbleBoggle.cpp" />
   </ItemGroup>

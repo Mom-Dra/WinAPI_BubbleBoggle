@@ -29,7 +29,7 @@ namespace MomDra
 		inline Object* GetOwner() const noexcept { return owner; }
 		inline void SetOwner(Object* owner) noexcept { this->owner = owner; }
 
-		void Update() const noexcept;
+		void LateUpdate() const noexcept;
 		void Render(const HDC& hdc) const noexcept;
 
 		Animation* FindAnimation(const std::wstring& animationName) const noexcept;

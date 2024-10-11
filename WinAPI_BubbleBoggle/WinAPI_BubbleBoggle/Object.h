@@ -32,8 +32,8 @@ namespace MomDra
 		explicit Object(const Object& other) noexcept;
 		virtual ~Object() noexcept = default;
 
-		inline void SetPos(Vector2 pos) noexcept { this->pos = pos; }
-		inline void SetScale(Vector2 scale) noexcept { this->scale = scale; }
+		inline void SetPos(const Vector2& pos) noexcept { this->pos = pos; }
+		inline void SetScale(const Vector2& scale) noexcept { this->scale = scale; }
 		inline void SetName(const std::wstring& name) noexcept { this->name = name; }
 
 		inline const Vector2& GetPos() const noexcept { return pos; }
@@ -45,7 +45,7 @@ namespace MomDra
 		inline bool IsDead() const noexcept { return !isAlive; }
 
 		virtual void Update() noexcept = 0;
-		virtual void LateUpdate() noexcept final;
+		virtual void LateUpdate() noexcept;
 		virtual void Render(const HDC& hdc) const noexcept;
 
 		virtual void OnCollisionEnter(const Collider* other) {};

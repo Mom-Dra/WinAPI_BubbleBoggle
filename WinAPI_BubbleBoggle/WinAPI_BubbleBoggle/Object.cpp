@@ -8,7 +8,7 @@ namespace MomDra
 
 	}
 
-	Object::Object(const Object& other) noexcept : pos{ other.pos }, scale{ other.scale }, isAlive{ true }, layer{ other.layer }
+	Object::Object(const Object& other) noexcept : pos{ other.pos }, scale{ other.scale }, isAlive{ true }, name{ other.name }, layer{ other.layer }
 	{
 		if (other.collider)
 		{
@@ -30,13 +30,11 @@ namespace MomDra
 
 		// Update 위치 여기??
 		if (animator)
-			animator->Update();
+			animator->LateUpdate();
 	}
 
 	void Object::Render(const HDC& hdc) const noexcept
 	{
-
-
 		ComponentRender(hdc);
 	}
 

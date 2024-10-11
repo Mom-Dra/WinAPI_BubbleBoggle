@@ -7,6 +7,8 @@
 #include "resource.h"
 #include "SceneManager.h"
 #include "UI.h"
+#include "PanelUI.h"
+#include "BtnUI.h"
 
 namespace MomDra
 {
@@ -25,11 +27,21 @@ namespace MomDra
 		// UI 하나 만들기
 		const Vector2& resolution{ Core::GetInstance().GetResolution() };
 
-		UI* ui = new UI{ Layer::UI };
-		ui->SetScale(Vector2{ 100.0f, 30.0f });
-		ui->SetPos(Vector2{ resolution.X - ui->GetScale().X, 0.0f });
+		std::unique_ptr<PanelUI> panelUI{ std::make_unique<PanelUI>(false, Layer::UI) };
+		panelUI->SetScale(Vector2{ 200.0f, 100.0f });
+		panelUI->SetPos(Vector2{ resolution.X - panelUI->GetScale().X, 0.0f });
+		panelUI->SetName(L"Parent");
 
-		AddObject(ui);
+		std::shared_ptr<BtnUI> childBtnUI{ std::make_shared<BtnUI>(Vector2{50.0f, 0.0f}, Vector2{100.0f, 40.0f}, false, Layer::UI) };
+		childBtnUI->SetName(L"Child");
+
+		panelUI->AddChild(childBtnUI);
+
+		std::unique_ptr<PanelUI> panelUICloned{ std::make_unique<PanelUI>(*panelUI) };
+		panelUICloned->SetPos(panelUICloned->GetPos() + Vector2{ 0.0f, 50.0f });
+
+		AddObject(std::move(panelUI));
+		AddObject(std::move(panelUICloned));
 
 		// Camera Look At 지정
 		Camera::GetInstance().SetLookAt(resolution / 2.0f);
@@ -52,7 +64,7 @@ namespace MomDra
 			int col{ static_cast<int>(mousePos.X / Tile::TILE_SIZE) };
 			int row{ static_cast<int>(mousePos.Y / Tile::TILE_SIZE) };
 
-			if (mousePos.X < 0.0f || tileX <= col || mousePos.Y < 0.0f || tileY <= row)
+			if (mousePos.X < 0.0f || tileX <= static_cast<unsigned int>(col) || mousePos.Y < 0.0f || tileY <= static_cast<unsigned int>(row))
 				return;
 
 			unsigned int idx{ row * tileX + col };

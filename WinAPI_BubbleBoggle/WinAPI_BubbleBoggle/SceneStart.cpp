@@ -16,9 +16,8 @@ namespace MomDra
 		std::wstring filePath{ PathManager::GetContentPath() };
 		filePath.append(L"\\texture\\player.bmp");
 
-		Object* player{ new Player{ Vector2{640.0f, 384.0f}, Vector2{100.0f, 100.0f}, Layer::PLAYER } };
-		AddObject(player);
-		AddObject(new Monster{ Vector2{200.0f, 200.0f}, Vector2{100.0f, 100.0f}, Layer::MONSTER });
+		AddObject(std::make_unique<Player>(Vector2{ 640.0f, 384.0f }, Vector2{ 100.0f, 100.0f }, Layer::PLAYER));
+		AddObject(std::make_unique<Monster>(Vector2{ 200.0f, 200.0f }, Vector2{ 100.0f, 100.0f }, Layer::MONSTER));
 
 		// 충돌 지정
 		CollisionManager::GetInstance().CheckLayer(Layer::PLAYER, Layer::MONSTER);

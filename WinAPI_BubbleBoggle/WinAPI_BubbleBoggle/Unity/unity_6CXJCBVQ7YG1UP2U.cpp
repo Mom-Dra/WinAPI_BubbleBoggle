@@ -5,6 +5,9 @@
 #include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Animator.cpp"
 
 
+#include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\BtnUI.cpp"
+
+
 #include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Camera.cpp"
 
 
@@ -30,6 +33,9 @@
 
 
 #include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Object.cpp"
+
+
+#include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\PanelUI.cpp"
 
 
 #include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\PathManager.cpp"
@@ -69,6 +75,12 @@
 
 
 #include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\TimeManager.cpp"
+
+
+#include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\UI.cpp"
+
+
+#include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\UIManager.cpp"
 
 
 #include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Vector2.cpp"

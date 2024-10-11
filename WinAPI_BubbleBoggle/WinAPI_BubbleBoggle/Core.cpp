@@ -10,6 +10,7 @@
 #include "EventManager.h"
 #include "Camera.h"
 #include <iostream>
+#include "UIManager.h"
 
 namespace MomDra
 {
@@ -41,6 +42,7 @@ namespace MomDra
         Camera::GetInstance().Update();
         SceneManager::GetInstance().Update();
         CollisionManager::GetInstance().Update();
+        UIManager::GetInstance().Update();
     }
 
     void Core::Render(const HDC& hdc) const noexcept

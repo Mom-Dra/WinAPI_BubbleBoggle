@@ -13,7 +13,7 @@ namespace MomDra
 
 	}
 
-	void Animator::Update() const noexcept
+	void Animator::LateUpdate() const noexcept
 	{
 		if (currAnimation)
 		{

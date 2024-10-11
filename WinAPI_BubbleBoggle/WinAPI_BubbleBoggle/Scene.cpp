@@ -66,7 +66,7 @@ namespace MomDra
 		{
 			for (unsigned int j{ 0 }; j < xCount; ++j)
 			{
-				AddObject(new Tile{ Vector2{static_cast<int> (j * Tile::TILE_SIZE), static_cast<int>(i * Tile::TILE_SIZE)}, ResourceManager::GetInstance().LoadTexture(L"\\texture\\tileMap.bmp"), Layer::TILE });
+				AddObject(std::make_unique<Tile>(Vector2{ static_cast<int> (j * Tile::TILE_SIZE), static_cast<int>(i * Tile::TILE_SIZE) }, ResourceManager::GetInstance().LoadTexture(L"\\texture\\tileMap.bmp"), Layer::TILE));
 			}
 		}
 	}
