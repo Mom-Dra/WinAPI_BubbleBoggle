@@ -9,6 +9,7 @@
 #include "UI.h"
 #include "PanelUI.h"
 #include "BtnUI.h"
+#include "UIManager.h"
 
 namespace MomDra
 {
@@ -39,6 +40,8 @@ namespace MomDra
 
 		std::unique_ptr<PanelUI> panelUICloned{ std::make_unique<PanelUI>(*panelUI) };
 		panelUICloned->SetPos(panelUICloned->GetPos() + Vector2{ 0.0f, 50.0f });
+
+		ui = panelUICloned.get();
 
 		AddObject(std::move(panelUI));
 		AddObject(std::move(panelUICloned));

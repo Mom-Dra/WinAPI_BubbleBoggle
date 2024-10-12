@@ -37,6 +37,7 @@ namespace MomDra
 		void Render(const HDC& hdc) noexcept;
 
 		inline const std::vector<std::unique_ptr<Object>>& GetLayerObject(const Layer& layer) const noexcept { return objects[static_cast<int>(layer)]; }
+		inline std::vector<std::unique_ptr<Object>>& GetUILayerObject() noexcept { return objects[static_cast<int>(Layer::UI)]; }
 		inline void AddObject(std::unique_ptr<Object> obj) noexcept { objects[static_cast<int>(obj->GetLayer())].emplace_back(std::move(obj)); }
 		inline void AddObject(Object* obj) noexcept { objects[static_cast<int>(obj->GetLayer())].emplace_back(obj); }
 		inline void DeleteLayerObject(const Layer& layer) noexcept { objects[static_cast<int>(layer)].clear(); }

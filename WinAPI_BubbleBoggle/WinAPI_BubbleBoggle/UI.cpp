@@ -72,7 +72,6 @@ namespace MomDra
 		{
 			Rectangle(hdc, static_cast<int>(pos.X), static_cast<int>(pos.Y), static_cast<int>(pos.X + scale.X), static_cast<int>(pos.Y + scale.Y));
 		}
-		
 
 		RenderChild(hdc);
 	}
