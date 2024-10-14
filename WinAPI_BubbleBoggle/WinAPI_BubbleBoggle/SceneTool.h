@@ -10,6 +10,8 @@ namespace MomDra
 	private:
 		UI* ui;
 
+		using SCENE_BTN_FUNC = std::function<void(const Scene&)>;
+
 	public:
 		explicit SceneTool() noexcept = default;
 		explicit SceneTool(const std::wstring& name) noexcept;

@@ -15,7 +15,6 @@ namespace MomDra
 
 		void Update() noexcept override;
 
-
 		virtual std::unique_ptr<Object> Clone() const override
 		{
 			return std::make_unique<Monster>(*this);

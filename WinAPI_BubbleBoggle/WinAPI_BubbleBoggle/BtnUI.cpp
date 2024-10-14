@@ -23,5 +23,10 @@ namespace MomDra
 		{
 			func(param1, param2);
 		}
+
+		if (sceneFunc)
+		{
+			sceneFunc();
+		}
 	}
 }

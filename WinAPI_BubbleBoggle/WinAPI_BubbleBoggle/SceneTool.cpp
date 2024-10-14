@@ -57,7 +57,7 @@ namespace MomDra
 
 		std::shared_ptr<BtnUI> childBtnUI{ std::make_shared<BtnUI>(Vector2{50.0f, 0.0f}, Vector2{100.0f, 40.0f}, false, Layer::UI) };
 		childBtnUI->SetName(L"Child");
-		childBtnUI->SetClickedCallFunc(ChangeScene, 0, 0);
+		childBtnUI->SetClickedCallBack([this]() {this->SaveTileData(); });
 
 		panelUI->AddChild(childBtnUI);
 
