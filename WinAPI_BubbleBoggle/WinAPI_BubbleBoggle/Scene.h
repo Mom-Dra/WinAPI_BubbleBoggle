@@ -32,7 +32,7 @@ namespace MomDra
 		virtual void Enter() noexcept = 0;
 		virtual void Exit() noexcept = 0;
 
-		virtual void Update() const noexcept;
+		virtual void Update() noexcept;
 		void LateUpdate() const noexcept;
 		void Render(const HDC& hdc) noexcept;
 
@@ -44,5 +44,6 @@ namespace MomDra
 		inline void DeleteAllObject() noexcept { for (auto& objVec : objects) objVec.clear(); }
 
 		void CreateTile(unsigned int xCount, unsigned int yCount);
+		void LoadTile(const std::wstring& relativePath);
 	};
 }

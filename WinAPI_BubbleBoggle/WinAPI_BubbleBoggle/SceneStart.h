@@ -13,7 +13,7 @@ namespace MomDra
 		explicit SceneStart(const std::wstring& name) noexcept : Scene{ name } {}
 
 		virtual void Enter() noexcept override;
-		virtual void Update() const noexcept;
+		virtual void Update() noexcept override;
 		virtual void Exit() noexcept override;
 	};
 }

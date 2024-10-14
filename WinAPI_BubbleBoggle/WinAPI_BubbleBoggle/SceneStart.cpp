@@ -28,7 +28,7 @@ namespace MomDra
 		Camera::GetInstance().SetLookAt(resolution / 2.0f);
 	}
 
-	void SceneStart::Update() const noexcept
+	void SceneStart::Update() noexcept
 	{
 		Scene::Update();
 

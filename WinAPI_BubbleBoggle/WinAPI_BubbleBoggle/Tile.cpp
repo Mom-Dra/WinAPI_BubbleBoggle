@@ -1,5 +1,6 @@
 #include "Tile.h"
 #include "Camera.h"
+#include <fstream>
 
 namespace MomDra
 {
@@ -35,5 +36,15 @@ namespace MomDra
 		BitBlt(hdc, static_cast<int>(renderPos.X), static_cast<int>(renderPos.Y), static_cast<int>(scale.X), static_cast<int>(scale.Y), texture->GetDC(), currCol * TILE_SIZE, curRow * TILE_SIZE, SRCCOPY);
 
 		Object::Render(hdc);
+	}
+
+	void Tile::SaveFile(std::wostream& wOut)
+	{
+		wOut << imgIndex << ' ';
+	}
+
+	void Tile::LoadFile(std::wifstream& wIn)
+	{
+		wIn >> imgIndex;
 	}
 }

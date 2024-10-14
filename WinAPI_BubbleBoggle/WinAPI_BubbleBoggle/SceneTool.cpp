@@ -10,6 +10,10 @@
 #include "PanelUI.h"
 #include "BtnUI.h"
 #include "UIManager.h"
+#include <fstream>
+#include <iostream>
+#include "PathManager.h"
+#include <commdlg.h>
 
 namespace MomDra
 {
@@ -20,11 +24,22 @@ namespace MomDra
 
 	}
 
-	void SceneTool::Update() const noexcept
+	void SceneTool::Update() noexcept
 	{
 		Scene::Update();
 
 		SetTileIndex();
+
+		if (KeyManager::GetInstance().GetKeyDown(Key::LSHIFT))
+		{
+			//SaveTile(L"\\tile\\Test.tile");
+			SaveTileData();
+		}
+
+		if (KeyManager::GetInstance().GetKeyDown(Key::CTRL))
+		{
+			LoadTile(L"\\tile\\Test.tile");
+		}
 	}
 
 	void SceneTool::Enter() noexcept
@@ -81,9 +96,77 @@ namespace MomDra
 			unsigned int idx{ row * tileX + col };
 
 			const std::vector<std::unique_ptr<Object>>& tileVec{ GetLayerObject(Layer::TILE) };
-			
+
 			Tile* tile{ dynamic_cast<Tile*>(tileVec[idx].get()) };
 			tile->AddImgIndex();
+		}
+	}
+
+	void SceneTool::SaveTile(const std::wstring& relativePath) const
+	{
+		std::wstring path{ PathManager::GetContentPath() };
+		path.append(relativePath);
+
+		std::wofstream wOut{ path, std::ios::binary };
+
+		if (!wOut.is_open())
+		{
+			std::wcout << "Can Not Open File Path: " << path << std::endl;
+
+			return;
+		}
+		
+		// 타일 개수 저장
+		const auto& [tileX, tileY] {GetTileXY()};
+
+		wOut << tileX << ' ' << tileY << ' ';
+
+		const std::vector<std::unique_ptr<Object>>& tiles{ GetLayerObject(Layer::TILE) };
+
+		// 각 타일 각자의 데이터를 저장
+		for (const auto& tile : tiles)
+		{
+			Tile* tilePtr{ dynamic_cast<Tile*>(tile.get()) };
+			tilePtr->SaveFile(wOut);
+		}
+
+		std::cout << "Save File Complete - tileX: " << tileX << ", tileY: " << tileY << std::endl;
+	}
+
+	void SceneTool::SaveTileData()
+	{
+		OPENFILENAME ofn = {};
+
+		std::wstring name;
+		name.resize(256);
+
+		ofn.lStructSize = sizeof(OPENFILENAME);
+		ofn.hwndOwner = Core::GetInstance().GetMainHwnd();
+		ofn.lpstrFile = &name[0];
+		ofn.nMaxFile = name.size();
+		ofn.lpstrFilter = L"ALL\0*.*\0Tile\0*.tile\0";
+		ofn.nFilterIndex = 0;
+		ofn.lpstrFileTitle = nullptr;
+		ofn.nMaxFileTitle = 0;
+
+		std::wstring tilePath{ PathManager::GetContentPath() };
+		tilePath.append(L"\\tile");
+
+		ofn.lpstrInitialDir = tilePath.data();
+		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+		// Modal 방식
+		// 그 해당 창이 포커싱이 되고, 나머지는 동작하지 않는다
+		if (GetSaveFileName(&ofn))
+		{
+			 
+
+			SaveTile(L"\\tile\\Test.tile");
+
+		} 
+		else
+		{
+			DWORD dwError = GetLastError();
 		}
 	}
 
