@@ -38,7 +38,7 @@ namespace MomDra
 
 		if (KeyManager::GetInstance().GetKeyDown(Key::CTRL))
 		{
-			LoadTile(L"\\tile\\Test.tile");
+			LoadSceneData();
 		}
 	}
 
@@ -102,20 +102,19 @@ namespace MomDra
 		}
 	}
 
-	void SceneTool::SaveTile(const std::wstring& relativePath) const
+	void SceneTool::SaveTile(const std::wstring& path) const
 	{
-		std::wstring path{ PathManager::GetContentPath() };
-		path.append(relativePath);
+		/*std::wstring path{ PathManager::GetContentPath() };
+		path.append(path);*/
 
 		std::wofstream wOut{ path, std::ios::binary };
 
 		if (!wOut.is_open())
 		{
 			std::wcout << "Can Not Open File Path: " << path << std::endl;
-
 			return;
 		}
-		
+
 		// 타일 개수 저장
 		const auto& [tileX, tileY] {GetTileXY()};
 
@@ -143,7 +142,7 @@ namespace MomDra
 		ofn.lStructSize = sizeof(OPENFILENAME);
 		ofn.hwndOwner = Core::GetInstance().GetMainHwnd();
 		ofn.lpstrFile = &name[0];
-		ofn.nMaxFile = name.size();
+		ofn.nMaxFile = static_cast<DWORD>(name.size());
 		ofn.lpstrFilter = L"ALL\0*.*\0Tile\0*.tile\0";
 		ofn.nFilterIndex = 0;
 		ofn.lpstrFileTitle = nullptr;
@@ -159,14 +158,38 @@ namespace MomDra
 		// 그 해당 창이 포커싱이 되고, 나머지는 동작하지 않는다
 		if (GetSaveFileName(&ofn))
 		{
-			 
-
-			SaveTile(L"\\tile\\Test.tile");
-
+			SaveTile(name);
 		} 
-		else
+	}
+
+	void SceneTool::LoadSceneData()
+	{
+		OPENFILENAME ofn = {};
+
+		std::wstring name;
+		name.resize(256);
+
+		ofn.lStructSize = sizeof(OPENFILENAME);
+		ofn.hwndOwner = Core::GetInstance().GetMainHwnd();
+		ofn.lpstrFile = &name[0];
+		ofn.nMaxFile = static_cast<DWORD>(name.size());
+		ofn.lpstrFilter = L"ALL\0*.*\0Tile\0*.tile\0";
+		ofn.nFilterIndex = 0;
+		ofn.lpstrFileTitle = nullptr;
+		ofn.nMaxFileTitle = 0;
+
+		std::wstring tilePath{ PathManager::GetContentPath() };
+		tilePath.append(L"\\tile");
+
+		ofn.lpstrInitialDir = tilePath.data();
+		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+		// Modal 방식
+		// 그 해당 창이 포커싱이 되고, 나머지는 동작하지 않는다
+		if (GetOpenFileName(&ofn))
 		{
-			DWORD dwError = GetLastError();
+			std::wstring relativePath{ PathManager::GetRelativePath(name) };
+			LoadTile(relativePath);
 		}
 	}
 

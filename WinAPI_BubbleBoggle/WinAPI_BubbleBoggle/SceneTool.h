@@ -21,5 +21,6 @@ namespace MomDra
 		void SetTileIndex() const noexcept;
 		void SaveTile(const std::wstring& relativePath) const;
 		void SaveTileData();
+		void LoadSceneData();
 	};
 }

@@ -13,13 +13,20 @@ namespace MomDra
 
 	void PathManager::Initialize() noexcept
 	{
-		path.resize(pathLength);
-		unsigned long size{ GetCurrentDirectory(pathLength, &path[0]) };
-		path.resize(size);
+		contentPath.resize(pathLength);
+		unsigned long size{ GetCurrentDirectory(pathLength, &contentPath[0]) };
+		contentPath.resize(size);
 		// 상위폴더로!
 	
-		path.append(L"\\contents");
+		contentPath.append(L"\\contents");
 
 		//SetWindowText(Core::GetInstance().GetHwnd(), path.data());
+	}
+
+	std::wstring PathManager::GetRelativePath(const std::wstring& absolutePath)
+	{
+		std::wstring relativePath{ absolutePath.substr(contentPath.size(), absolutePath.size() - contentPath.size()) };
+
+		return relativePath;
 	}
 }
