@@ -15,6 +15,11 @@ namespace MomDra
 {
 	void ChangeScene(DWORD_PTR, DWORD_PTR);
 
+	SceneTool::SceneTool(const std::wstring& name) noexcept : Scene{ name }, ui{ nullptr }
+	{
+
+	}
+
 	void SceneTool::Update() const noexcept
 	{
 		Scene::Update();
@@ -55,7 +60,7 @@ namespace MomDra
 
 	void SceneTool::Exit() noexcept
 	{
-		
+		DeleteAllObject();
 	}
 
 	void SceneTool::SetTileIndex() const noexcept

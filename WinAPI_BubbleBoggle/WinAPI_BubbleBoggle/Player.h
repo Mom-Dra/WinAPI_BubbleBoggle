@@ -11,6 +11,11 @@ namespace MomDra
 		virtual void Update() noexcept override;
 		virtual void Render(const HDC& hdc) const noexcept override;
 
+		inline virtual std::unique_ptr<Object> Clone() const override
+		{
+			return std::make_unique<Player>(*this);
+		}
+
 	private:
 		void Attack() const noexcept;
 	};

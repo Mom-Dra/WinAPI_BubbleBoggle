@@ -12,7 +12,7 @@ namespace MomDra
 
 	public:
 		explicit SceneTool() noexcept = default;
-		explicit SceneTool(const std::wstring& name) noexcept : Scene{ name } {}
+		explicit SceneTool(const std::wstring& name) noexcept;
 
 		virtual void Update() const noexcept override;
 		virtual void Enter() noexcept override;

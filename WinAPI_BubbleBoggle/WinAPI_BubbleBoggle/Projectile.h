@@ -13,5 +13,10 @@ namespace MomDra
 		virtual void Render(const HDC& hdc) const noexcept override;
 
 		virtual void OnCollisionEnter(const Collider* other);
+
+		inline virtual std::unique_ptr<Object> Clone() const override
+		{
+			return std::make_unique<Projectile>(*this);
+		}
 	};
 }

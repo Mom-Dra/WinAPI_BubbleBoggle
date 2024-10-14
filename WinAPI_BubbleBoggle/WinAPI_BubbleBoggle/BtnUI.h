@@ -29,5 +29,10 @@ namespace MomDra
 			this->param1 = param1;
 			this->param2 = param2;
 		}
+
+		inline virtual std::unique_ptr<Object> Clone() const override
+		{
+			return std::make_unique<BtnUI>(*this);
+		}
 	};
 }

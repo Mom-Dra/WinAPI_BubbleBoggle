@@ -1,5 +1,6 @@
 #include "EventManager.h"
 #include "SceneManager.h"
+#include "UIManager.h"
 
 namespace MomDra
 {
@@ -79,6 +80,7 @@ namespace MomDra
 		case EventType::CHANGESCENE:
 			// lParam : Next Scene Type
 			SceneManager::GetInstance().ChangeScene(static_cast<SceneType>(event.lParam));
+			UIManager::GetInstance().SetFocusedUI(nullptr);
 			break;
 		}
 	}

@@ -20,8 +20,13 @@ namespace MomDra
 	{
 		for (const auto& child : other.children)
 		{
-			std::shared_ptr<UI> childClone{ std::make_shared<UI>(*child) };
-			AddChild(childClone);
+			std::unique_ptr<Object> cloned{ std::move(child->Clone()) };
+			Object* clonedObjectPtr{ cloned.release() };
+			UI* clonedUIPtr{ dynamic_cast<UI*>(clonedObjectPtr) };
+
+			std::shared_ptr<UI> clonedUI = std::shared_ptr<UI>(clonedUIPtr);
+			//std::shared_ptr<UI> childClone{ std::make_shared<UI>(*child) };
+			AddChild(clonedUI);
 		}
 	}
 

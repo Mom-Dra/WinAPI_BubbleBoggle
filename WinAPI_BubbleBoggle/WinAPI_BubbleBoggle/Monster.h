@@ -14,5 +14,11 @@ namespace MomDra
 		virtual void OnCollisionEnter(const Collider* other) override;
 
 		void Update() noexcept override;
+
+
+		virtual std::unique_ptr<Object> Clone() const override
+		{
+			return std::make_unique<Monster>(*this);
+		}
 	};
 }

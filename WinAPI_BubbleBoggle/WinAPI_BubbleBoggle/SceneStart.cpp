@@ -38,6 +38,11 @@ namespace MomDra
 			const Vector2& lookAt{ Camera::GetInstance().GetRealPos(mousePos) };
 			Camera::GetInstance().SetLookAt(lookAt);
 		}
+
+		if (KeyManager::GetInstance().GetKeyDown(Key::LSHIFT))
+		{
+			EventManager::GetInstance().ChangeScene(SceneType::TOOL);
+		}
 	}
 
 	void SceneStart::Exit() noexcept

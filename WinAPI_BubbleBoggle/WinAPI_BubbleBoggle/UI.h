@@ -45,6 +45,8 @@ namespace MomDra
 		virtual void MouseLBtnUp() noexcept;
 		virtual void MouseLBtnClicked() noexcept;
 
+		inline virtual std::unique_ptr<Object> Clone() const override { return std::make_unique<UI>(*this); }
+
 	private:
 		void UpdateChild() noexcept;
 		void LateUpdateChild() noexcept;
