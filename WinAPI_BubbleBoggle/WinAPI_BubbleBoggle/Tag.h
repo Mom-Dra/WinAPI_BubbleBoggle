@@ -9,6 +9,7 @@ namespace MomDra
 		MONSTER,
 		PROJECTILE,
 		TILE,
+		GROUND,
 		UI,
 		LAST
 	};
@@ -59,13 +60,17 @@ namespace MomDra
 	{
 		IDLE,
 		WALK,
+		JUMP,
 		ATTACK,
+		HIT,
+		DEAD,
 		LAST
 	};
 
 	enum class PlayerAttackState
 	{
-		NORMALATTACK1,
+		NORMAL_ATTACK1,
+		NORMAL_ATTACK2,
 		LAST
 	};
 }

@@ -9,6 +9,7 @@
 #include "Core.h"
 #include "Camera.h"
 #include "IdleState.h"
+#include "Ground.h"
 
 namespace MomDra
 {	
@@ -24,13 +25,19 @@ namespace MomDra
 		/*std::unique_ptr<AI> ai{ std::make_unique<AI>() };
 		ai->AddState(std::make_unique<IdleState>());*/
 
+		// 땅 생성
+		AddObject(std::make_unique<Ground>(Vector2{ 300.0f, 300.0f }, Vector2{ 200.0f, 50.0f }, Layer::GROUND));
+
 		// 충돌 지정
 		CollisionManager::GetInstance().CheckLayer(Layer::PLAYER, Layer::MONSTER);
 		CollisionManager::GetInstance().CheckLayer(Layer::MONSTER, Layer::PROJECTILE);
+		CollisionManager::GetInstance().CheckLayer(Layer::PLAYER, Layer::GROUND);
 
 		// Camera Look 지점
 		Vector2 resolution{ Core::GetInstance().GetResolution() };
 		Camera::GetInstance().SetLookAt(resolution / 2.0f);
+
+		Start();
 	}
 
 	void SceneStart::Update() noexcept

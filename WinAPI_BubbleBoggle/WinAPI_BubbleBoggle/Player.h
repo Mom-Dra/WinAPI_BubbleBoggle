@@ -5,6 +5,12 @@ namespace MomDra
 {
 	class Player : public Object
 	{
+	private:
+		PlayerState currState;
+		PlayerState prevState;
+
+		int lookDir;
+
 	public:
 		explicit Player(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::PLAYER);
 
@@ -18,5 +24,9 @@ namespace MomDra
 
 	private:
 		void Attack() const noexcept;
+		void Move();
+
+		void UpdateState();
+		void UpdateAnimation();
 	};
 }

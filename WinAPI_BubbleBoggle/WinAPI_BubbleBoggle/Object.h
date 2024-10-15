@@ -47,6 +47,7 @@ namespace MomDra
 		inline RigidBody* GetRigidBody() const noexcept { return rigidbody.get(); }
 		inline bool IsDead() const noexcept { return !isAlive; }
 
+		virtual void Start() {};
 		virtual void Update() noexcept = 0;
 		virtual void LateUpdate() noexcept;
 		virtual void Render(const HDC& hdc) const noexcept;

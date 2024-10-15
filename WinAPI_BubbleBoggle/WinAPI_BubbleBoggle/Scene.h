@@ -32,6 +32,7 @@ namespace MomDra
 		virtual void Enter() noexcept = 0;
 		virtual void Exit() noexcept = 0;
 
+		virtual void Start() noexcept;
 		virtual void Update() noexcept;
 		void LateUpdate() const noexcept;
 		void Render(const HDC& hdc) noexcept;

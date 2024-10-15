@@ -15,6 +15,17 @@ namespace MomDra
 
 	}
 
+	void Scene::Start() noexcept
+	{
+		for (const auto& objVec : objects)
+		{
+			for (const auto& obj : objVec)
+			{
+				obj->Start();
+			}
+		}
+	}
+
 	void Scene::Update() noexcept
 	{
 		for (const auto& objVec : objects)
