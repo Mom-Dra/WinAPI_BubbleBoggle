@@ -21,6 +21,12 @@ namespace MomDra
 			animator = std::make_unique<Animator>(*other.animator);
 			animator->SetOwner(this);
 		}
+
+		if (other.rigidbody)
+		{
+			rigidbody = std::make_unique<RigidBody>(*other.rigidbody);
+			rigidbody->SetOwner(this);
+		}
 	}
 
 	void Object::LateUpdate() noexcept
@@ -31,6 +37,9 @@ namespace MomDra
 		// Update 위치 여기??
 		if (animator)
 			animator->LateUpdate();
+
+		if (rigidbody)
+			rigidbody->LateUpdate();
 	}
 
 	void Object::Render(const HDC& hdc) const noexcept

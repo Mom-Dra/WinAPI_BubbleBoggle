@@ -16,6 +16,7 @@ namespace MomDra
 		CreateCollider(Vector2{ 100.0f, 100.0f });
 
 		CreateAnimator();
+		CreateRigidbody();
 
 		/*std::wstring filePath{ PathManager::GetContentPath() };
 		filePath.append(L"\\texture\\player2.bmp");*/
@@ -36,38 +37,48 @@ namespace MomDra
 
 	void Player::Update() noexcept
 	{
-		const Vector2& currPos{ GetPos() };
-		Vector2 moveVec{ Vector2::Zero };
+		RigidBody* rigid{ GetRigidBody() };
 
-		if (KeyManager::GetInstance().GetKey(Key::A))
+		if (KeyManager::GetInstance().GetKeyDown(Key::LEFT))
 		{
-			moveVec -= Vector2::UnitX;
+			rigid->AddVelocity(Vector2(-100.0f, 0.0f));
+		}
+		else if (KeyManager::GetInstance().GetKey(Key::LEFT))
+		{
+			rigid->AddForce(Vector2(-200.0f, 0.0f));
 		}
 
-		if (KeyManager::GetInstance().GetKey(Key::D))
+		if (KeyManager::GetInstance().GetKeyDown(Key::RIGHT))
 		{
-			moveVec += Vector2::UnitX;
+			rigid->AddVelocity(Vector2(100.0f, 0.0f));
+		}
+		else if (KeyManager::GetInstance().GetKey(Key::RIGHT))
+		{
+			rigid->AddForce(Vector2(200.0f, 0.0f));
 		}
 
-		if (KeyManager::GetInstance().GetKey(Key::S))
+		if (KeyManager::GetInstance().GetKeyDown(Key::DOWN))
 		{
-			moveVec += Vector2::UnitY;
+			rigid->AddVelocity(Vector2(0.0f, 100.0f));
+		}
+		else if (KeyManager::GetInstance().GetKey(Key::DOWN))
+		{
+			rigid->AddForce(Vector2(0.0f, 200.0f));
 		}
 
-		if (KeyManager::GetInstance().GetKey(Key::W))
+		if (KeyManager::GetInstance().GetKeyDown(Key::UP))
 		{
-			moveVec -= Vector2::UnitY;
+			rigid->AddVelocity(Vector2(0.0f, -100.0f));
+		}
+		else if (KeyManager::GetInstance().GetKey(Key::UP))
+		{
+			rigid->AddForce(Vector2(0.0f, -200.0f));
 		}
 
 		if (KeyManager::GetInstance().GetKeyDown(Key::SPACE))
 		{
 			Attack();
 		}
-
-		moveVec.Normalize();
-		moveVec *= 100;
-
-		SetPos(currPos + moveVec * TimeManager::GetInstance().GetDeltaTime());
 	}
 
 	void Player::Render(const HDC& hdc) const noexcept

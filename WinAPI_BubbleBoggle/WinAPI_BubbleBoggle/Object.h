@@ -7,6 +7,7 @@
 #include "Tag.h"
 #include "EventManager.h"
 #include "Animator.h"
+#include "RigidBody.h"
 
 using namespace CK;
 
@@ -21,6 +22,7 @@ namespace MomDra
 		// Component
 		std::unique_ptr<Collider> collider;
 		std::unique_ptr<Animator> animator;
+		std::unique_ptr<RigidBody> rigidbody;
 
 		Layer layer;
 		std::wstring name;
@@ -42,6 +44,7 @@ namespace MomDra
 		inline const Layer& GetLayer() const noexcept { return layer; }
 		inline Collider* GetCollider() const noexcept { return collider.get(); }
 		inline Animator* GetAnimator() const noexcept { return animator.get(); }
+		inline RigidBody* GetRigidBody() const noexcept { return rigidbody.get(); }
 		inline bool IsDead() const noexcept { return !isAlive; }
 
 		virtual void Update() noexcept = 0;
@@ -58,6 +61,7 @@ namespace MomDra
 		inline void CreateCollider(const Vector2& scale) noexcept { collider = std::make_unique<Collider>(this, scale); }
 		inline void CreateCollider() noexcept { collider = std::make_unique<Collider>(this); }
 		inline void CreateAnimator() noexcept { animator = std::make_unique<Animator>(this); }
+		inline void CreateRigidbody() noexcept { rigidbody = std::make_unique<RigidBody>(this); }
 		void ComponentRender(const HDC& hdc) const noexcept;
 
 	private:

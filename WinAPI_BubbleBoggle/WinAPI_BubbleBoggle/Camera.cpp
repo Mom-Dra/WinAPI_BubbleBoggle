@@ -30,7 +30,7 @@ namespace MomDra
 
         float deltatime{ TimeManager::GetInstance().GetDeltaTime() };
 
-        if (KeyManager::GetInstance().GetKey(Key::UP))
+        /*if (KeyManager::GetInstance().GetKey(Key::UP))
         {
             lookAt.Y -= 500.0f * deltatime;
         }
@@ -48,7 +48,7 @@ namespace MomDra
         if (KeyManager::GetInstance().GetKey(Key::RIGHT))
         {
             lookAt.X += 500.0f * deltatime;
-        }
+        }*/
 
         // 화면 중앙좌표와 카메라 LookAt 좌표간의 사이값 계산
         CalDiff();

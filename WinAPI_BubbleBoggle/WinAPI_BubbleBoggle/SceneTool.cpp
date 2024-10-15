@@ -30,10 +30,15 @@ namespace MomDra
 
 		SetTileIndex();
 
+		//if (KeyManager::GetInstance().GetKeyDown(Key::LSHIFT))
+		//{
+		//	//SaveTile(L"\\tile\\Test.tile");
+		//	SaveTileData();
+		//}
+
 		if (KeyManager::GetInstance().GetKeyDown(Key::LSHIFT))
 		{
-			//SaveTile(L"\\tile\\Test.tile");
-			SaveTileData();
+			EventManager::GetInstance().ChangeScene(SceneType::START);
 		}
 
 		if (KeyManager::GetInstance().GetKeyDown(Key::CTRL))

@@ -8,6 +8,7 @@
 #include "SceneManager.h"
 #include "Core.h"
 #include "Camera.h"
+#include "IdleState.h"
 
 namespace MomDra
 {	
@@ -18,6 +19,10 @@ namespace MomDra
 
 		AddObject(std::make_unique<Player>(Vector2{ 640.0f, 384.0f }, Vector2{ 100.0f, 100.0f }, Layer::PLAYER));
 		AddObject(std::make_unique<Monster>(Vector2{ 200.0f, 200.0f }, Vector2{ 100.0f, 100.0f }, Layer::MONSTER));
+
+		// 몬스터에 AI 연결해야 함
+		/*std::unique_ptr<AI> ai{ std::make_unique<AI>() };
+		ai->AddState(std::make_unique<IdleState>());*/
 
 		// 충돌 지정
 		CollisionManager::GetInstance().CheckLayer(Layer::PLAYER, Layer::MONSTER);
@@ -39,10 +44,10 @@ namespace MomDra
 			Camera::GetInstance().SetLookAt(lookAt);
 		}
 
-		if (KeyManager::GetInstance().GetKeyDown(Key::LSHIFT))
+		/*if (KeyManager::GetInstance().GetKeyDown(Key::LSHIFT))
 		{
 			EventManager::GetInstance().ChangeScene(SceneType::TOOL);
-		}
+		}*/
 	}
 
 	void SceneStart::Exit() noexcept

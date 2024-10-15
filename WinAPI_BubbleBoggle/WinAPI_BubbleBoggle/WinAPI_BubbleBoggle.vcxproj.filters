@@ -46,6 +46,12 @@
     <Filter Include="헤더 파일\Component">
       <UniqueIdentifier>{0f4c1061-899f-4a48-8695-f14a502001c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\AI">
+      <UniqueIdentifier>{b8e2840d-5167-4b80-877d-1d886f873adf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\AI">
+      <UniqueIdentifier>{24c8c720-7f7a-4700-aba6-504bc9686c49}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -150,6 +156,18 @@
     <ClInclude Include="BtnUI.h">
       <Filter>헤더 파일\Object</Filter>
     </ClInclude>
+    <ClInclude Include="RigidBody.h">
+      <Filter>헤더 파일\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="AI.h">
+      <Filter>헤더 파일\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AIState.h">
+      <Filter>헤더 파일\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="IdleState.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinAPI_BubbleBoggle.cpp">
@@ -241,6 +259,18 @@
     </ClCompile>
     <ClCompile Include="BtnUI.cpp">
       <Filter>소스 파일\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBody.cpp">
+      <Filter>소스 파일\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="AI.cpp">
+      <Filter>소스 파일\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="AIState.cpp">
+      <Filter>소스 파일\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="IdleState.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

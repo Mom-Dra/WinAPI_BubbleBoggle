@@ -43,4 +43,29 @@ namespace MomDra
 		STAGE_02,
 		LAST
 	};
+
+	enum class MonsterState
+	{
+		IDLE,
+		PATROL,
+		TRACE,
+		ATTACK,
+		RUN,
+		DEAD,
+		LAST
+	};
+
+	enum class PlayerState
+	{
+		IDLE,
+		WALK,
+		ATTACK,
+		LAST
+	};
+
+	enum class PlayerAttackState
+	{
+		NORMALATTACK1,
+		LAST
+	};
 }
