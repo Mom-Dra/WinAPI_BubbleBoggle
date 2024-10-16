@@ -37,21 +37,34 @@ namespace MomDra
 			SaveTileData();
 		}
 
-		if (KeyManager::GetInstance().GetKey(Key::LBUTTON))
+		static unsigned int startXPos;
+		static unsigned int startYPos;
+
+		if (KeyManager::GetInstance().GetKeyDown(Key::LBUTTON))
 		{
 			const Vector2& mousePos{ KeyManager::GetInstance().GetMousePos() };
 			const Vector2& resolution{ Core::GetInstance().GetResolution() };
 
-			unsigned int xPos{ static_cast<unsigned int>(mousePos.X / TileRectangle::TILE_SIZE_X) };
-			unsigned int yPos{ static_cast<unsigned int> (mousePos.Y / TileRectangle::TILE_SIZE_Y) };
+			startXPos = { static_cast<unsigned int>(mousePos.X / TileRectangle::TILE_SIZE_X) };
+			startYPos = { static_cast<unsigned int> (mousePos.Y / TileRectangle::TILE_SIZE_Y) };
 
-			CreateTileAtMousePos(xPos, yPos);
+			//CreateTileAtMousePos(xPos, yPos);
+		}
+		else if (KeyManager::GetInstance().GetKeyUp(Key::LBUTTON))
+		{
+			const Vector2& mousePos{ KeyManager::GetInstance().GetMousePos() };
+			const Vector2& resolution{ Core::GetInstance().GetResolution() };
+
+			unsigned int endXPos = { static_cast<unsigned int>(mousePos.X / TileRectangle::TILE_SIZE_X) };
+			unsigned int endYPos = { static_cast<unsigned int> (mousePos.Y / TileRectangle::TILE_SIZE_Y) };
+
+			CreateTileAtMouseDrag(startXPos, startYPos, endXPos, endYPos);
 		}
 
-		/*if (KeyManager::GetInstance().GetKeyDown(Key::LSHIFT))
+		if (KeyManager::GetInstance().GetKeyDown(Key::SPACE))
 		{
 			EventManager::GetInstance().ChangeScene(SceneType::START);
-		}*/
+		}
 
 		if (KeyManager::GetInstance().GetKeyDown(Key::CTRL))
 		{
@@ -218,8 +231,8 @@ namespace MomDra
 		// 그 해당 창이 포커싱이 되고, 나머지는 동작하지 않는다
 		if (GetOpenFileName(&ofn))
 		{
-			//std::wstring relativePath{ PathManager::GetRelativePath(name) };
-			LoadTile(name);
+			std::wstring relativePath{ PathManager::GetRelativePath(name) };
+			LoadTile(relativePath);
 
 			std::wcout << "Load File Complete: " << name << std::endl;
 		}

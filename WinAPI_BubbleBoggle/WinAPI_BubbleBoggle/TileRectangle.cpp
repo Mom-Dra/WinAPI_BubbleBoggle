@@ -5,7 +5,7 @@
 
 namespace MomDra
 {
-    TileRectangle::TileRectangle(const Vector2& pos, const Layer& layer) noexcept : Object{ pos, Vector2{TILE_SIZE_X, TILE_SIZE_Y}, layer }
+    TileRectangle::TileRectangle(const Vector2& pos, const Vector2& scale, const Layer& layer) noexcept : Object{ pos, scale, layer }
     {
 
     }
@@ -52,7 +52,7 @@ namespace MomDra
         const Vector2& scale{ GetScale() };
 
         //BitBlt(hdc, static_cast<int>(renderPos.X), static_cast<int>(renderPos.Y), static_cast<int>(scale.X), static_cast<int>(scale.Y), texture->GetDC(), currCol * TILE_SIZE_X, curRow * TILE_SIZE_Y, SRCCOPY);
-        Rectangle(hdc, static_cast<int>(renderPos.X), static_cast<int>(renderPos.Y), static_cast<int>(renderPos.X + scale.X), static_cast<int>(renderPos.Y + scale.Y));
+        Rectangle(hdc, static_cast<int>(renderPos.X - scale.X / 2.0f), static_cast<int>(renderPos.Y - scale.Y / 2.0f), static_cast<int>(renderPos.X + scale.X / 2.0f), static_cast<int>(renderPos.Y + scale.Y / 2.0f));
        
         Object::Render(hdc);
     }

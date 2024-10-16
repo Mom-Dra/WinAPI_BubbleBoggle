@@ -5,6 +5,7 @@
 #include "PathManager.h"
 #include <fstream>
 #include <iostream>
+#include "Ground.h"
 
 using namespace CK;
 
@@ -96,16 +97,23 @@ namespace MomDra
 		}
 	}
 
-	void Scene::LoadTile(const std::wstring& path)
+	void Scene::CreateTileAtMouseDrag(unsigned int startXPos, unsigned int startYPos, unsigned int endXPos, unsigned int endYPos)
 	{
-		/*std::wstring path{ PathManager::GetContentPath() };
-		path.append(relativePath);*/
+		Vector2 pos{ static_cast<float> ((startXPos + endXPos) / 2.0f), static_cast<float> ((startYPos + endYPos) / 2) };
+		AddObject(std::make_unique<TileRectangle>(pos, Layer::TILE));
+	}
+
+	void Scene::LoadTile(const std::wstring& relativePath)
+	{
+		std::wstring path{ PathManager::GetContentPath() };
+		path.append(relativePath);
 
 		std::wifstream in{ path, std::ios::binary };
 
 		if (!in.is_open())
 		{
 			std::wcout << "Can Not Open File Path: " << path << std::endl;
+			return;
 		}
 
 		//unsigned int xCount;
@@ -132,6 +140,16 @@ namespace MomDra
 		{
 			AddObject(std::make_unique<TileRectangle>(Vector2{ static_cast<int>(xPos * TileRectangle::TILE_SIZE_X), static_cast<int>(yPos * TileRectangle::TILE_SIZE_Y) }, Layer::TILE));
 			std::cout << "Add Tile: " << xPos << ", " << yPos << std::endl;
+		}
+	}
+
+	void Scene::LoadGround()
+	{
+		const std::set<std::pair<unsigned int, unsigned int>>& tileSet{ TileRectangle::GetTileSet() };
+
+		for (const auto& [xPos, yPos] : tileSet)
+		{
+			AddObject(std::make_unique<Ground>(Vector2{ static_cast<int>(xPos * TileRectangle::TILE_SIZE_X), static_cast<int>(yPos * TileRectangle::TILE_SIZE_Y) }, Vector2{ TileRectangle::TILE_SIZE_X, TileRectangle::TILE_SIZE_Y }, Layer::GROUND));
 		}
 	}
 }

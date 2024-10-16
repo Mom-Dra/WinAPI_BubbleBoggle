@@ -15,10 +15,13 @@ namespace MomDra
 {	
 	void SceneStart::Enter() noexcept
 	{
+		LoadTile(L"\\tile\\test1.tile");
+		LoadGround();
+
 		std::wstring filePath{ PathManager::GetContentPath() };
 		filePath.append(L"\\texture\\player.bmp");
 
-		AddObject(std::make_unique<Player>(Vector2{ 640.0f, 384.0f }, Vector2{ 100.0f, 100.0f }, Layer::PLAYER));
+		AddObject(std::make_unique<Player>(Vector2{ 640.0f, 384.0f }, Vector2{ 20.0f, 20.0f }, Layer::PLAYER));
 		AddObject(std::make_unique<Monster>(Vector2{ 200.0f, 200.0f }, Vector2{ 100.0f, 100.0f }, Layer::MONSTER));
 
 		// 몬스터에 AI 연결해야 함
@@ -44,12 +47,12 @@ namespace MomDra
 	{
 		Scene::Update();
 
-		if (KeyManager::GetInstance().GetKeyDown(Key::LBUTTON))
+		/*if (KeyManager::GetInstance().GetKeyDown(Key::LBUTTON))
 		{
 			const Vector2& mousePos{ KeyManager::GetInstance().GetMousePos() };
 			const Vector2& lookAt{ Camera::GetInstance().GetRealPos(mousePos) };
 			Camera::GetInstance().SetLookAt(lookAt);
-		}
+		}*/
 
 		/*if (KeyManager::GetInstance().GetKeyDown(Key::LSHIFT))
 		{

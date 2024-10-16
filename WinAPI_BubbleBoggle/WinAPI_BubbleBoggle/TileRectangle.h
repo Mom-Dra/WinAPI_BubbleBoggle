@@ -16,7 +16,7 @@ namespace MomDra
 		static constexpr inline int TILE_SIZE_Y{ 20 };
 
 	public:
-		explicit TileRectangle(const Vector2& pos, const Layer& layer) noexcept;
+		explicit TileRectangle(const Vector2& pos, const Vector2& scale, const Layer& layer) noexcept;
 
 		static inline const TileSet& GetTileSet() noexcept
 		{
