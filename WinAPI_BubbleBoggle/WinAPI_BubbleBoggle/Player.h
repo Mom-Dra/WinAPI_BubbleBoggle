@@ -25,6 +25,7 @@ namespace MomDra
 	private:
 		void Attack() const noexcept;
 		void Move();
+		void Jump();
 
 		void UpdateState();
 		void UpdateAnimation();

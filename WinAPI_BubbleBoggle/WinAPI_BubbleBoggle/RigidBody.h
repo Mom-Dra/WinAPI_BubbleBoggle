@@ -16,9 +16,11 @@ namespace MomDra
 		Vector2 accel; // 가속도
 		Vector2 velocity; // 속도( 크기: 속력, 방향)
 
+		static inline constexpr Vector2 gravityAccel{ 0.0f, 500.0f };
+
 		float mass; // 질량
 		float fricCoeff; // 마찰 계수
-		float maxVelocity; // 최대 속력
+		Vector2 maxVelocity; // 최대 속력
 
 		bool isGravity;
 
@@ -29,12 +31,13 @@ namespace MomDra
 		explicit RigidBody(Object* owner) noexcept;
 		explicit RigidBody(const RigidBody& other) noexcept;
 
-		inline float GetVelocity() const noexcept { return velocity.Size(); }
+		inline const Vector2& GetVelocity() const noexcept { return velocity; }
+		inline bool GetGravity() const noexcept { return isGravity; }
 
 		inline void SetOwner(Object* owner) noexcept { this->owner = owner; }
 		inline void SetMass(float mass) noexcept { this->mass = mass; }
 		inline void SetVelocity(const Vector2& velocity) noexcept { this->velocity = velocity; }
-		inline void SetMaxVelocity(float maxVelocity) noexcept { this->maxVelocity = maxVelocity; }
+		inline void SetMaxVelocity(const Vector2& maxVelocity) noexcept { this->maxVelocity = maxVelocity; }
 		inline void SetGravity(bool isGravity) noexcept { this->isGravity = isGravity; }
 
 		inline void AddForce(const Vector2& force) noexcept { this->force += force; }

@@ -39,13 +39,10 @@ namespace MomDra
 	void Player::Update() noexcept
 	{
 		Move();
+		Jump();
+		Attack();
 
 		UpdateState();
-
-		if (KeyManager::GetInstance().GetKeyDown(Key::SPACE))
-		{
-			Attack();
-		}
 
 		prevState = currState;
 	}
@@ -68,47 +65,45 @@ namespace MomDra
 	{
 		// Projectile 생성!
 		// EventManager에 생성 등록!!
-		EventManager::GetInstance().Instantiate(new Projectile{ Vector2{500.0f, 200.0f}, Vector2{50.0f, 50.0f}, Layer::PROJECTILE });
+
+		if (KeyManager::GetInstance().GetKeyDown(Key::CTRL))
+		{
+			EventManager::GetInstance().Instantiate(new Projectile{ Vector2{500.0f, 200.0f}, Vector2{50.0f, 50.0f}, Layer::PROJECTILE });
+		}
 	}
 
 	void Player::Move()
 	{
 		RigidBody* rigid{ GetRigidBody() };
+		const KeyManager& keyManager{ KeyManager::GetInstance() };
 
-		if (KeyManager::GetInstance().GetKeyDown(Key::LEFT))
-		{
-			rigid->AddVelocity(Vector2(-100.0f, 0.0f));
-		}
-		else if (KeyManager::GetInstance().GetKey(Key::LEFT))
-		{
-			rigid->AddForce(Vector2(-200.0f, 0.0f));
-		}
+		static constexpr float AddPower{ 200.0f };
 
-		if (KeyManager::GetInstance().GetKeyDown(Key::RIGHT))
+		if (keyManager.GetKeyDown(Key::LEFT))
 		{
-			rigid->AddVelocity(Vector2(100.0f, 0.0f));
+			rigid->AddVelocity(Vector2(-AddPower, 0.0f));
 		}
-		else if (KeyManager::GetInstance().GetKey(Key::RIGHT))
+		else if (keyManager.GetKey(Key::LEFT))
 		{
-			rigid->AddForce(Vector2(200.0f, 0.0f));
+			rigid->AddForce(Vector2(-AddPower, 0.0f));
 		}
 
-		if (KeyManager::GetInstance().GetKeyDown(Key::DOWN))
+		if (keyManager.GetKeyDown(Key::RIGHT))
 		{
-			rigid->AddVelocity(Vector2(0.0f, 100.0f));
+			rigid->AddVelocity(Vector2(AddPower, 0.0f));
 		}
-		else if (KeyManager::GetInstance().GetKey(Key::DOWN))
+		else if (keyManager.GetKey(Key::RIGHT))
 		{
-			rigid->AddForce(Vector2(0.0f, 200.0f));
+			rigid->AddForce(Vector2(AddPower, 0.0f));
 		}
+	}
 
-		if (KeyManager::GetInstance().GetKeyDown(Key::UP))
+	void Player::Jump()
+	{
+		if (KeyManager::GetInstance().GetKeyDown(Key::SPACE))
 		{
-			rigid->AddVelocity(Vector2(0.0f, -100.0f));
-		}
-		else if (KeyManager::GetInstance().GetKey(Key::UP))
-		{
-			rigid->AddForce(Vector2(0.0f, -200.0f));
+			RigidBody* rigid{ GetRigidBody() };
+			rigid->AddVelocity(Vector2(0.0f, -300.0f));
 		}
 	}
 
@@ -122,9 +117,6 @@ namespace MomDra
 
 		// 아무키가 눌리지 않았을 때 Idle로 변경해야지!
 		// 속도에 따른 애니메이션도 여기서 해보자!
-
-
-
 	}
 
 	void Player::UpdateAnimation()
