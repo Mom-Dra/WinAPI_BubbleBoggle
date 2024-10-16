@@ -45,6 +45,7 @@ namespace MomDra
 		inline void DeleteAllObject() noexcept { for (auto& objVec : objects) objVec.clear(); }
 
 		void CreateTile(unsigned int xCount, unsigned int yCount);
+		void CreateTileAtMousePos(unsigned int xPos, unsigned int yPos);
 		void LoadTile(const std::wstring& relativePath);
 	};
 }

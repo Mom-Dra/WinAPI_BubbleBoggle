@@ -1,6 +1,7 @@
 #include "SceneTool.h"
 #include "KeyManager.h"
 #include "Tile.h"
+#include "TileRectangle.h"
 #include "Core.h"
 #include "Camera.h"
 #include "ResourceManager.h"
@@ -30,16 +31,27 @@ namespace MomDra
 
 		SetTileIndex();
 
-		//if (KeyManager::GetInstance().GetKeyDown(Key::LSHIFT))
-		//{
-		//	//SaveTile(L"\\tile\\Test.tile");
-		//	SaveTileData();
-		//}
-
 		if (KeyManager::GetInstance().GetKeyDown(Key::LSHIFT))
 		{
-			EventManager::GetInstance().ChangeScene(SceneType::START);
+			//SaveTile(L"\\tile\\Test.tile");
+			SaveTileData();
 		}
+
+		if (KeyManager::GetInstance().GetKeyDown(Key::LBUTTON))
+		{
+			const Vector2& mousePos{ KeyManager::GetInstance().GetMousePos() };
+			const Vector2& resolution{ Core::GetInstance().GetResolution() };
+
+			unsigned int xPos{ static_cast<unsigned int>(mousePos.X / TileRectangle::TILE_SIZE_X) };
+			unsigned int yPos{ static_cast<unsigned int> (mousePos.Y / TileRectangle::TILE_SIZE_Y) };
+
+			CreateTileAtMousePos(xPos, yPos);
+		}
+
+		/*if (KeyManager::GetInstance().GetKeyDown(Key::LSHIFT))
+		{
+			EventManager::GetInstance().ChangeScene(SceneType::START);
+		}*/
 
 		if (KeyManager::GetInstance().GetKeyDown(Key::CTRL))
 		{
@@ -50,12 +62,12 @@ namespace MomDra
 	void SceneTool::Enter() noexcept
 	{
 		// 타일 생성
-		CreateTile(5, 5);
+		//CreateTile(5, 5);
 
 		// UI 하나 만들기
 		const Vector2& resolution{ Core::GetInstance().GetResolution() };
 
-		std::unique_ptr<PanelUI> panelUI{ std::make_unique<PanelUI>(false, Layer::UI) };
+		/*std::unique_ptr<PanelUI> panelUI{ std::make_unique<PanelUI>(false, Layer::UI) };
 		panelUI->SetScale(Vector2{ 200.0f, 100.0f });
 		panelUI->SetPos(Vector2{ resolution.X - panelUI->GetScale().X, 0.0f });
 		panelUI->SetName(L"Parent");
@@ -72,7 +84,7 @@ namespace MomDra
 		ui = panelUICloned.get();
 
 		AddObject(std::move(panelUI));
-		AddObject(std::move(panelUICloned));
+		AddObject(std::move(panelUICloned));*/
 
 		// Camera Look At 지정
 		Camera::GetInstance().SetLookAt(resolution / 2.0f);
@@ -85,15 +97,15 @@ namespace MomDra
 
 	void SceneTool::SetTileIndex() const noexcept
 	{
-		if (KeyManager::GetInstance().GetKeyDown(Key::LBUTTON))
+		/*if (KeyManager::GetInstance().GetKeyDown(Key::LBUTTON))
 		{
 			Vector2 mousePos{ KeyManager::GetInstance().GetMousePos() };
 			mousePos = Camera::GetInstance().GetRealPos(mousePos);
 
 			const auto& [tileX, tileY] { GetTileXY() };
 
-			int col{ static_cast<int>(mousePos.X / Tile::TILE_SIZE) };
-			int row{ static_cast<int>(mousePos.Y / Tile::TILE_SIZE) };
+			int col{ static_cast<int>(mousePos.X / Tile::TILE_SIZE_X) };
+			int row{ static_cast<int>(mousePos.Y / Tile::TILE_SIZE_Y) };
 
 			if (mousePos.X < 0.0f || tileX <= static_cast<unsigned int>(col) || mousePos.Y < 0.0f || tileY <= static_cast<unsigned int>(row))
 				return;
@@ -104,7 +116,7 @@ namespace MomDra
 
 			Tile* tile{ dynamic_cast<Tile*>(tileVec[idx].get()) };
 			tile->AddImgIndex();
-		}
+		}*/
 	}
 
 	void SceneTool::SaveTile(const std::wstring& path) const
@@ -112,29 +124,39 @@ namespace MomDra
 		/*std::wstring path{ PathManager::GetContentPath() };
 		path.append(path);*/
 
-		std::wofstream wOut{ path, std::ios::binary };
+		/*std::wofstream wOut{ path, std::ios::binary };
 
 		if (!wOut.is_open())
+		{
+			std::wcout << "Can Not Open File Path: " << path << std::endl;
+			return;
+		}*/
+
+		std::wofstream Out{ path, std::ios::binary };
+
+		if (!Out.is_open())
 		{
 			std::wcout << "Can Not Open File Path: " << path << std::endl;
 			return;
 		}
 
 		// 타일 개수 저장
-		const auto& [tileX, tileY] {GetTileXY()};
+		//const auto& [tileX, tileY] {GetTileXY()};
 
-		wOut << tileX << ' ' << tileY << ' ';
+		//wOut << tileX << ' ' << tileY << ' ';
 
-		const std::vector<std::unique_ptr<Object>>& tiles{ GetLayerObject(Layer::TILE) };
+		//const std::vector<std::unique_ptr<Object>>& tiles{ GetLayerObject(Layer::TILE) };
 
 		// 각 타일 각자의 데이터를 저장
-		for (const auto& tile : tiles)
+		/*for (const auto& tile : tiles)
 		{
-			Tile* tilePtr{ dynamic_cast<Tile*>(tile.get()) };
+			TileRectangle* tilePtr{ dynamic_cast<TileRectangle*>(tile.get()) };
 			tilePtr->SaveFile(wOut);
-		}
+		}*/
 
-		std::cout << "Save File Complete - tileX: " << tileX << ", tileY: " << tileY << std::endl;
+		TileRectangle::SaveFile(Out);
+
+		//std::cout << "Save File Complete - tileX: " << tileX << ", tileY: " << tileY << std::endl;
 	}
 
 	void SceneTool::SaveTileData()

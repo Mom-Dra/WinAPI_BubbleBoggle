@@ -8,7 +8,8 @@ namespace MomDra
 	class Tile : public Object
 	{
 	public:
-		static constexpr inline int TILE_SIZE{ 16 };
+		static constexpr inline int TILE_SIZE_X{ 20 };
+		static constexpr inline int TILE_SIZE_Y{ 20 };
 
 	private:
 		std::shared_ptr<Texture> texture;

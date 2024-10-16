@@ -21,7 +21,7 @@ namespace MomDra
 		virtual void Exit() noexcept override;
 
 		void SetTileIndex() const noexcept;
-		void SaveTile(const std::wstring& relativePath) const;
+		void SaveTile(const std::wstring& path) const;
 		void SaveTileData();
 		void LoadSceneData();
 	};

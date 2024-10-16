@@ -1,5 +1,5 @@
 #include "Scene.h"
-#include "Tile.h"
+#include "TileRectangle.h"
 #include "Vector2.h"
 #include "ResourceManager.h"
 #include "PathManager.h"
@@ -82,40 +82,52 @@ namespace MomDra
 		{
 			for (unsigned int j{ 0 }; j < xCount; ++j)
 			{
-				AddObject(std::make_unique<Tile>(Vector2{ static_cast<int> (j * Tile::TILE_SIZE), static_cast<int>(i * Tile::TILE_SIZE) }, ResourceManager::GetInstance().LoadTexture(L"\\texture\\tileMap.bmp"), Layer::TILE));
+				AddObject(std::make_unique<TileRectangle>(Vector2{ static_cast<int> (j * TileRectangle::TILE_SIZE_X), static_cast<int>(i * TileRectangle::TILE_SIZE_Y) }, Layer::TILE));
 			}
 		}
 	}
 
-	void Scene::LoadTile(const std::wstring& relativePath)
+	void Scene::CreateTileAtMousePos(unsigned int xPos, unsigned int yPos)
 	{
-		std::wstring path{ PathManager::GetContentPath() };
-		path.append(relativePath);
+		if (TileRectangle::CanAdd(xPos, yPos))
+		{
+			TileRectangle::AddTile(xPos, yPos);
+			AddObject(std::make_unique<TileRectangle>(Vector2{ static_cast<int>(xPos * TileRectangle::TILE_SIZE_X), static_cast<int>(yPos * TileRectangle::TILE_SIZE_Y) }, Layer::TILE));
+		}
+	}
 
-		std::wifstream wIn{ path };
+	void Scene::LoadTile(const std::wstring& path)
+	{
+		/*std::wstring path{ PathManager::GetContentPath() };
+		path.append(relativePath);*/
 
-		if (!wIn.is_open())
+		std::wifstream in{ path };
+
+		if (!in.is_open())
 		{
 			std::wcout << "Can Not Open File Path: " << path << std::endl;
 		}
 
-		unsigned int xCount;
-		unsigned int yCount;
+		//unsigned int xCount;
+		//unsigned int yCount;
 
-		// 타일 개수 읽어오기
-		wIn >> xCount >> yCount;
+		//// 타일 개수 읽어오기
+		//in >> xCount >> yCount;
 
-		CreateTile(xCount, yCount);
+		//CreateTile(xCount, yCount);
 
-		const std::vector<std::unique_ptr<Object>>& tiles{ GetLayerObject(Layer::TILE) };
+		//const std::vector<std::unique_ptr<Object>>& tiles{ GetLayerObject(Layer::TILE) };
 
 		// 각 타일 데이터 읽어오기
-		for (const auto& tile : tiles)
+		/*for (const auto& tile : tiles)
 		{
-			Tile* tilePtr{ dynamic_cast<Tile*>(tile.get()) };
-			tilePtr->LoadFile(wIn);
-		}
+			TileRectangle* tilePtr{ dynamic_cast<TileRectangle*>(tile.get()) };
+			tilePtr->LoadFile(in);
+		}*/
 
-		std::cout << "Load File Complete - xCount: " << xCount << ", yCount: " << yCount << std::endl;
+		TileRectangle::LoadFile(in);
+
+
+		//std::cout << "Load File Complete - xCount: " << xCount << ", yCount: " << yCount << std::endl;
 	}
 }
