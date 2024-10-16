@@ -37,7 +37,7 @@ namespace MomDra
 			SaveTileData();
 		}
 
-		if (KeyManager::GetInstance().GetKeyDown(Key::LBUTTON))
+		if (KeyManager::GetInstance().GetKey(Key::LBUTTON))
 		{
 			const Vector2& mousePos{ KeyManager::GetInstance().GetMousePos() };
 			const Vector2& resolution{ Core::GetInstance().GetResolution() };
@@ -132,9 +132,10 @@ namespace MomDra
 			return;
 		}*/
 
-		std::wofstream Out{ path, std::ios::binary };
+		std::wofstream out{ path, std::ios::binary };
+		//std::ofstream out{ path, std::ios::binary };
 
-		if (!Out.is_open())
+		if (!out.is_open())
 		{
 			std::wcout << "Can Not Open File Path: " << path << std::endl;
 			return;
@@ -154,7 +155,7 @@ namespace MomDra
 			tilePtr->SaveFile(wOut);
 		}*/
 
-		TileRectangle::SaveFile(Out);
+		TileRectangle::SaveFile(out);
 
 		//std::cout << "Save File Complete - tileX: " << tileX << ", tileY: " << tileY << std::endl;
 	}
@@ -186,6 +187,8 @@ namespace MomDra
 		if (GetSaveFileName(&ofn))
 		{
 			SaveTile(name);
+
+			std::wcout << "Save File Complete : " << name;
 		} 
 	}
 
@@ -215,8 +218,10 @@ namespace MomDra
 		// 그 해당 창이 포커싱이 되고, 나머지는 동작하지 않는다
 		if (GetOpenFileName(&ofn))
 		{
-			std::wstring relativePath{ PathManager::GetRelativePath(name) };
-			LoadTile(relativePath);
+			//std::wstring relativePath{ PathManager::GetRelativePath(name) };
+			LoadTile(name);
+
+			std::wcout << "Load File Complete: " << name << std::endl;
 		}
 	}
 

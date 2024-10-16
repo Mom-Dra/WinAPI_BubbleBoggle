@@ -1,5 +1,7 @@
 #include "TileRectangle.h"
 #include "Camera.h"
+#include <fstream>
+#include <iostream>
 
 namespace MomDra
 {
@@ -12,11 +14,13 @@ namespace MomDra
     {
         unsigned int size{ static_cast<unsigned int>(tileSet.size()) };
 
-        out << size;
+        out << size << ' ';
 
         for (const auto& [xPos, yPos] : tileSet)
         {
-            out << xPos << ' ' << yPos;
+            out << xPos << ' ' << yPos << ' ';
+
+            std::cout << "Save Tile: " << xPos << ", " << yPos << std::endl;
         }
     }
 

@@ -101,7 +101,7 @@ namespace MomDra
 		/*std::wstring path{ PathManager::GetContentPath() };
 		path.append(relativePath);*/
 
-		std::wifstream in{ path };
+		std::wifstream in{ path, std::ios::binary };
 
 		if (!in.is_open())
 		{
@@ -126,8 +126,12 @@ namespace MomDra
 		}*/
 
 		TileRectangle::LoadFile(in);
+		const std::set<std::pair<unsigned int, unsigned int>>& tileSet{ TileRectangle::GetTileSet() };
 
-
-		//std::cout << "Load File Complete - xCount: " << xCount << ", yCount: " << yCount << std::endl;
+		for (const auto& [xPos, yPos] : tileSet)
+		{
+			AddObject(std::make_unique<TileRectangle>(Vector2{ static_cast<int>(xPos * TileRectangle::TILE_SIZE_X), static_cast<int>(yPos * TileRectangle::TILE_SIZE_Y) }, Layer::TILE));
+			std::cout << "Add Tile: " << xPos << ", " << yPos << std::endl;
+		}
 	}
 }

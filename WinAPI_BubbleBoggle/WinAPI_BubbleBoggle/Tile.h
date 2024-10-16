@@ -24,7 +24,7 @@ namespace MomDra
 		inline void SetTexture(std::shared_ptr<Texture> texture) noexcept { this->texture = texture; }
 		inline void AddImgIndex() noexcept { ++imgIndex; }
 
-		virtual void SaveFile(std::wostream& wOut);
+		virtual void SaveFile(std::wofstream& wOut);
 		virtual void LoadFile(std::wifstream& wIn);
 
 		inline virtual std::unique_ptr<Object> Clone() const override

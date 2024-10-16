@@ -38,7 +38,7 @@ namespace MomDra
 		Object::Render(hdc);
 	}
 
-	void Tile::SaveFile(std::wostream& wOut)
+	void Tile::SaveFile(std::wofstream& wOut)
 	{
 		wOut << imgIndex << ' ';
 	}

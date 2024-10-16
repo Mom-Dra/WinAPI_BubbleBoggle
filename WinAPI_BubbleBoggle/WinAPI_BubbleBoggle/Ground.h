@@ -19,6 +19,6 @@ namespace MomDra
 		virtual void Start() override;
 		virtual void Update() noexcept override;
 
-		inline virtual std::unique_ptr<Object> Clone() const { return std::make_unique<Ground>(*this); }
+		inline virtual std::unique_ptr<Object> Clone() const override { return std::make_unique<Ground>(*this); }
 	};
 }

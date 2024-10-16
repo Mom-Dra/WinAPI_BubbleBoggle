@@ -7,7 +7,9 @@ namespace MomDra
 	class TileRectangle : public Object
 	{
 	private:
-		static inline std::set<std::pair<unsigned int, unsigned int>> tileSet;
+		using TileSet = std::set<std::pair<unsigned int, unsigned int>>;
+
+		static inline TileSet tileSet;
 
 	public:
 		static constexpr inline int TILE_SIZE_X{ 20 };
@@ -15,6 +17,11 @@ namespace MomDra
 
 	public:
 		explicit TileRectangle(const Vector2& pos, const Layer& layer) noexcept;
+
+		static inline const TileSet& GetTileSet() noexcept
+		{
+			return tileSet;
+		}
 
 		static inline bool CanAdd(unsigned int xPos, unsigned int yPos)
 		{
