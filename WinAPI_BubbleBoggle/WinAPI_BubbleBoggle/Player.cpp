@@ -61,6 +61,39 @@ namespace MomDra
 		Object::Render(hdc);
 	}
 
+	void Player::OnCollisionEnter(const Collider* other)
+	{
+		Object* otherObject{ other->GetObj() };
+		const Layer otherLayer{ otherObject->GetLayer() };
+
+		if (otherLayer == Layer::GROUND)
+		{
+			isGround = true;
+		}
+	}
+
+	void Player::OnCollisionStay(const Collider* other)
+	{
+		Object* otherObject{ other->GetObj() };
+		const Layer otherLayer{ otherObject->GetLayer() };
+
+		if (otherLayer == Layer::GROUND)
+		{
+			isGround = true;
+		}
+	}
+
+	void Player::OnCollisionExit(const Collider* other)
+	{
+		Object* otherObject{ other->GetObj() };
+		const Layer otherLayer{ otherObject->GetLayer() };
+
+		if (otherLayer == Layer::GROUND)
+		{
+			isGround = false;
+		}
+	}
+
 	void Player::Attack() const noexcept
 	{
 		// Projectile »ý¼º!

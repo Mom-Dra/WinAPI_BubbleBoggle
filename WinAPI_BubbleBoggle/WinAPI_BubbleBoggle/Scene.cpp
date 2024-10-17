@@ -6,6 +6,13 @@
 #include <fstream>
 #include <iostream>
 #include "Ground.h"
+#include "UndoManager.h"
+
+
+#ifdef max
+#undef max
+#endif // min
+
 
 using namespace CK;
 
@@ -83,24 +90,33 @@ namespace MomDra
 		{
 			for (unsigned int j{ 0 }; j < xCount; ++j)
 			{
-				AddObject(std::make_unique<TileRectangle>(Vector2{ static_cast<int> (j * TileRectangle::TILE_SIZE_X), static_cast<int>(i * TileRectangle::TILE_SIZE_Y) }, Layer::TILE));
+				AddObject(std::make_unique<TileRectangle>(Vector2{ static_cast<int> (j * TileRectangle::TILE_SIZE_X), static_cast<int>(i * TileRectangle::TILE_SIZE_Y) }, Vector2{ TileRectangle::TILE_SIZE_X, TileRectangle::TILE_SIZE_Y }, Layer::TILE));
 			}
 		}
 	}
 
 	void Scene::CreateTileAtMousePos(unsigned int xPos, unsigned int yPos)
 	{
-		if (TileRectangle::CanAdd(xPos, yPos))
-		{
-			TileRectangle::AddTile(xPos, yPos);
-			AddObject(std::make_unique<TileRectangle>(Vector2{ static_cast<int>(xPos * TileRectangle::TILE_SIZE_X), static_cast<int>(yPos * TileRectangle::TILE_SIZE_Y) }, Layer::TILE));
-		}
+		Vector2 pos{ static_cast<float>(xPos), static_cast<float>(yPos) };
+		TileRectangle::AddTile(pos, TileRectangle::TILE_SIZE);
+
+		AddObject(std::make_unique<TileRectangle>(TileRectangle::GetRealTilePos(xPos, yPos), TileRectangle::TILE_SIZE, Layer::TILE));
 	}
 
 	void Scene::CreateTileAtMouseDrag(unsigned int startXPos, unsigned int startYPos, unsigned int endXPos, unsigned int endYPos)
 	{
-		Vector2 pos{ static_cast<float> ((startXPos + endXPos) / 2.0f), static_cast<float> ((startYPos + endYPos) / 2) };
-		AddObject(std::make_unique<TileRectangle>(pos, Layer::TILE));
+		Vector2 pos{ static_cast<float> ((startXPos + endXPos) / 2.0f), static_cast<float> ((startYPos + endYPos) / 2.0f) };
+
+		float scaleX{ static_cast<float>((endXPos - startXPos + 1) * TileRectangle::TILE_SIZE_X) };
+		float scaleY{ static_cast<float>((endYPos - startYPos + 1) * TileRectangle::TILE_SIZE_Y) };
+
+		Vector2 scale{ scaleX, scaleY };
+
+		TileRectangle::AddTile(pos, scale);
+
+		//AddObject(std::make_unique<TileRectangle>(TileRectangle::GetRealTilePos(pos), scale, Layer::TILE));
+
+		CommandManager::Execute(std::make_unique<AddTileCommand>(this, TileRectangle::TileInfo{ pos, scale }));
 	}
 
 	void Scene::LoadTile(const std::wstring& relativePath)
@@ -134,22 +150,24 @@ namespace MomDra
 		}*/
 
 		TileRectangle::LoadFile(in);
-		const std::set<std::pair<unsigned int, unsigned int>>& tileSet{ TileRectangle::GetTileSet() };
+		const TileRectangle::TileVec& tileVec{ TileRectangle::GetTileVec() };
 
-		for (const auto& [xPos, yPos] : tileSet)
+		for (const TileRectangle::TileInfo& tileInfo : tileVec)
 		{
-			AddObject(std::make_unique<TileRectangle>(Vector2{ static_cast<int>(xPos * TileRectangle::TILE_SIZE_X), static_cast<int>(yPos * TileRectangle::TILE_SIZE_Y) }, Layer::TILE));
-			std::cout << "Add Tile: " << xPos << ", " << yPos << std::endl;
+			AddObject(std::make_unique<TileRectangle>(TileRectangle::GetRealTilePos(tileInfo.pos), tileInfo.scale, Layer::TILE));
+			std::cout << "Add Tile: " << tileInfo << std::endl;
 		}
+
+		std::wcout << "Load Tile Complete: " << relativePath << std::endl;
 	}
 
 	void Scene::LoadGround()
 	{
-		const std::set<std::pair<unsigned int, unsigned int>>& tileSet{ TileRectangle::GetTileSet() };
+		const TileRectangle::TileVec& tileVec{ TileRectangle::GetTileVec() };
 
-		for (const auto& [xPos, yPos] : tileSet)
+		for (const TileRectangle::TileInfo& tileInfo : tileVec)
 		{
-			AddObject(std::make_unique<Ground>(Vector2{ static_cast<int>(xPos * TileRectangle::TILE_SIZE_X), static_cast<int>(yPos * TileRectangle::TILE_SIZE_Y) }, Vector2{ TileRectangle::TILE_SIZE_X, TileRectangle::TILE_SIZE_Y }, Layer::GROUND));
+			AddObject(std::make_unique<Ground>(TileRectangle::GetRealTilePos(tileInfo.pos), tileInfo.scale, Layer::GROUND));
 		}
 	}
 }

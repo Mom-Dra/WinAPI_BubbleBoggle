@@ -15,6 +15,7 @@
 #include <iostream>
 #include "PathManager.h"
 #include <commdlg.h>
+#include "UndoManager.h"
 
 namespace MomDra
 {
@@ -27,33 +28,30 @@ namespace MomDra
 
 	void SceneTool::Update() noexcept
 	{
+		static const KeyManager& keyManager{ KeyManager::GetInstance() };
+
 		Scene::Update();
 
 		SetTileIndex();
 
-		if (KeyManager::GetInstance().GetKeyDown(Key::LSHIFT))
-		{
-			//SaveTile(L"\\tile\\Test.tile");
-			SaveTileData();
-		}
+		
 
 		static unsigned int startXPos;
 		static unsigned int startYPos;
+		static const Vector2& resolution{ Core::GetInstance().GetResolution() };
 
 		if (KeyManager::GetInstance().GetKeyDown(Key::LBUTTON))
 		{
 			const Vector2& mousePos{ KeyManager::GetInstance().GetMousePos() };
-			const Vector2& resolution{ Core::GetInstance().GetResolution() };
-
+			
 			startXPos = { static_cast<unsigned int>(mousePos.X / TileRectangle::TILE_SIZE_X) };
 			startYPos = { static_cast<unsigned int> (mousePos.Y / TileRectangle::TILE_SIZE_Y) };
 
-			//CreateTileAtMousePos(xPos, yPos);
+			//CreateTileAtMousePos(startXPos, startYPos);
 		}
 		else if (KeyManager::GetInstance().GetKeyUp(Key::LBUTTON))
 		{
 			const Vector2& mousePos{ KeyManager::GetInstance().GetMousePos() };
-			const Vector2& resolution{ Core::GetInstance().GetResolution() };
 
 			unsigned int endXPos = { static_cast<unsigned int>(mousePos.X / TileRectangle::TILE_SIZE_X) };
 			unsigned int endYPos = { static_cast<unsigned int> (mousePos.Y / TileRectangle::TILE_SIZE_Y) };
@@ -66,9 +64,19 @@ namespace MomDra
 			EventManager::GetInstance().ChangeScene(SceneType::START);
 		}
 
-		if (KeyManager::GetInstance().GetKeyDown(Key::CTRL))
+		if (keyManager.GetKey(Key::CTRL))
 		{
-			LoadSceneData();
+			if (keyManager.GetKeyDown(Key::S))
+				SaveTileData();
+
+			if (keyManager.GetKeyDown(Key::L))
+				LoadTileData();
+
+			if (keyManager.GetKeyDown(Key::Z))
+				CommandManager::Undo();
+
+			if (keyManager.GetKeyDown(Key::Y))
+				CommandManager::Redo();
 		}
 	}
 
@@ -205,7 +213,7 @@ namespace MomDra
 		} 
 	}
 
-	void SceneTool::LoadSceneData()
+	void SceneTool::LoadTileData()
 	{
 		OPENFILENAME ofn = {};
 

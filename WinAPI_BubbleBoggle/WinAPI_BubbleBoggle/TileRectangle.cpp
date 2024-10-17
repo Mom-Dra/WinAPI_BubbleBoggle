@@ -12,32 +12,39 @@ namespace MomDra
 
     void TileRectangle::SaveFile(std::wofstream& out)
     {
-        unsigned int size{ static_cast<unsigned int>(tileSet.size()) };
+        unsigned int size{ static_cast<unsigned int>(tileVec.size()) };
 
         out << size << ' ';
 
-        for (const auto& [xPos, yPos] : tileSet)
+        for (const TileInfo& tileInfo : tileVec)
         {
-            out << xPos << ' ' << yPos << ' ';
+            out << tileInfo.pos.X << ' ' << tileInfo.pos.Y << ' ';
+            out << tileInfo.scale.X << ' ' << tileInfo.scale.Y << '\n';
 
-            std::cout << "Save Tile: " << xPos << ", " << yPos << std::endl;
+            std::cout << "Save Tile: " << tileInfo << std::endl;
         }
     }
 
     void TileRectangle::LoadFile(std::wifstream& in)
     {
+        tileVec.clear();
+
         unsigned int size;
 
         in >> size;
 
+        tileVec.reserve(size);
+
         for (unsigned int i{ 0 }; i < size; ++i)
         {
-            unsigned int xPos;
-            unsigned int yPos;
+            TileInfo tileInfo;
 
-            in >> xPos >> yPos;
+            in >> tileInfo.pos.X >> tileInfo.pos.Y;
+            in >> tileInfo.scale.X >> tileInfo.scale.Y;
 
-            tileSet.emplace(xPos, yPos);
+            tileVec.emplace_back(tileInfo);
+
+            std::cout << "Load Tile: " << tileInfo << std::endl;
         }
     }
 

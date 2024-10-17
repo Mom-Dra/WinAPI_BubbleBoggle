@@ -39,8 +39,11 @@ namespace MomDra
 
 		Vector2 renderPos{ Camera::GetInstance().GetRenderPos(finalPos) };
 
-		Rectangle(hdc, static_cast<int>(renderPos.X - scale.X / 2.0f), static_cast<int>(renderPos.Y - scale.Y / 2.0f),
-			static_cast<int>(renderPos.X + scale.X / 2.0f), static_cast<int>(renderPos.Y + scale.Y / 2.0f));
+		float halfScaleX{ scale.X / 2.0f };
+		float halfScaleY{ scale.Y / 2.0f };
+
+		Rectangle(hdc, static_cast<int>(renderPos.X - halfScaleX), static_cast<int>(renderPos.Y - halfScaleY),
+			static_cast<int>(renderPos.X + halfScaleX), static_cast<int>(renderPos.Y + halfScaleY));
 	}
 
 	void Collider::OnCollisionStay(const Collider* other) noexcept

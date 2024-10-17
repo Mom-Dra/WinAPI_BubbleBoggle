@@ -5,6 +5,8 @@
 #include <memory>
 #include <array>
 #include <string>
+#include <algorithm>
+#include "TileRectangle.h"
 
 namespace MomDra
 {
@@ -43,6 +45,13 @@ namespace MomDra
 		inline void AddObject(Object* obj) noexcept { objects[static_cast<int>(obj->GetLayer())].emplace_back(obj); }
 		inline void DeleteLayerObject(const Layer& layer) noexcept { objects[static_cast<int>(layer)].clear(); }
 		inline void DeleteAllObject() noexcept { for (auto& objVec : objects) objVec.clear(); }
+
+		inline void DeleteTile(TileRectangle* tilePtr) noexcept
+		{
+			std::vector<std::unique_ptr<Object>>& tileVec{ objects[static_cast<int>(Layer::TILE)] };
+			auto it{ std::remove_if(tileVec.begin(), tileVec.end(), [tilePtr](const std::unique_ptr<Object>& obj) {return obj.get() == tilePtr; }) };
+			tileVec.erase(it, tileVec.end());
+		}
 
 		void CreateTile(unsigned int xCount, unsigned int yCount);
 		void CreateTileAtMousePos(unsigned int xPos, unsigned int yPos);

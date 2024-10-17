@@ -4,6 +4,7 @@
 #include <limits>
 #include <numbers>
 #include <algorithm>
+#include <iostream>
 
 #ifdef max
 #undef max
@@ -32,6 +33,7 @@ namespace CK
 		inline constexpr Vector2& operator/=(float InScale);
 		inline constexpr Vector2& operator+=(const Vector2& InVector);
 		inline constexpr Vector2& operator-=(const Vector2& InVector);
+		inline constexpr bool operator==(const Vector2& other) const noexcept;
 
 		// ¸â¹öÇÔ¼ö 
 		inline float Size() const;
@@ -65,6 +67,9 @@ namespace CK
 
 			std::array<float, Dimension> Scalars{ 0.f, 0.f };
 		};
+
+	private:
+		inline friend std::ostream& operator<<(std::ostream& os, const Vector2& vector);
 	};
 
 	inline float Vector2::Size() const
@@ -156,6 +161,11 @@ namespace CK
 		return *this;
 	}
 
+	inline constexpr bool Vector2::operator==(const Vector2& other) const noexcept
+	{
+		return X == other.X && Y == other.Y;
+	}
+
 	inline bool Vector2::EqualsInTolerance(const Vector2& InVector, float InTolerance) const
 	{
 		return (std::abs(this->X - InVector.X) <= InTolerance) &&
@@ -235,5 +245,11 @@ namespace CK
 		float sin = 0.f, cos = 0.f;
 		GetSinCosRad(sin, cos, Y);
 		return Vector2(X * cos, X * sin);
+	}
+
+	inline std::ostream& operator<<(std::ostream& os, const Vector2& vector)
+	{
+		os << '(' << vector.X << ", " << vector.Y << ')';
+		return os;
 	}
 }

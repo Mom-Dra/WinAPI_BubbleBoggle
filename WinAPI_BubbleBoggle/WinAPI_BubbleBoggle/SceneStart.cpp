@@ -15,7 +15,7 @@ namespace MomDra
 {	
 	void SceneStart::Enter() noexcept
 	{
-		LoadTile(L"\\tile\\test1.tile");
+		LoadTile(L"\\tile\\Test.tile");
 		LoadGround();
 
 		std::wstring filePath{ PathManager::GetContentPath() };

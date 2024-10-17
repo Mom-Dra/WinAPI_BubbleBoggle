@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include <memory>
 #include "UI.h"
+#include <functional>
 
 namespace MomDra
 {
@@ -23,6 +24,6 @@ namespace MomDra
 		void SetTileIndex() const noexcept;
 		void SaveTile(const std::wstring& path) const;
 		void SaveTileData();
-		void LoadSceneData();
+		void LoadTileData();
 	};
 }

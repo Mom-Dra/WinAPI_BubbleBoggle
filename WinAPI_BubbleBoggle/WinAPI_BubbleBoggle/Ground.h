@@ -7,7 +7,6 @@ namespace MomDra
 	{
 	private:
 
-
 	public:
 		explicit Ground(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::GROUND);
 
