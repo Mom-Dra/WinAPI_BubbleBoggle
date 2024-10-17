@@ -101,7 +101,7 @@ namespace MomDra
 
 		if (KeyManager::GetInstance().GetKeyDown(Key::CTRL))
 		{
-			EventManager::GetInstance().Instantiate(new Projectile{ Vector2{500.0f, 200.0f}, Vector2{50.0f, 50.0f}, Layer::PROJECTILE });
+			EventManager::GetInstance().Instantiate(new Projectile{ GetPos() + forward * 5.0f, Vector2{50.0f, 50.0f}, Layer::PROJECTILE });
 		}
 	}
 
@@ -114,6 +114,7 @@ namespace MomDra
 
 		if (keyManager.GetKeyDown(Key::LEFT))
 		{
+			forward = -Vector2::UnitX;
 			rigid->AddVelocity(Vector2(-AddPower, 0.0f));
 		}
 		else if (keyManager.GetKey(Key::LEFT))
@@ -123,6 +124,7 @@ namespace MomDra
 
 		if (keyManager.GetKeyDown(Key::RIGHT))
 		{
+			forward = Vector2::UnitX;
 			rigid->AddVelocity(Vector2(AddPower, 0.0f));
 		}
 		else if (keyManager.GetKey(Key::RIGHT))

@@ -9,7 +9,7 @@ namespace MomDra
 		PlayerState currState;
 		PlayerState prevState;
 
-		int lookDir;
+		Vector2 forward;
 		bool isGround;
 
 	public:

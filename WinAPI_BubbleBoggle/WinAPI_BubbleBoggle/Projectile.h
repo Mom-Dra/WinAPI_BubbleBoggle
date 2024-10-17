@@ -19,4 +19,28 @@ namespace MomDra
 			return std::make_unique<Projectile>(*this);
 		}
 	};
+
+
+	class ProjectileState
+	{
+	public:
+		static ProjectileState aa;
+
+
+	public:
+		//static inline ProjectileState& GetInstance() noexcept
+		virtual void OnCollisionEnter(const Collider* other) = 0;
+
+	private:
+		explicit ProjectileState() noexcept = default;
+		explicit ProjectileState(const ProjectileState& other) = delete;
+		ProjectileState& operator=(const ProjectileState& other) = delete;
+	};
+
+	class ProjectileAttackState
+	{
+	public:
+		
+	};
+
 }
