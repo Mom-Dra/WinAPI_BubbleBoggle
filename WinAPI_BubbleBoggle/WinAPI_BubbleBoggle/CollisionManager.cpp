@@ -90,7 +90,7 @@ namespace MomDra
                         {
                             // 둘 중하나가 삭제 예정이라면, 충돌 해제시켜준다
                             collider1->OnCollisionExit(collider2);
-                            collider2->OnCollisionExit(collider1);
+                             collider2->OnCollisionExit(collider1);
 
                             it->second = false;
                         }

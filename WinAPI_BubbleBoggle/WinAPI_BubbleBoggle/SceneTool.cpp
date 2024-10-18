@@ -15,7 +15,7 @@
 #include <iostream>
 #include "PathManager.h"
 #include <commdlg.h>
-#include "UndoManager.h"
+#include "CommandManager.h"
 
 namespace MomDra
 {
@@ -272,7 +272,7 @@ namespace MomDra
 				if (!toolScene)
 					throw std::runtime_error("It's Not Tool Scene");
 
-				toolScene->DeleteLayerObject(Layer::TILE);
+				toolScene->DeleteLayerObject(Layer::Tile);
 				toolScene->CreateTile(xCount, yCount);
 
 				EndDialog(hDlg, LOWORD(wParam));

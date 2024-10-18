@@ -15,26 +15,30 @@ namespace MomDra
 {	
 	void SceneStart::Enter() noexcept
 	{
-		LoadTile(L"\\tile\\Test.tile");
+		LoadTileData();
+		//LoadTile(L"\\tile\\test2.tile");
 		LoadGround();
 
 		std::wstring filePath{ PathManager::GetContentPath() };
 		filePath.append(L"\\texture\\player.bmp");
 
-		AddObject(std::make_unique<Player>(Vector2{ 640.0f, 384.0f }, Vector2{ 20.0f, 20.0f }, Layer::PLAYER));
-		AddObject(std::make_unique<Monster>(Vector2{ 200.0f, 200.0f }, Vector2{ 100.0f, 100.0f }, Layer::MONSTER));
+		AddObject(std::make_unique<Player>(Vector2{ 640.0f, 384.0f }, Vector2{ 20.0f, 20.0f }, Layer::Player));
+		AddObject(std::make_unique<Monster>(Vector2{ 200.0f, 200.0f }, Vector2{ 20.0f, 20.0f }, Layer::Monster));
 
 		// 몬스터에 AI 연결해야 함
 		/*std::unique_ptr<AI> ai{ std::make_unique<AI>() };
 		ai->AddState(std::make_unique<IdleState>());*/
 
 		// 땅 생성
-		AddObject(std::make_unique<Ground>(Vector2{ 300.0f, 300.0f }, Vector2{ 200.0f, 50.0f }, Layer::GROUND));
+		AddObject(std::make_unique<Ground>(Vector2{ 300.0f, 300.0f }, Vector2{ 200.0f, 50.0f }, Layer::Ground));
 
 		// 충돌 지정
-		CollisionManager::GetInstance().CheckLayer(Layer::PLAYER, Layer::MONSTER);
-		CollisionManager::GetInstance().CheckLayer(Layer::MONSTER, Layer::PROJECTILE);
-		CollisionManager::GetInstance().CheckLayer(Layer::PLAYER, Layer::GROUND);
+		CollisionManager::GetInstance().CheckLayer(Layer::Player, Layer::Monster);
+		CollisionManager::GetInstance().CheckLayer(Layer::Monster, Layer::Projectile);
+		CollisionManager::GetInstance().CheckLayer(Layer::Player, Layer::Ground);
+		CollisionManager::GetInstance().CheckLayer(Layer::Monster, Layer::Ground);
+		CollisionManager::GetInstance().CheckLayer(Layer::Item, Layer::Ground);
+		CollisionManager::GetInstance().CheckLayer(Layer::Item, Layer::Player);
 
 		// Camera Look 지점
 		Vector2 resolution{ Core::GetInstance().GetResolution() };

@@ -12,7 +12,7 @@ namespace MomDra
         std::shared_ptr<Texture> texture;
 
     public:
-        explicit ImageObject(const Vector2& pos, const Vector2& scale, const std::wstring& imgPath, const Layer& layer = Layer::DEFAULT);
+        explicit ImageObject(const Vector2& pos, const Vector2& scale, const std::wstring& imgPath, const Layer& layer = Layer::Default);
         virtual ~ImageObject() = default;
 
         virtual void Update() noexcept override;

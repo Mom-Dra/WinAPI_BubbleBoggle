@@ -30,7 +30,7 @@ namespace MomDra
 		bool isAlive;
 
 	public:
-		explicit Object(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::DEFAULT) noexcept;
+		explicit Object(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::Default) noexcept;
 		explicit Object(const Object& other) noexcept;
 		virtual ~Object() noexcept = default;
 
@@ -46,6 +46,8 @@ namespace MomDra
 		inline Animator* GetAnimator() const noexcept { return animator.get(); }
 		inline RigidBody* GetRigidBody() const noexcept { return rigidbody.get(); }
 		inline bool IsDead() const noexcept { return !isAlive; }
+
+		inline void Destroy() noexcept { EventManager::GetInstance().Destory(this); }
 
 		virtual void Start() {};
 		virtual void Update() noexcept = 0;

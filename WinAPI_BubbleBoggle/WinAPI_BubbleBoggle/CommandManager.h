@@ -33,7 +33,7 @@ namespace MomDra
 
 		inline void Execute() override
 		{
-			auto tileUniqPtr{ std::make_unique<TileRectangle>(TileRectangle::GetRealTilePos(tileInfo.pos), tileInfo.scale, Layer::TILE) };
+			auto tileUniqPtr{ std::make_unique<TileRectangle>(TileRectangle::GetRealTilePos(tileInfo.pos), tileInfo.scale, Layer::Tile) };
 			addedTile = tileUniqPtr.get();
 			scene->AddObject(std::move(tileUniqPtr));
 
@@ -59,7 +59,9 @@ namespace MomDra
 	private:
 		explicit CommandManager() noexcept = default;
 		explicit CommandManager(const CommandManager& other) = delete;
+		explicit CommandManager(const CommandManager&& other) = delete;
 		CommandManager& operator=(const CommandManager& other) = delete;
+		CommandManager& operator=(const CommandManager&& other) = delete;
 
 	public:
 		static void Execute(std::unique_ptr<Command> command);

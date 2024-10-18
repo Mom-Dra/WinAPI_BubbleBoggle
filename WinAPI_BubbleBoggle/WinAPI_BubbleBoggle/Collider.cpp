@@ -29,10 +29,10 @@ namespace MomDra
 
 	void Collider::Render(const HDC& hdc) noexcept
 	{
-		PenType penType{ PenType::GREEN };
+		PenType penType{ PenType::Green };
 
 		if (colCount)
-			penType = PenType::RED;
+			penType = PenType::Red;
 
 		SelectGDI pen{ hdc, penType };
 		SelectGDI brush{ hdc, BrushType::HOLLOW };

@@ -4,12 +4,13 @@ namespace MomDra
 {
 	enum class Layer
 	{
-		DEFAULT,
-		PLAYER,
-		MONSTER,
-		PROJECTILE,
-		TILE,
-		GROUND,
+		Default,
+		Player,
+		Monster,
+		Projectile,
+		Tile,
+		Ground,
+		Item,
 		UI,
 		LAST
 	};
@@ -22,9 +23,10 @@ namespace MomDra
 
 	enum class PenType
 	{
-		RED,
-		GREEN,
-		BLUE,
+		Red,
+		Green,
+		Blue,
+		Orange,
 		LAST
 	};
 
@@ -45,16 +47,7 @@ namespace MomDra
 		LAST
 	};
 
-	enum class MonsterState
-	{
-		IDLE,
-		PATROL,
-		TRACE,
-		ATTACK,
-		RUN,
-		DEAD,
-		LAST
-	};
+	
 
 	enum class PlayerState
 	{

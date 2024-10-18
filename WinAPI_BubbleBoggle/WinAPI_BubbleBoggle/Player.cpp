@@ -8,10 +8,11 @@
 #include "PathManager.h"
 #include "ResourceManager.h"
 #include "Camera.h"
+#include "Ray.h"
 
 namespace MomDra
 {
-	Player::Player(const Vector2& pos, const Vector2& scale, const Layer& layer) : Object{ pos, scale, layer }
+	Player::Player(const Vector2& pos, const Vector2& scale, const Layer& layer) noexcept : Object{ pos, scale, layer }
 	{
 		CreateCollider(scale);
 
@@ -54,9 +55,10 @@ namespace MomDra
 	
 		Vector2 renderPos{ Camera::GetInstance().GetRenderPos(pos) };
 
-		// 여기에 RenderPos 업데이트!
+		float halfScaleX{ scale.X / 2.0f };
+		float halfScaleY{ scale.Y / 2.0f };
 
-		Rectangle(hdc, static_cast<int>(renderPos.X - scale.X / 2), static_cast<int>(renderPos.Y - scale.Y / 2), static_cast<int> (renderPos.X + scale.X / 2), static_cast<int>(renderPos.Y + scale.Y / 2));
+		Rectangle(hdc, static_cast<int>(renderPos.X - halfScaleX), static_cast<int>(renderPos.Y - halfScaleY), static_cast<int> (renderPos.X + halfScaleX), static_cast<int>(renderPos.Y + halfScaleY));
 
 		Object::Render(hdc);
 	}
@@ -65,33 +67,18 @@ namespace MomDra
 	{
 		Object* otherObject{ other->GetObj() };
 		const Layer otherLayer{ otherObject->GetLayer() };
-
-		if (otherLayer == Layer::GROUND)
-		{
-			isGround = true;
-		}
 	}
 
 	void Player::OnCollisionStay(const Collider* other)
 	{
 		Object* otherObject{ other->GetObj() };
 		const Layer otherLayer{ otherObject->GetLayer() };
-
-		if (otherLayer == Layer::GROUND)
-		{
-			isGround = true;
-		}
 	}
 
 	void Player::OnCollisionExit(const Collider* other)
 	{
 		Object* otherObject{ other->GetObj() };
 		const Layer otherLayer{ otherObject->GetLayer() };
-
-		if (otherLayer == Layer::GROUND)
-		{
-			isGround = false;
-		}
 	}
 
 	void Player::Attack() const noexcept
@@ -101,7 +88,7 @@ namespace MomDra
 
 		if (KeyManager::GetInstance().GetKeyDown(Key::CTRL))
 		{
-			EventManager::GetInstance().Instantiate(new Projectile{ GetPos() + forward * 5.0f, Vector2{50.0f, 50.0f}, Layer::PROJECTILE });
+			EventManager::GetInstance().Instantiate(new Projectile{ GetPos() + forward * 5.0f, Vector2{10.0f, 10.0f}, forward, Layer::Projectile });
 		}
 	}
 

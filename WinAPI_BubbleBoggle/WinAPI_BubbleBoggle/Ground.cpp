@@ -25,24 +25,36 @@ namespace MomDra
 		Collider* thisCollider{ GetCollider() };
 		RigidBody* rigid{ otherObj->GetRigidBody() };
 
+		float yPos{ thisCollider->GetFinalPos().Y - thisCollider->GetScale().Y / 2.0f - other->GetScale().Y / 2.0f + 0.01f };
+
 		switch (otherLayer)
 		{
-		case Layer::PLAYER:
+		case Layer::Player:
 		{
 			// rigidbody 쪽에 땅이라고 설정!
+
+			// 옆면 무시
 			if (std::abs(other->GetFinalPos().X - thisCollider->GetFinalPos().X) >= other->GetScale().X / 2.0f + thisCollider->GetScale().X / 2.0f - 0.2f)
 				return;
 
 			rigid->SetGravity(false);
 			rigid->SetVelocity(Vector2{ rigid->GetVelocity().X, 0.0f });
-
-			float yPos{ thisCollider->GetFinalPos().Y - thisCollider->GetScale().Y / 2.0f - other->GetScale().Y / 2.0f + 0.01f };
-
 			otherObj->SetPos(Vector2{ otherObj->GetPos().X, yPos });
 		}
 			break;
-		case Layer::MONSTER:
-			
+
+		case Layer::Monster:
+			rigid->SetGravity(false);
+			rigid->SetVelocity(Vector2{ rigid->GetVelocity().X, 0.0f });
+
+			otherObj->SetPos(Vector2{ otherObj->GetPos().X, yPos });
+			break;
+
+		case Layer::Item:
+			rigid->SetGravity(false);
+			rigid->SetVelocity(Vector2{ rigid->GetVelocity().X, 0.0f });
+
+			otherObj->SetPos(Vector2{ otherObj->GetPos().X, yPos });
 			break;
 		}
 	}
@@ -56,7 +68,7 @@ namespace MomDra
 
 		switch (otherLayer)
 		{
-		case Layer::PLAYER:
+		case Layer::Player:
 		{
 			float left{ other->GetFinalPos().Y + other->GetScale().Y / 2.0f };
 			float right{ thisCollider->GetFinalPos().Y - thisCollider->GetScale().Y / 2.0f + 0.4f };
@@ -79,7 +91,7 @@ namespace MomDra
 			}
 		}
 			break;
-		case Layer::MONSTER:
+		case Layer::Monster:
 			break;
 		}
 	}
@@ -88,18 +100,15 @@ namespace MomDra
 	{
 		Object* otherObj{ other->GetObj() };
 		const Layer& otherLayer{ otherObj->GetLayer() };
+		RigidBody* rigid{ otherObj->GetRigidBody() };
 
 		switch (otherLayer)
 		{
-		case Layer::PLAYER:
-		{
-			Player* player{ dynamic_cast<Player*>(otherObj) };
-
-			RigidBody* rigid{ otherObj->GetRigidBody() };
+		case Layer::Player:
 			rigid->SetGravity(true);
-		}
 			break;
-		case Layer::MONSTER:
+		case Layer::Monster:
+			rigid->SetGravity(true);
 			break;
 		}
 	}

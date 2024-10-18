@@ -13,7 +13,7 @@ namespace MomDra
 		bool isGround;
 
 	public:
-		explicit Player(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::PLAYER);
+		explicit Player(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::Player) noexcept;
 
 		virtual void Update() noexcept override;
 		virtual void Render(const HDC& hdc) const noexcept override;
@@ -33,6 +33,7 @@ namespace MomDra
 		void Attack() const noexcept;
 		void Move();
 		void Jump();
+		void Ray();
 
 		void UpdateState();
 		void UpdateAnimation();

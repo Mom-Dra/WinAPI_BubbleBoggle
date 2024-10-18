@@ -48,7 +48,7 @@ namespace MomDra
 
 		inline void DeleteTile(TileRectangle* tilePtr) noexcept
 		{
-			std::vector<std::unique_ptr<Object>>& tileVec{ objects[static_cast<int>(Layer::TILE)] };
+			std::vector<std::unique_ptr<Object>>& tileVec{ objects[static_cast<int>(Layer::Tile)] };
 			auto it{ std::remove_if(tileVec.begin(), tileVec.end(), [tilePtr](const std::unique_ptr<Object>& obj) {return obj.get() == tilePtr; }) };
 			tileVec.erase(it, tileVec.end());
 		}
@@ -58,5 +58,7 @@ namespace MomDra
 		void CreateTileAtMouseDrag(unsigned int startXPos, unsigned int startYPos, unsigned int endXPos, unsigned int endYPos);
 		void LoadTile(const std::wstring& relativePath);
 		void LoadGround();
+
+		void LoadTileData();
 	};
 }

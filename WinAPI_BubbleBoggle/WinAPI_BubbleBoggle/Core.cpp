@@ -11,6 +11,7 @@
 #include "Camera.h"
 #include <iostream>
 #include "UIManager.h"
+#include "Ray.h"
 
 namespace MomDra
 {
@@ -49,6 +50,7 @@ namespace MomDra
     {
         TimeManager::GetInstance().Render();
         SceneManager::GetInstance().Render(memDC);
+        Ray::Render(hdc);
     }
 
     void Core::CreateBrushPen() noexcept
@@ -57,9 +59,10 @@ namespace MomDra
         brushes[static_cast <int> (BrushType::HOLLOW)] = static_cast<HBRUSH> (GetStockObject(HOLLOW_BRUSH));
 
         // red pen
-        pens[static_cast<int>(PenType::RED)] = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
-        pens[static_cast<int>(PenType::GREEN)] = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
-        pens[static_cast<int>(PenType::BLUE)] = CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
+        pens[static_cast<int>(PenType::Red)] = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
+        pens[static_cast<int>(PenType::Green)] = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
+        pens[static_cast<int>(PenType::Blue)] = CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
+        pens[static_cast<int>(PenType::Orange)] = CreatePen(PS_SOLID, 1, RGB(255, 165, 0));
     }
 
     Core::~Core() noexcept

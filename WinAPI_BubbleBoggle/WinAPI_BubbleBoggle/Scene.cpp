@@ -6,8 +6,9 @@
 #include <fstream>
 #include <iostream>
 #include "Ground.h"
-#include "UndoManager.h"
-
+#include "CommandManager.h"
+#include <commdlg.h>
+#include "Core.h"
 
 #ifdef max
 #undef max
@@ -80,7 +81,7 @@ namespace MomDra
 
 	void Scene::CreateTile(unsigned int xCount, unsigned int yCount)
 	{
-		DeleteLayerObject(Layer::TILE);
+		DeleteLayerObject(Layer::Tile);
 
 		tileXY.first = xCount;
 		tileXY.second = yCount;
@@ -90,7 +91,7 @@ namespace MomDra
 		{
 			for (unsigned int j{ 0 }; j < xCount; ++j)
 			{
-				AddObject(std::make_unique<TileRectangle>(Vector2{ static_cast<int> (j * TileRectangle::TILE_SIZE_X), static_cast<int>(i * TileRectangle::TILE_SIZE_Y) }, Vector2{ TileRectangle::TILE_SIZE_X, TileRectangle::TILE_SIZE_Y }, Layer::TILE));
+				AddObject(std::make_unique<TileRectangle>(Vector2{ static_cast<int> (j * TileRectangle::TILE_SIZE_X), static_cast<int>(i * TileRectangle::TILE_SIZE_Y) }, Vector2{ TileRectangle::TILE_SIZE_X, TileRectangle::TILE_SIZE_Y }, Layer::Tile));
 			}
 		}
 	}
@@ -100,7 +101,7 @@ namespace MomDra
 		Vector2 pos{ static_cast<float>(xPos), static_cast<float>(yPos) };
 		TileRectangle::AddTile(pos, TileRectangle::TILE_SIZE);
 
-		AddObject(std::make_unique<TileRectangle>(TileRectangle::GetRealTilePos(xPos, yPos), TileRectangle::TILE_SIZE, Layer::TILE));
+		AddObject(std::make_unique<TileRectangle>(TileRectangle::GetRealTilePos(xPos, yPos), TileRectangle::TILE_SIZE, Layer::Tile));
 	}
 
 	void Scene::CreateTileAtMouseDrag(unsigned int startXPos, unsigned int startYPos, unsigned int endXPos, unsigned int endYPos)
@@ -154,7 +155,7 @@ namespace MomDra
 
 		for (const TileRectangle::TileInfo& tileInfo : tileVec)
 		{
-			AddObject(std::make_unique<TileRectangle>(TileRectangle::GetRealTilePos(tileInfo.pos), tileInfo.scale, Layer::TILE));
+			AddObject(std::make_unique<TileRectangle>(TileRectangle::GetRealTilePos(tileInfo.pos), tileInfo.scale, Layer::Tile));
 			std::cout << "Add Tile: " << tileInfo << std::endl;
 		}
 
@@ -167,7 +168,40 @@ namespace MomDra
 
 		for (const TileRectangle::TileInfo& tileInfo : tileVec)
 		{
-			AddObject(std::make_unique<Ground>(TileRectangle::GetRealTilePos(tileInfo.pos), tileInfo.scale, Layer::GROUND));
+			AddObject(std::make_unique<Ground>(TileRectangle::GetRealTilePos(tileInfo.pos), tileInfo.scale, Layer::Ground));
+		}
+	}
+
+	void Scene::LoadTileData()
+	{
+		OPENFILENAME ofn = {};
+
+		std::wstring name;
+		name.resize(256);
+
+		ofn.lStructSize = sizeof(OPENFILENAME);
+		ofn.hwndOwner = Core::GetInstance().GetMainHwnd();
+		ofn.lpstrFile = &name[0];
+		ofn.nMaxFile = static_cast<DWORD>(name.size());
+		ofn.lpstrFilter = L"ALL\0*.*\0Tile\0*.tile\0";
+		ofn.nFilterIndex = 0;
+		ofn.lpstrFileTitle = nullptr;
+		ofn.nMaxFileTitle = 0;
+
+		std::wstring tilePath{ PathManager::GetContentPath() };
+		tilePath.append(L"\\tile");
+
+		ofn.lpstrInitialDir = tilePath.data();
+		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+		// Modal 방식
+		// 그 해당 창이 포커싱이 되고, 나머지는 동작하지 않는다
+		if (GetOpenFileName(&ofn))
+		{
+			std::wstring relativePath{ PathManager::GetRelativePath(name) };
+			LoadTile(relativePath);
+
+			std::wcout << "Load File Complete: " << name << std::endl;
 		}
 	}
 }

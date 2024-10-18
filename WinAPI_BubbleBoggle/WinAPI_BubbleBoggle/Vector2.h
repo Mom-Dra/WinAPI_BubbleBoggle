@@ -43,6 +43,7 @@ namespace CK
 		inline bool EqualsInTolerance(const Vector2& InVector, float InTolerance = std::numeric_limits<float>::epsilon()) const;
 		inline constexpr float Max() const;
 		inline constexpr float Dot(const Vector2& InVector) const;
+		inline constexpr float Cross(const Vector2& other) const;
 		inline float Angle() const;
 		inline float AngleInDegree() const;
 		inline Vector2 ToPolarCoordinate() const;
@@ -180,6 +181,11 @@ namespace CK
 	inline constexpr float Vector2::Dot(const Vector2& InVector) const
 	{
 		return X * InVector.X + Y * InVector.Y;
+	}
+
+	inline constexpr float Vector2::Cross(const Vector2& other) const
+	{
+		return X * other.Y - Y * other.X;
 	}
 
 	inline float Vector2::Angle() const
