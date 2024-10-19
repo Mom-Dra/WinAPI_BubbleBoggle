@@ -1,6 +1,6 @@
 #include "Projectile.h"
 #include "TimeManager.h"
-#include <coroutine>
+#include "Monster.h"
 
 namespace MomDra
 {
@@ -32,7 +32,11 @@ namespace MomDra
 		switch (otherLayer)
 		{
 		case Layer::Monster:
+		{
+			Monster* monster{ dynamic_cast<Monster*>(otherObject) };
+
 			projectile.Destroy();
+		}
 			break;
 		}
 	}

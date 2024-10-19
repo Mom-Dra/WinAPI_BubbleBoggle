@@ -86,15 +86,9 @@ namespace MomDra
 			CreateCollider(scale);
 		}
 
-		inline Vector2 GetInitialDir() const noexcept
-		{
-			return initialDir;
-		}
+		inline Vector2 GetInitialDir() const noexcept { return initialDir; }
 
-		inline virtual void Update() noexcept override
-		{
-			currState->Update(*this);
-		}
+		inline virtual void Update() noexcept override { currState->Update(*this); }
 
 		inline virtual void Render(const HDC& hdc) const noexcept override
 		{
@@ -107,19 +101,14 @@ namespace MomDra
 			currState->OnCollisionEnter(*this, other);
 		}
 
-		inline void ChangeToAttackState()
-		{
-			currState = &attackState;
-		}
+		inline bool IsAttackState() const noexcept { return currState == &attackState; }
 
-		inline void ChangeToMovingState()
-		{
-			currState = &movingState;
-		}
+		inline void ChangeToAttackState() { currState = &attackState; }
+		inline void ChangeToMovingState() { currState = &movingState; }
 
 		inline virtual std::unique_ptr<Object> Clone() const
 		{
-			return std::make_unique< Projectile>(*this);
+			return std::make_unique<Projectile>(*this);
 		}
 	};
 }

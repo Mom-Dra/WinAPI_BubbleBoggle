@@ -28,12 +28,6 @@ namespace MomDra
 	class MonsterMoveState : public MonsterState
 	{
 	private:
-		static constexpr inline float ChangeDirTime{ 3.0f };
-		static constexpr inline int ChangeDirPossibility{ 20 };
-		static constexpr inline float speed{ 150.0f };
-		static constexpr inline float playerForwardRayDistance{ 50.0f };
-		static constexpr inline float groundRayDistance{ 30.0f };
-
 		float time{ 0.0f };
 
 	public:
@@ -88,7 +82,6 @@ namespace MomDra
 	class MonsterHittedState : public MonsterState
 	{
 	private:
-		static constexpr inline float speed{ 100.0f };
 		float time{ 0.0f };
 
 	public:
@@ -104,6 +97,21 @@ namespace MomDra
 		MonsterHittedState& operator=(const MonsterHittedState&& other) = delete;
 	};
 
+	struct MonsterSetting
+	{
+		static constexpr inline float ChangeDirTime{ 3.0f };
+		static constexpr inline int ChangeDirPossibility{ 20 };
+		static constexpr inline float speed{ 150.0f };
+		static constexpr inline float jumpPower{ 300.0f };
+		static constexpr inline float playerForwardRayDistance{ 50.0f };
+
+		// 정면에 땅이 있는지 체크, 나중에 Wall로 바꿔야 한다
+		static constexpr inline float groundRayDistance{ 30.0f };
+
+		// HittedState
+		static constexpr inline float hittedSpeed{ 100.0f };
+	};
+
 	class Monster : public Object
 	{
 	private:
@@ -115,35 +123,29 @@ namespace MomDra
 
 		// 후에 Object로 빼도 괜찮을 듯
 		Vector2 forwardDir{ Vector2::UnitX };
-		Vector2 upDir{ Vector2{1.0f, -1.0f} };
+		Vector2 upDir{ Vector2{0.0f, -1.0f} };
 
-		Player* player;
+		Player* player{ nullptr };
 
 	public:
 		explicit Monster(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::Monster);
 
 		inline virtual void Update() noexcept override { currState->Update(*this); }
-
 		inline virtual void OnCollisionEnter(const Collider* other) override { currState->OnCollisionEnter(*this, other); }
 
 		inline Player* GetPlayer() const noexcept { return player; }
-		inline const Vector2 GetForwardDir() const noexcept { return forwardDir; }
-		inline const Vector2 GetUpDir() const noexcept { return upDir; }
+		inline const Vector2& GetForwardDir() const noexcept { return forwardDir; }
+		inline const Vector2& GetUpDir() const noexcept { return upDir; }
 
 		inline void SetPlayer(Player* player) noexcept { this->player = player; }
 		inline void SetForwardDir(const Vector2 forwardDir) noexcept { this->forwardDir = forwardDir; }
 		inline void SetUpDir(const Vector2 forwardDir) noexcept { this->upDir = upDir; }
 
-		inline void ChangeDir() noexcept
-		{
-			RigidBody* rigid{ GetRigidBody() };
-			Vector2 velocity{ rigid->GetVelocity() };
-			velocity.X = -velocity.X;
-			rigid->SetVelocity(velocity);
+		void ChangeDir() noexcept;
+		void GetintoProjectile() noexcept;
 
-			forwardDir = -forwardDir;
-			upDir.X = -upDir.X;
-		}
+		inline void MoveForward(float speed) const noexcept { GetRigidBody()->AddForce(forwardDir * speed); }
+		inline void Jump() const noexcept { GetRigidBody()->AddVelocity(Vector2(0.0f, -MonsterSetting::jumpPower)); }
 
 		inline void ChangeToMoveState() { currState = &moveState; }
 		inline void ChangeToTraceState() { currState = &traceState; }

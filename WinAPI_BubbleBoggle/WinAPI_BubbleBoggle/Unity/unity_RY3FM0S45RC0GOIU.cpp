@@ -38,6 +38,9 @@
 #include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\ImageObject.cpp"
 
 
+#include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Item.cpp"
+
+
 #include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\KeyManager.cpp"
 
 
@@ -57,6 +60,12 @@
 
 
 #include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Projectile.cpp"
+
+
+#include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Random.cpp"
+
+
+#include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Ray.cpp"
 
 
 #include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\TileRectangle.cpp"
@@ -101,7 +110,7 @@
 #include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\UIManager.cpp"
 
 
-#include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\UndoManager.cpp"
+#include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\CommandManager.cpp"
 
 
 #include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Vector2.cpp"

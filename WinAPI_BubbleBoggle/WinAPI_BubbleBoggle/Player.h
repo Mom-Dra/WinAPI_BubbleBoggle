@@ -33,7 +33,6 @@ namespace MomDra
 		void Attack() const noexcept;
 		void Move();
 		void Jump();
-		void Ray();
 
 		void UpdateState();
 		void UpdateAnimation();
