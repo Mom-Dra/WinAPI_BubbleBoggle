@@ -1,5 +1,6 @@
 #include "Ground.h"
 #include "Player.h"
+#include "Monster.h"
 
 namespace MomDra
 {
@@ -37,6 +38,10 @@ namespace MomDra
 			if (std::abs(other->GetFinalPos().X - thisCollider->GetFinalPos().X) >= other->GetScale().X / 2.0f + thisCollider->GetScale().X / 2.0f - 0.2f)
 				return;
 
+			// 아래에서 위로 올라가는 경우 무시!
+			if (rigid->GetVelocity().Y < 0.0f && thisCollider->GetFinalPos().Y < other->GetFinalPos().Y) return;
+
+
 			rigid->SetGravity(false);
 			rigid->SetVelocity(Vector2{ rigid->GetVelocity().X, 0.0f });
 			otherObj->SetPos(Vector2{ otherObj->GetPos().X, yPos });
@@ -44,9 +49,16 @@ namespace MomDra
 			break;
 
 		case Layer::Monster:
+
+			// 아래서 위로 점프 할 때
+			if (rigid->GetVelocity().Y < 0.0f && thisCollider->GetFinalPos().Y < other->GetFinalPos().Y) return;
+
+			// 몬스터가 위에 있을 때
+			if (other->GetFinalPos().Y < thisCollider->GetFinalPos().Y)
+				dynamic_cast<Monster*>(otherObj)->SetOnGround(true);
+
 			rigid->SetGravity(false);
 			rigid->SetVelocity(Vector2{ rigid->GetVelocity().X, 0.0f });
-
 			otherObj->SetPos(Vector2{ otherObj->GetPos().X, yPos });
 			break;
 
@@ -108,7 +120,8 @@ namespace MomDra
 			rigid->SetGravity(true);
 			break;
 		case Layer::Monster:
-			rigid->SetGravity(true);
+			rigid->SetGravity(true);	
+			dynamic_cast<Monster*>(otherObj)->SetOnGround(false);
 			break;
 		}
 	}

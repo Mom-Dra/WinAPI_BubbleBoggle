@@ -1,6 +1,7 @@
 #pragma once
 #include "Object.h"
 #include "AI.h"
+#include "Ray.h"
 
 namespace MomDra
 {
@@ -23,12 +24,15 @@ namespace MomDra
 	public:
 		virtual void Update(Monster& monster) noexcept = 0;
 		virtual void OnCollisionEnter(Monster& monster, const Collider* other) = 0;
+		virtual void OnCollisionExit(Monster& monster, const Collider* other) = 0;
 	};
 
 	class MonsterMoveState : public MonsterState
 	{
 	private:
-		float time{ 0.0f };
+		float changeDirTime{ 0.0f };
+		float jumpTime{ 0.0f };
+		float forwardJumpTime{ 0.0f };
 
 	public:
 		explicit MonsterMoveState() noexcept = default;
@@ -36,13 +40,14 @@ namespace MomDra
 
 		virtual void Update(Monster& monster) noexcept override;
 		virtual void OnCollisionEnter(Monster& monster, const Collider* other) override;
+		virtual void OnCollisionExit(Monster& monster, const Collider* other) override;
 
 	private:
 		explicit MonsterMoveState(const MonsterMoveState&& other) = delete;
 		MonsterMoveState& operator=(const MonsterMoveState& other) = delete;
 		MonsterMoveState& operator=(const MonsterMoveState&& other) = delete;
 
-		void Move(Monster& monster, float deltaTime) const noexcept;
+		void Move(Monster& monster, float deltaTime) noexcept;
 	};
 
 	class MonsterTraceState : public MonsterState
@@ -55,6 +60,10 @@ namespace MomDra
 
 		virtual void Update(Monster& monster) noexcept override;
 		virtual void OnCollisionEnter(Monster& monster, const Collider* other) override;
+		virtual void OnCollisionExit(Monster& monster, const Collider* other) override
+		{
+
+		}
 
 	private:
 		explicit MonsterTraceState(const MonsterTraceState&& other) = delete;
@@ -72,6 +81,7 @@ namespace MomDra
 
 		virtual void Update(Monster& monster) noexcept override;
 		virtual void OnCollisionEnter(Monster& monster, const Collider* other) override;
+		virtual void OnCollisionExit(Monster& monster, const Collider* other) override;
 
 	private:
 		explicit MonsterAngryState(const MonsterAngryState&& other) = delete;
@@ -90,6 +100,7 @@ namespace MomDra
 
 		virtual void Update(Monster& monster) noexcept override;
 		virtual void OnCollisionEnter(Monster& monster, const Collider* other) override;
+		virtual void OnCollisionExit(Monster& monster, const Collider* other) override {}
 
 	private:
 		explicit MonsterHittedState(const MonsterHittedState&& other) = delete;
@@ -104,6 +115,7 @@ namespace MomDra
 		static constexpr inline float speed{ 150.0f };
 		static constexpr inline float jumpPower{ 300.0f };
 		static constexpr inline float playerForwardRayDistance{ 50.0f };
+		static constexpr inline float jumpCoolDown{ 5.0f };
 
 		// 정면에 땅이 있는지 체크, 나중에 Wall로 바꿔야 한다
 		static constexpr inline float groundRayDistance{ 30.0f };
@@ -116,7 +128,7 @@ namespace MomDra
 	{
 	private:
 		MonsterMoveState moveState;
-		MonsterTraceState traceState;
+		//MonsterTraceState traceState;
 		MonsterAngryState angryState;
 		MonsterHittedState hittedState;
 		MonsterState* currState{ &moveState };
@@ -126,29 +138,36 @@ namespace MomDra
 		Vector2 upDir{ Vector2{0.0f, -1.0f} };
 
 		Player* player{ nullptr };
+		
+		bool onGround{ false };
 
 	public:
 		explicit Monster(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::Monster);
 
 		inline virtual void Update() noexcept override { currState->Update(*this); }
-		inline virtual void OnCollisionEnter(const Collider* other) override { currState->OnCollisionEnter(*this, other); }
+		virtual void OnCollisionEnter(const Collider* other) override;
+		virtual void OnCollisionExit(const Collider* other) override;
 
 		inline Player* GetPlayer() const noexcept { return player; }
 		inline const Vector2& GetForwardDir() const noexcept { return forwardDir; }
 		inline const Vector2& GetUpDir() const noexcept { return upDir; }
+		inline bool GetOnGround() const noexcept { return onGround; }
 
 		inline void SetPlayer(Player* player) noexcept { this->player = player; }
 		inline void SetForwardDir(const Vector2 forwardDir) noexcept { this->forwardDir = forwardDir; }
 		inline void SetUpDir(const Vector2 forwardDir) noexcept { this->upDir = upDir; }
+		inline void SetOnGround(bool onGround) noexcept { this->onGround = onGround; }
 
 		void ChangeDir() noexcept;
 		void GetintoProjectile() noexcept;
 
 		inline void MoveForward(float speed) const noexcept { GetRigidBody()->AddForce(forwardDir * speed); }
-		inline void Jump() const noexcept { GetRigidBody()->AddVelocity(Vector2(0.0f, -MonsterSetting::jumpPower)); }
+		inline void Jump() const noexcept { GetRigidBody()->AddVelocity(Vector2{ 0.0f, -MonsterSetting::jumpPower }); }
+		inline void JumpForward() const noexcept { GetRigidBody()->AddVelocity(Vector2{ forwardDir.X * MonsterSetting::jumpPower, -MonsterSetting::jumpPower }); }
+		bool CanJump() const noexcept;
 
 		inline void ChangeToMoveState() { currState = &moveState; }
-		inline void ChangeToTraceState() { currState = &traceState; }
+		//inline void ChangeToTraceState() { currState = &traceState; }
 		inline void ChangeToAngryState() { currState = &angryState; }
 		inline void ChangeToHittedState() { currState = &hittedState; }
 

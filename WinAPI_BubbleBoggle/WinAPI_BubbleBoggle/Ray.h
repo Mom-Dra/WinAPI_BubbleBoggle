@@ -25,7 +25,7 @@ namespace MomDra
 		static void DebugRay(const Vector2& start, const Vector2& dir);
 
 		static void Render(const HDC& hdc) noexcept;
-		
+
 	private:
 		explicit Ray() noexcept = delete;
 		explicit Ray(const Ray& other) = delete;

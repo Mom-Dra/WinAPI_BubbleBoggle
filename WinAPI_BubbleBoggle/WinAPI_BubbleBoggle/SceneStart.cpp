@@ -39,6 +39,7 @@ namespace MomDra
 		CollisionManager::GetInstance().CheckLayer(Layer::Monster, Layer::Ground);
 		CollisionManager::GetInstance().CheckLayer(Layer::Item, Layer::Ground);
 		CollisionManager::GetInstance().CheckLayer(Layer::Item, Layer::Player);
+		CollisionManager::GetInstance().CheckLayer(Layer::Player, Layer::Wall);
 
 		// Camera Look ÁöÁ¡
 		Vector2 resolution{ Core::GetInstance().GetResolution() };

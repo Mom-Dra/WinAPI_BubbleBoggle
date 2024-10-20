@@ -9,6 +9,7 @@
 #include "CommandManager.h"
 #include <commdlg.h>
 #include "Core.h"
+#include "Wall.h"
 
 #ifdef max
 #undef max
@@ -104,7 +105,7 @@ namespace MomDra
 		AddObject(std::make_unique<TileRectangle>(TileRectangle::GetRealTilePos(xPos, yPos), TileRectangle::TILE_SIZE, Layer::Tile));
 	}
 
-	void Scene::CreateTileAtMouseDrag(unsigned int startXPos, unsigned int startYPos, unsigned int endXPos, unsigned int endYPos)
+	void Scene::CreateTileAtMouseDrag(unsigned int startXPos, unsigned int startYPos, unsigned int endXPos, unsigned int endYPos, bool isWall)
 	{
 		Vector2 pos{ static_cast<float> ((startXPos + endXPos) / 2.0f), static_cast<float> ((startYPos + endYPos) / 2.0f) };
 
@@ -113,11 +114,11 @@ namespace MomDra
 
 		Vector2 scale{ scaleX, scaleY };
 
-		TileRectangle::AddTile(pos, scale);
+		//TileRectangle::AddTile(pos, scale);
 
 		//AddObject(std::make_unique<TileRectangle>(TileRectangle::GetRealTilePos(pos), scale, Layer::TILE));
 
-		CommandManager::Execute(std::make_unique<AddTileCommand>(this, TileRectangle::TileInfo{ pos, scale }));
+		CommandManager::Execute(std::make_unique<AddTileCommand>(this, TileRectangle::TileInfo{ pos, scale, isWall }));
 	}
 
 	void Scene::LoadTile(const std::wstring& relativePath)
@@ -156,6 +157,7 @@ namespace MomDra
 		for (const TileRectangle::TileInfo& tileInfo : tileVec)
 		{
 			AddObject(std::make_unique<TileRectangle>(TileRectangle::GetRealTilePos(tileInfo.pos), tileInfo.scale, Layer::Tile));
+
 			std::cout << "Add Tile: " << tileInfo << std::endl;
 		}
 
@@ -168,7 +170,10 @@ namespace MomDra
 
 		for (const TileRectangle::TileInfo& tileInfo : tileVec)
 		{
-			AddObject(std::make_unique<Ground>(TileRectangle::GetRealTilePos(tileInfo.pos), tileInfo.scale, Layer::Ground));
+			if (tileInfo.isWall)
+				AddObject(std::make_unique<Wall>(TileRectangle::GetRealTilePos(tileInfo.pos), tileInfo.scale, Layer::Wall));
+			else
+				AddObject(std::make_unique<Ground>(TileRectangle::GetRealTilePos(tileInfo.pos), tileInfo.scale, Layer::Ground));
 		}
 	}
 

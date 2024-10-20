@@ -15,6 +15,7 @@ namespace MomDra
 		{
 			Vector2 pos;
 			Vector2 scale;
+			bool isWall;
 
 			bool operator==(const TileInfo& other)
 			{
@@ -23,7 +24,7 @@ namespace MomDra
 
 			friend std::ostream& operator<<(std::ostream& os, const TileInfo& tile)
 			{
-				os << "Position: " << tile.pos << ", Scale: " << tile.scale;
+				os << "Position: " << tile.pos << ", Scale: " << tile.scale << ", IsWall: " << tile.isWall;
 				return os;
 			}
 		};
@@ -53,7 +54,7 @@ namespace MomDra
 		}
 		static inline void AddTile(const TileInfo& tileInfo)
 		{
-			tileVec.emplace_back(tileInfo);
+ 			tileVec.emplace_back(tileInfo);
 		}
 
 		static inline void RemoveTile(const TileInfo& tileInfo)

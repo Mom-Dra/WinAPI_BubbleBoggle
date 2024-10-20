@@ -33,6 +33,23 @@ namespace MomDra
 		ChangeToHittedState();
 	}
 
+	bool Monster::CanJump() const noexcept
+	{
+		Collider* collider;
+		Ray::DebugRay(GetPos(), upDir * MonsterSetting::playerForwardRayDistance);
+		return Ray::RayCast(GetPos(), upDir * MonsterSetting::playerForwardRayDistance, Layer::Ground, collider);
+	}
+
+	void Monster::OnCollisionEnter(const Collider* other)
+	{
+		currState->OnCollisionEnter(*this, other);
+	}
+
+	void Monster::OnCollisionExit(const Collider* other)
+	{
+		currState->OnCollisionExit(*this, other);
+	}
+
 	// 땅이 끝날 때 떨어질지, 앞으로 점프할지, 위로 점프할지 결정한다!!
 	// 플레이어가 위에 있으면 점프, 아래 있으면 떨어지기, 같은 높이에 있으면 앞으로 점프 하자!
 	// 그냥 걸어가다가도 위로 점프 가능하면 점프 한다!
@@ -42,23 +59,24 @@ namespace MomDra
 	void MonsterMoveState::Update(Monster& monster) noexcept
 	{
 		static const TimeManager& timeManager{ TimeManager::GetInstance() };
+
 		float deltaTime{ timeManager.GetDeltaTime() };
 
 		const Vector2& pos{ monster.GetPos() };
 
-		time += deltaTime;
+		changeDirTime += deltaTime;
 
 		// Move
 		Move(monster, deltaTime);
 
-		if (time >= MonsterSetting::ChangeDirTime)
+		if (changeDirTime >= MonsterSetting::ChangeDirTime)
 		{
 			if (Random::GetPossibility(MonsterSetting::ChangeDirPossibility))
 			{
 				monster.ChangeDir();
 			}
 
-			time = 0.0f;
+			changeDirTime = 0.0f;
 		}
 	}
 
@@ -81,7 +99,14 @@ namespace MomDra
 		}
 	}
 
-	void MonsterMoveState::Move(Monster& monster, float deltaTime) const noexcept
+	void MonsterMoveState::OnCollisionExit(Monster& monster, const Collider* other)
+	{
+		Object* otherObject{ other->GetObj() };
+		const Layer& otherLayer{ otherObject->GetLayer() };
+		
+	}
+
+	void MonsterMoveState::Move(Monster& monster, float deltaTime) noexcept
 	{
 		const Vector2& pos{ monster.GetPos() };
 
@@ -95,6 +120,7 @@ namespace MomDra
 
 		Ray::DebugRay(pos, monster.GetForwardDir() * MonsterSetting::playerForwardRayDistance);
 		Ray::DebugRay(pos, monster.GetUpDir() * MonsterSetting::playerForwardRayDistance);
+		Ray::DebugRay(pos, Vector2::UnitY * MonsterSetting::groundRayDistance);
 
 		Collider* collider;
 		if (Ray::RayCast(pos, monster.GetForwardDir() * MonsterSetting::playerForwardRayDistance, Layer::Player, collider))
@@ -104,20 +130,30 @@ namespace MomDra
 			// trace 상태는 일단 없는걸로 해보자!
 			//monster.ChangeToTraceState();
 		}
-		else if (Ray::RayCast(pos, monster.GetForwardDir() * MonsterSetting::groundRayDistance, Layer::Ground, collider))
+		else if (Ray::RayCast(pos, monster.GetForwardDir() * MonsterSetting::groundRayDistance, Layer::Wall, collider))
 		{
 			monster.ChangeDir();
 		}
 
-		if (Ray::RayCast(pos, monster.GetUpDir() * MonsterSetting::playerForwardRayDistance, Layer::Ground, collider))
+		jumpTime += deltaTime;
+		if (monster.CanJump() && jumpTime >= MonsterSetting::jumpCoolDown)
 		{
-			if (Random::GetPossibility(0))
+			if (Random::GetPossibility(50))
 			{
 				// Jump 로직, 떨어지는 도중에 발생할 수도 있음
-				
+				jumpTime = 0.0f;
 				monster.Jump();
+			}
+		}
 
-				//rigid->AddVelocity(Vector2(0.0f, -300.0f));
+		// JumpForward
+		forwardJumpTime += deltaTime;
+		if (!Ray::RayCast(pos, Vector2::UnitY * MonsterSetting::groundRayDistance, Layer::Ground, collider) && monster.GetOnGround() && forwardJumpTime >= MonsterSetting::jumpCoolDown)
+		{
+			if (Random::GetPossibility(50))
+			{
+				forwardJumpTime = 0.0f;
+				monster.JumpForward();
 			}
 		}
 	}
@@ -209,6 +245,11 @@ namespace MomDra
 	}
 
 	void MonsterAngryState::OnCollisionEnter(Monster& monster, const Collider* other)
+	{
+
+	}
+
+	void MonsterAngryState::OnCollisionExit(Monster& monster, const Collider* other)
 	{
 
 	}

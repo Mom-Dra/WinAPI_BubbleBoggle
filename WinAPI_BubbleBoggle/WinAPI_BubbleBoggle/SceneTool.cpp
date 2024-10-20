@@ -34,29 +34,13 @@ namespace MomDra
 
 		SetTileIndex();
 
-		
-
-		static unsigned int startXPos;
-		static unsigned int startYPos;
-		static const Vector2& resolution{ Core::GetInstance().GetResolution() };
-
-		if (KeyManager::GetInstance().GetKeyDown(Key::LBUTTON))
+		if (KeyManager::GetInstance().GetKey(Key::CTRL))
 		{
-			const Vector2& mousePos{ KeyManager::GetInstance().GetMousePos() };
-			
-			startXPos = { static_cast<unsigned int>(mousePos.X / TileRectangle::TILE_SIZE_X) };
-			startYPos = { static_cast<unsigned int> (mousePos.Y / TileRectangle::TILE_SIZE_Y) };
-
-			//CreateTileAtMousePos(startXPos, startYPos);
+			MakeTileInput(true);
 		}
-		else if (KeyManager::GetInstance().GetKeyUp(Key::LBUTTON))
+		else
 		{
-			const Vector2& mousePos{ KeyManager::GetInstance().GetMousePos() };
-
-			unsigned int endXPos = { static_cast<unsigned int>(mousePos.X / TileRectangle::TILE_SIZE_X) };
-			unsigned int endYPos = { static_cast<unsigned int> (mousePos.Y / TileRectangle::TILE_SIZE_Y) };
-
-			CreateTileAtMouseDrag(startXPos, startYPos, endXPos, endYPos);
+			MakeTileInput(false);
 		}
 
 		if (KeyManager::GetInstance().GetKeyDown(Key::SPACE))
@@ -114,6 +98,32 @@ namespace MomDra
 	void SceneTool::Exit() noexcept
 	{
 		DeleteAllObject();
+	}
+
+	void SceneTool::MakeTileInput(bool isWall) noexcept
+	{
+		static unsigned int startXPos;
+		static unsigned int startYPos;
+		static const Vector2& resolution{ Core::GetInstance().GetResolution() };
+
+		if (KeyManager::GetInstance().GetKeyDown(Key::LBUTTON))
+		{
+			const Vector2& mousePos{ KeyManager::GetInstance().GetMousePos() };
+
+			startXPos = { static_cast<unsigned int>(mousePos.X / TileRectangle::TILE_SIZE_X) };
+			startYPos = { static_cast<unsigned int> (mousePos.Y / TileRectangle::TILE_SIZE_Y) };
+
+			//CreateTileAtMousePos(startXPos, startYPos);
+		}
+		else if (KeyManager::GetInstance().GetKeyUp(Key::LBUTTON))
+		{
+			const Vector2& mousePos{ KeyManager::GetInstance().GetMousePos() };
+
+			unsigned int endXPos = { static_cast<unsigned int>(mousePos.X / TileRectangle::TILE_SIZE_X) };
+			unsigned int endYPos = { static_cast<unsigned int> (mousePos.Y / TileRectangle::TILE_SIZE_Y) };
+
+			CreateTileAtMouseDrag(startXPos, startYPos, endXPos, endYPos, isWall);
+		}
 	}
 
 	void SceneTool::SetTileIndex() const noexcept

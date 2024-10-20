@@ -55,7 +55,7 @@ namespace MomDra
 
 		void CreateTile(unsigned int xCount, unsigned int yCount);
 		void CreateTileAtMousePos(unsigned int xPos, unsigned int yPos);
-		void CreateTileAtMouseDrag(unsigned int startXPos, unsigned int startYPos, unsigned int endXPos, unsigned int endYPos);
+		void CreateTileAtMouseDrag(unsigned int startXPos, unsigned int startYPos, unsigned int endXPos, unsigned int endYPos, bool isWall);
 		void LoadTile(const std::wstring& relativePath);
 		void LoadGround();
 

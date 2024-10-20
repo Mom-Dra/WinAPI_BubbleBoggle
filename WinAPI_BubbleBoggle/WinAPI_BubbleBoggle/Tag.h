@@ -10,6 +10,7 @@ namespace MomDra
 		Projectile,
 		Tile,
 		Ground,
+		Wall,
 		Item,
 		UI,
 		LAST

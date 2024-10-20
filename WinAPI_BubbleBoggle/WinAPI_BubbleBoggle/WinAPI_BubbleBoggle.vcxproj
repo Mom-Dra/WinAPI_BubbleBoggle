@@ -176,6 +176,7 @@
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="CommandManager.h" />
     <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Wall.h" />
     <ClInclude Include="WinAPI_BubbleBoggle.h" />
   </ItemGroup>
   <ItemGroup>
@@ -218,6 +219,7 @@
     <ClCompile Include="UIManager.cpp" />
     <ClCompile Include="CommandManager.cpp" />
     <ClCompile Include="Vector2.cpp" />
+    <ClCompile Include="Wall.cpp" />
     <ClCompile Include="WinAPI_BubbleBoggle.cpp" />
   </ItemGroup>
   <ItemGroup>

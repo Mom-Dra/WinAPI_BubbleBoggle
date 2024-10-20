@@ -21,6 +21,7 @@ namespace MomDra
 		virtual void Enter() noexcept override;
 		virtual void Exit() noexcept override;
 
+		void MakeTileInput(bool isWall) noexcept;
 		void SetTileIndex() const noexcept;
 		void SaveTile(const std::wstring& path) const;
 		void SaveTileData();

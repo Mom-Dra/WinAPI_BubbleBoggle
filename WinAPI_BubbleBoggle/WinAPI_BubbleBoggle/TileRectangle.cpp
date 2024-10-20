@@ -18,6 +18,7 @@ namespace MomDra
 
         for (const TileInfo& tileInfo : tileVec)
         {
+            out << tileInfo.isWall << ' ';
             out << tileInfo.pos.X << ' ' << tileInfo.pos.Y << ' ';
             out << tileInfo.scale.X << ' ' << tileInfo.scale.Y << '\n';
 
@@ -39,6 +40,7 @@ namespace MomDra
         {
             TileInfo tileInfo;
 
+            in >> tileInfo.isWall;
             in >> tileInfo.pos.X >> tileInfo.pos.Y;
             in >> tileInfo.scale.X >> tileInfo.scale.Y;
 
