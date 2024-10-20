@@ -45,7 +45,6 @@ namespace MomDra
 
 		UpdateState();
 
-		prevState = currState;
 	}
 
 	void Player::Render(const HDC& hdc) const noexcept
@@ -139,25 +138,5 @@ namespace MomDra
 
 		// 아무키가 눌리지 않았을 때 Idle로 변경해야지!
 		// 속도에 따른 애니메이션도 여기서 해보자!
-	}
-
-	void Player::UpdateAnimation()
-	{
-		if (prevState == currState)
-			return;
-
-		switch (currState)
-		{
-		case MomDra::PlayerState::IDLE:
-			break;
-		case MomDra::PlayerState::WALK:
-			break;
-		case MomDra::PlayerState::ATTACK:
-			break;
-		case MomDra::PlayerState::HIT:
-			break;
-		case MomDra::PlayerState::DEAD:
-			break;
-		}
 	}
 }

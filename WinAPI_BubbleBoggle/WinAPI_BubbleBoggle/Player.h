@@ -6,9 +6,6 @@ namespace MomDra
 	class Player : public Object
 	{
 	private:
-		PlayerState currState;
-		PlayerState prevState;
-
 		Vector2 forward;
 		bool isGround;
 

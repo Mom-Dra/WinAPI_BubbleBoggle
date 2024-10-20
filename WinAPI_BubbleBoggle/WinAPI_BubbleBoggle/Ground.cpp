@@ -51,7 +51,7 @@ namespace MomDra
 		case Layer::Monster:
 
 			// 아래서 위로 점프 할 때
-			if (rigid->GetVelocity().Y < 0.0f && thisCollider->GetFinalPos().Y < other->GetFinalPos().Y) return;
+			if (thisCollider->GetFinalPos().Y < other->GetFinalPos().Y) return;
 
 			// 몬스터가 위에 있을 때
 			if (other->GetFinalPos().Y < thisCollider->GetFinalPos().Y)
