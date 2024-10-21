@@ -4,6 +4,7 @@
 #include "Ray.h"
 #include "Player.h"
 #include "Projectile.h"
+#include "ResourceManager.h"
 
 namespace MomDra
 {
@@ -11,6 +12,14 @@ namespace MomDra
 	{
 		CreateCollider(scale);
 		CreateRigidbody();
+		CreateAnimator();
+
+		Animator* animator{ GetAnimator() };
+		animator->CreateAnimation(L"Monster_Walk_Left", ResourceManager::GetInstance().LoadTexture(L"\\texture\\Enemy.bmp"),
+			Vector2{ 0.0f, 0.0f }, Vector2{ 72.0f / 4, 16.0f }, Vector2{ 72.0f / 4, 0.0f }, 0.1f, 4);
+		//animator->LoadAnimation(L"\\animation\\Player_Walk.anim");
+
+		animator->Play(L"Monster_Walk_Left", true);
 	}
 
 	void Monster::ChangeDir() noexcept

@@ -116,5 +116,8 @@
 #include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Vector2.cpp"
 
 
+#include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Wall.cpp"
+
+
 #include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle.cpp"
 

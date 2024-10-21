@@ -1,4 +1,5 @@
 #include "Animator.h"
+#include "PathManager.h"
 
 namespace MomDra
 {
@@ -57,5 +58,13 @@ namespace MomDra
 	{
 		currAnimation = FindAnimation(animationName);
 		this->repeat = repeat;
+	}
+
+	void Animator::LoadAnimation(const std::wstring& relativePath)
+	{
+		std::unique_ptr<Animation> animation{ std::make_unique<Animation>(this) };
+
+		animation->Load(relativePath);
+		animationMap.emplace(animation->GetName(), std::move(animation));
 	}
 }

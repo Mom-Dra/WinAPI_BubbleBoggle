@@ -22,19 +22,25 @@ namespace MomDra
 		/*std::wstring filePath{ PathManager::GetContentPath() };
 		filePath.append(L"\\texture\\player2.bmp");*/
 
-		/*GetAnimator()->CreateAnimation(L"WALK", ResourceManager::GetInstance().LoadTexture(filePath), Vector2{ 0.0f, 710.0f / 8.0f * 4.0f }, Vector2{ 820.0f / 10.0f, 710.0f / 8.0f }, Vector2{ 820.0f / 10.0f, 0.0f }, 0.1f, 10);
-		GetAnimator()->Play(L"WALK", true);*/
+		//GetAnimator()->CreateAnimation(L"WALK", ResourceManager::GetInstance().LoadTexture(filePath), Vector2{ 0.0f, 710.0f / 8.0f * 4.0f }, Vector2{ 820.0f / 10.0f, 710.0f / 8.0f }, Vector2{ 820.0f / 10.0f, 0.0f }, 0.1f, 10);
+		// GetAnimator()->Play(L"WALK", true);
 
 		// 여기서 애니메이션 만들어야 한다
 		Animator* animator{ GetAnimator() };
 		animator->CreateAnimation(L"WALK", ResourceManager::GetInstance().LoadTexture(L"\\texture\\player.bmp"), Vector2{ 0.0f, 0.0f }, Vector2{ 312.0f / 15.0f, 74.0f / 3.0f }, Vector2{ 312.0f / 15.0f, 0.0f }, 0.2f, 7);
+	
+		animator->FindAnimation(L"WALK")->Save(L"\\animation\\Player_Walk.anim");
+
+		animator->LoadAnimation(L"\\animation\\Player_Walk.anim");
 		animator->Play(L"WALK", true);
 
-		Animation* animation{ animator->FindAnimation(L"WALK") };
+		/*Animation* animation{ animator->FindAnimation(L"WALK") };
 		for (unsigned int i{ 0 }; i < animation->GetMaxFrame(); ++i)
 		{
-			animation->GetFrame(i).offSet = Vector2{ 0.0f, -20.0f };
-		}
+			animation->GetFrame(i).offSet = Vector2{ 0.0f, 20.0f };
+		}*/
+
+		
 	}
 
 	void Player::Update() noexcept
@@ -44,7 +50,6 @@ namespace MomDra
 		Attack();
 
 		UpdateState();
-
 	}
 
 	void Player::Render(const HDC& hdc) const noexcept
@@ -57,7 +62,7 @@ namespace MomDra
 		float halfScaleX{ scale.X / 2.0f };
 		float halfScaleY{ scale.Y / 2.0f };
 
-		Rectangle(hdc, static_cast<int>(renderPos.X - halfScaleX), static_cast<int>(renderPos.Y - halfScaleY), static_cast<int> (renderPos.X + halfScaleX), static_cast<int>(renderPos.Y + halfScaleY));
+		//Rectangle(hdc, static_cast<int>(renderPos.X - halfScaleX), static_cast<int>(renderPos.Y - halfScaleY), static_cast<int> (renderPos.X + halfScaleX), static_cast<int>(renderPos.Y + halfScaleY));
 
 		Object::Render(hdc);
 	}

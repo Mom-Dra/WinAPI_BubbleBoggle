@@ -5,6 +5,7 @@
 #include <numbers>
 #include <algorithm>
 #include <iostream>
+#include <fstream>
 
 #ifdef max
 #undef max
@@ -71,6 +72,8 @@ namespace CK
 
 	private:
 		inline friend std::ostream& operator<<(std::ostream& os, const Vector2& vector);
+		inline friend std::wofstream& operator<<(std::wofstream& wofs, const Vector2& vector);
+		inline friend std::wifstream& operator>>(std::wifstream& wifs, const Vector2& vector);
 	};
 
 	inline float Vector2::Size() const
@@ -257,5 +260,19 @@ namespace CK
 	{
 		os << '(' << vector.X << ", " << vector.Y << ')';
 		return os;
+	}
+
+	inline std::wofstream& operator<<(std::wofstream& wofs, const Vector2& vector)
+	{
+		wofs << vector.X << L' ' << vector.Y;
+		return wofs;
+	}
+
+	std::wifstream& operator>>(std::wifstream& wifs, Vector2& vector)
+	{
+		wifs >> vector.X;
+		wifs >> vector.Y;
+
+		return wifs;
 	}
 }

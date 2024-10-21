@@ -1,10 +1,18 @@
 #include "Animation.h"
 #include "Object.h"
 #include "Camera.h"
+#include <fstream>
+#include "PathManager.h"
+#include "ResourceManager.h"
 
 namespace MomDra
 {
-	Animation::Animation(const std::wstring& name, Animator* animator) noexcept : name{ name }, animator{ animator }, currFrame{ 0 }, time{ 0.0f }, isFinish{ false }
+	Animation::Animation(const std::wstring& name, Animator* animator, const Vector2 scale) noexcept : name{ name }, animator{ animator }, scale{ scale }, currFrame{ 0 }, time{ 0.0f }, isFinish{ false }
+	{
+
+	}
+
+	Animation::Animation(Animator* animator, const Vector2 scale) noexcept : animator{ animator }, scale{ scale }, currFrame{ 0 }, time{ 0.0f }, isFinish{ false }
 	{
 
 	}
@@ -45,7 +53,11 @@ namespace MomDra
 
 		pos = Camera::GetInstance().GetRenderPos(pos);
 
-		TransparentBlt(hdc, static_cast<int>(pos.X - slice.X / 2.0f), static_cast<int>(pos.Y - slice.Y / 2.0f), static_cast<int>(slice.X), static_cast<int>(slice.Y), texture->GetDC(), static_cast<int>(leftTop.X), static_cast<int>(leftTop.Y), static_cast<int>(slice.X), static_cast<int>(slice.Y), RGB(255, 255, 255));
+
+		TransparentBlt(hdc, static_cast<int>(pos.X - slice.X / 2.0f * scale.X), static_cast<int>(pos.Y - slice.Y / 2.0f * scale.Y), static_cast<int>(slice.X * scale.X), static_cast<int>(slice.Y * scale.Y), texture->GetDC(), texture->GetWidth() - static_cast<int>(leftTop.X) - static_cast<int>(slice.X), static_cast<int>(leftTop.Y), static_cast<int>(slice.X), static_cast<int>(slice.Y), RGB(255, 0, 255));
+		// Left ÄÚµå
+		TransparentBlt(hdc, static_cast<int>(pos.X - slice.X / 2.0f * scale.X), static_cast<int>(pos.Y - slice.Y / 2.0f * scale.Y), static_cast<int>(slice.X * scale.X), static_cast<int>(slice.Y * scale.Y), texture->GetDC(), texture->GetWidth() - static_cast<int>(leftTop.X) - static_cast<int>(slice.X), static_cast<int>(leftTop.Y), static_cast<int>(slice.X), static_cast<int>(slice.Y), RGB(255, 0, 255));
+		//TransparentBlt(hdc, static_cast<int>(pos.X - slice.X / 2.0f), static_cast<int>(pos.Y - slice.Y / 2.0f), static_cast<int>(slice.X), static_cast<int>(slice.Y), texture->GetDC(), static_cast<int>(leftTop.X), static_cast<int>(leftTop.Y), static_cast<int>(slice.X), static_cast<int>(slice.Y), RGB(255, 255, 255));
 	}
 
 	void Animation::Create(std::shared_ptr<Texture> texture, const Vector2& leftTop, const Vector2& sliceSize, const Vector2& step, float duration, unsigned int frameCount)
@@ -61,5 +73,49 @@ namespace MomDra
 
 			frames.emplace_back(frame);
 		}
+	}
+
+	void Animation::Save(const std::wstring& relativePath)
+	{	
+		std::wstring path{ PathManager::GetContentPath() };
+		path.append(relativePath);
+
+		std::wofstream out{ path, std::ios::binary };
+
+		out << name << L'\n';
+		out << frames.size() << L'\n';
+		
+		for (const AnimationFrame& frame : frames)
+			out << frame << L'\n';
+
+		out << texture->GetFilePath();
+	}
+
+	void Animation::Load(const std::wstring& relativePath)
+	{
+		std::wstring path{ PathManager::GetContentPath() };
+		path.append(relativePath);
+
+		std::wifstream in{ path, std::ios::binary };
+
+		in >> name;
+
+		unsigned int size;
+		in >> size;
+
+		frames.reserve(size);
+
+		for (unsigned int i{ 0 }; i < size; ++i)
+		{
+			AnimationFrame frame;
+			in >> frame;
+
+			frames.emplace_back(frame);
+		}
+
+		std::wstring textureKey;
+		in >> textureKey;
+
+		texture = ResourceManager::GetInstance().LoadTexture(textureKey);
 	}
 }

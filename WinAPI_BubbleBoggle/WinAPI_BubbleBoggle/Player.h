@@ -32,6 +32,6 @@ namespace MomDra
 		void Jump();
 
 		void UpdateState();
-		void UpdateAnimation();
+		//void UpdateAnimation();
 	};
 }
