@@ -34,6 +34,8 @@ namespace MomDra
 
 		Animation* FindAnimation(const std::wstring& animationName) const noexcept;
 		void CreateAnimation(const std::wstring& animationName, std::shared_ptr<Texture> texture, const Vector2& leftTop, const Vector2& sliceSize, const Vector2& step, float duration, unsigned int frameCount);
+		void CreateAnimation(const std::wstring& animationName, std::shared_ptr<Texture> texture, const Vector2& leftTop, const Vector2& sliceSize, const Vector2& step, const std::initializer_list<float>& durations, unsigned int frameCount);
+		void CreateAnimation(const std::wstring& animationName, std::shared_ptr<Texture> texture, const std::initializer_list<Vector2>& leftTops, const Vector2& sliceSize, const std::initializer_list<float>& durations, unsigned int frameCount);
 		void Play(const std::wstring& animationName, bool repeat) noexcept;
 
 		void LoadAnimation(const std::wstring& relativePath);

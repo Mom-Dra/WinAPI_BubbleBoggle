@@ -54,6 +54,30 @@ namespace MomDra
 		animationMap.emplace(animationName, std::move(animation));
 	}
 
+	void Animator::CreateAnimation(const std::wstring& animationName, std::shared_ptr<Texture> texture, const Vector2& leftTop, const Vector2& sliceSize, const Vector2& step, const std::initializer_list<float>& durations, unsigned int frameCount)
+	{
+		if (FindAnimation(animationName) != nullptr)
+			throw std::runtime_error{ "Duplicate key error: Animation already exists." };
+
+		std::unique_ptr<Animation> animation{ std::make_unique<Animation>(animationName, this) };
+
+		animation->Create(texture, leftTop, sliceSize, step, durations, frameCount);
+
+		animationMap.emplace(animationName, std::move(animation));
+	}
+
+	void Animator::CreateAnimation(const std::wstring& animationName, std::shared_ptr<Texture> texture, const std::initializer_list<Vector2>& leftTops, const Vector2& sliceSize, const std::initializer_list<float>& durations, unsigned int frameCount)
+	{
+		if (FindAnimation(animationName) != nullptr)
+			throw std::runtime_error{ "Duplicate key error: Animation already exists." };
+
+		std::unique_ptr<Animation> animation{ std::make_unique<Animation>(animationName, this) };
+
+		animation->Create(texture, leftTops, sliceSize, durations, frameCount);
+
+		animationMap.emplace(animationName, std::move(animation));
+	}
+
 	void Animator::Play(const std::wstring& animationName, bool repeat) noexcept
 	{
 		currAnimation = FindAnimation(animationName);

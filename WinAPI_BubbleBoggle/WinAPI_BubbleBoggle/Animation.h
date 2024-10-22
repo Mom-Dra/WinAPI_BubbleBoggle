@@ -39,7 +39,7 @@ namespace MomDra
 			wifs >> frame.slice;
 			wifs >> frame.offSet;
 			wifs >> frame.duration;
-			
+
 			return wifs;
 		}
 	};
@@ -57,13 +57,15 @@ namespace MomDra
 		bool isFinish;
 
 	public:
-		explicit Animation(const std::wstring& name, Animator* animator, const Vector2 scale = Vector2::One * 2) noexcept;
-		explicit Animation(Animator* animator, const Vector2 scale = Vector2::One * 2) noexcept;
+		explicit Animation(const std::wstring& name, Animator* animator, const Vector2& scale = Vector2::One * 2) noexcept;
+		explicit Animation(Animator* animator, const Vector2& scale = Vector2::One * 2) noexcept;
 
 		void Update() noexcept;
 		void Render(const HDC& hdc) const noexcept;
 
 		void Create(std::shared_ptr<Texture> texture, const Vector2& leftTop, const Vector2& sliceSize, const Vector2& step, float duration, unsigned int frameCount);
+		void Create(std::shared_ptr<Texture> texture, const Vector2& leftTop, const Vector2& sliceSize, const Vector2& step, const std::initializer_list<float>& durations, unsigned int frameCount);
+		void Create(std::shared_ptr<Texture> texture, const std::initializer_list<Vector2>& leftTops, const Vector2& sliceSize, const std::initializer_list<float>& durations, unsigned int frameCount);
 
 		inline const std::wstring& GetName() const noexcept { return name; }
 		inline bool IsFinish() const noexcept { return isFinish; }
