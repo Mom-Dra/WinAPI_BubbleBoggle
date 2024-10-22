@@ -4,6 +4,11 @@
 
 namespace MomDra
 {
+	void ProjectileAttackState::Enter(Projectile& projectile) noexcept
+	{
+
+	}
+
 	void ProjectileAttackState::Update(Projectile& projectile)
 	{
 		static const TimeManager& timeManager{ TimeManager::GetInstance() };
@@ -39,6 +44,11 @@ namespace MomDra
 		}
 			break;
 		}
+	}
+
+	void ProjectileMovingState::Enter(Projectile& projectile) noexcept
+	{
+
 	}
 
 	void ProjectileMovingState::Update(Projectile& projectile)

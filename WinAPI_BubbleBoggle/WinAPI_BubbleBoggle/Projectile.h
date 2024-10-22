@@ -11,9 +11,11 @@ namespace MomDra
 	public:
 
 	public:
+		virtual void Enter(Projectile& projectile) noexcept = 0;
 		virtual void Render(const Projectile& projectile, const HDC& hdc) const noexcept = 0;
 		virtual void Update(Projectile& projectile) = 0;
 		virtual void OnCollisionEnter(Projectile& projectile, const Collider* other) = 0;
+		virtual void Exit(Projectile& projectile) noexcept = 0;
 	};
 
 	class ProjectileAttackState : public ProjectileState
@@ -27,6 +29,8 @@ namespace MomDra
 		explicit ProjectileAttackState() noexcept = default;
 		explicit ProjectileAttackState(const ProjectileAttackState& other) noexcept = default;
 
+		virtual void Enter(Projectile& projectile) noexcept override;
+
 		inline virtual void Render(const Projectile& projectile, const HDC& hdc) const noexcept override
 		{
 
@@ -35,6 +39,8 @@ namespace MomDra
 		virtual void Update(Projectile& projectile) override;
 
 		inline virtual void OnCollisionEnter(Projectile& projectile, const Collider* other) override;
+
+		inline virtual void Exit(Projectile& projectile) noexcept override {}
 
 	private:
 		explicit ProjectileAttackState(const ProjectileAttackState&& other) = delete;
@@ -53,6 +59,7 @@ namespace MomDra
 		explicit ProjectileMovingState() noexcept = default;
 		explicit ProjectileMovingState(const ProjectileMovingState& other) noexcept = default;
 
+		virtual void Enter(Projectile& projectile) noexcept override;
 		inline virtual void Render(const Projectile& projectile, const HDC& hdc) const noexcept override
 		{
 
@@ -64,6 +71,8 @@ namespace MomDra
 		{
 
 		}
+
+		inline virtual void Exit(Projectile& projectile) noexcept override {}
 
 	private:
 		explicit ProjectileMovingState(const ProjectileMovingState&& other) = delete;
