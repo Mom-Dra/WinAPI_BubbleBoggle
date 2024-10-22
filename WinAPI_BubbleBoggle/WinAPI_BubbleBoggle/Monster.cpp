@@ -14,74 +14,74 @@ namespace MomDra
 		CreateRigidbody();
 		CreateAnimator();
 
-		std::shared_ptr<Texture> enemyBmp{ ResourceManager::GetInstance().LoadTexture(L"\\texture\\Enemy.bmp") };
-		std::shared_ptr<Texture> enemyRightBmp{ ResourceManager::GetInstance().LoadTexture(L"\\texture\\Enemy_Right.bmp") };
+		//std::shared_ptr<Texture> enemyBmp{ ResourceManager::GetInstance().LoadTexture(L"\\texture\\Enemy.bmp") };
+		//std::shared_ptr<Texture> enemyRightBmp{ ResourceManager::GetInstance().LoadTexture(L"\\texture\\Enemy_Right.bmp") };
 
-		Animator* animator{ GetAnimator() };
-		/*animator->CreateAnimation(L"Monster_Walk_Left", ResourceManager::GetInstance().LoadTexture(L"\\texture\\Enemy.bmp"),
-			Vector2{ 0.0f, 0.0f }, Vector2{ 72.0f / 4, 16.0f }, Vector2{ 72.0f / 4, 0.0f }, 0.1f, 4);*/
+		//Animator* animator{ GetAnimator() };
+		///*animator->CreateAnimation(L"Monster_Walk_Left", ResourceManager::GetInstance().LoadTexture(L"\\texture\\Enemy.bmp"),
+		//	Vector2{ 0.0f, 0.0f }, Vector2{ 72.0f / 4, 16.0f }, Vector2{ 72.0f / 4, 0.0f }, 0.1f, 4);*/
 
-		// Walk Animation
-		animator->LoadAnimation(L"\\animation\\Monster_Walk_Left.anim");
-		animator->Play(L"Monster_Walk_Left", true);
-		animator->FindAnimation(L"Monster_Walk_Left")->Save(L"\\animation\\Monster_Walk_Left.anim");
-
-
-		animator->CreateAnimation(L"Monster_Walk_Right", enemyRightBmp, Vector2{ 516.0f, 0.0f }, Vector2{ 14.0f, 16.0f }, Vector2{ 19.0f, 0.0f }, 0.2f, 4);
-		animator->Play(L"Monster_Walk_Right", true);
-		animator->FindAnimation(L"Monster_Walk_Right")->Save(L"\\animation\\Monster_Walk_Right.anim");
+		//// Walk Animation
+		//animator->LoadAnimation(L"\\animation\\Monster_Walk_Left.anim");
+		//animator->Play(L"Monster_Walk_Left", true);
+		//animator->FindAnimation(L"Monster_Walk_Left")->Save(L"\\animation\\Monster_Walk_Left.anim");
 
 
-		animator->CreateAnimation(L"Monster_Walk_Angry_Left", enemyBmp, Vector2{ 76.0f, 0.0f }, Vector2{ 14.0f, 16.0f }, Vector2{ 18.0f, 0.0f }, 0.2f, 4);
-		animator->Play(L"Monster_Walk_Angry_Left", true);
-		animator->FindAnimation(L"Monster_Walk_Angry_Left")->Save(L"\\animation\\Monster_Walk_Angry_Left.anim");
+		//animator->CreateAnimation(L"Monster_Walk_Right", enemyRightBmp, Vector2{ 516.0f, 0.0f }, Vector2{ 14.0f, 16.0f }, Vector2{ 19.0f, 0.0f }, 0.2f, 4);
+		//animator->Play(L"Monster_Walk_Right", true);
+		//animator->FindAnimation(L"Monster_Walk_Right")->Save(L"\\animation\\Monster_Walk_Right.anim");
 
 
-		animator->CreateAnimation(L"Monster_Walk_Angry_Right", enemyRightBmp, Vector2{ 444.0f, 0.0f }, Vector2{ 14.0f, 16.0f }, Vector2{ 18.0f, 0.0f }, 0.2f, 4);
-		animator->Play(L"Monster_Walk_Angry_Right", true);
-		animator->FindAnimation(L"Monster_Walk_Angry_Right")->Save(L"\\animation\\Monster_Walk_Angry_Right.anim");
+		//animator->CreateAnimation(L"Monster_Walk_Angry_Left", enemyBmp, Vector2{ 76.0f, 0.0f }, Vector2{ 14.0f, 16.0f }, Vector2{ 18.0f, 0.0f }, 0.2f, 4);
+		//animator->Play(L"Monster_Walk_Angry_Left", true);
+		//animator->FindAnimation(L"Monster_Walk_Angry_Left")->Save(L"\\animation\\Monster_Walk_Angry_Left.anim");
 
 
-		// InProjectile Animation
-		animator->CreateAnimation(L"Monster_InProjectile_1", enemyBmp, Vector2{ 299.0f, 0.0f }, Vector2{ 13.0f, 16.0f }, Vector2{ 18.0f, 0.0f }, 0.3f, 3);
-		animator->Play(L"Monster_InProjectile_1", true);
-		//animator->FindAnimation(L"Monster_InProjectile_1")->Save(L"\\animation\\Monster_InProjectile_1.anim");
+		//animator->CreateAnimation(L"Monster_Walk_Angry_Right", enemyRightBmp, Vector2{ 444.0f, 0.0f }, Vector2{ 14.0f, 16.0f }, Vector2{ 18.0f, 0.0f }, 0.2f, 4);
+		//animator->Play(L"Monster_Walk_Angry_Right", true);
+		//animator->FindAnimation(L"Monster_Walk_Angry_Right")->Save(L"\\animation\\Monster_Walk_Angry_Right.anim");
 
 
-		animator->CreateAnimation(L"Monster_InProjectile_2", enemyBmp, Vector2{ 353.0f, 0.0f }, Vector2{ 13.0f, 16.0f }, Vector2{ 18.0f, 0.0f }, 0.3f, 3);
-		animator->Play(L"Monster_InProjectile_2", true);
-		//animator->FindAnimation(L"Monster_InProjectile_2")->Save(L"\\animation\\Monster_InProjectile_2.anim");
+		//// InProjectile Animation
+		//animator->CreateAnimation(L"Monster_InProjectile_1", enemyBmp, Vector2{ 299.0f, 0.0f }, Vector2{ 13.0f, 16.0f }, Vector2{ 18.0f, 0.0f }, 0.3f, 3);
+		//animator->Play(L"Monster_InProjectile_1", true);
+		////animator->FindAnimation(L"Monster_InProjectile_1")->Save(L"\\animation\\Monster_InProjectile_1.anim");
 
 
-		animator->CreateAnimation(L"Monster_InProjectile_3", enemyBmp, Vector2{ 407.0f, 0.0f }, Vector2{ 13.0f, 16.0f }, Vector2{ 18.0f, 0.0f }, 0.3f, 3);
-		animator->Play(L"Monster_InProjectile_3", true);
-		//animator->FindAnimation(L"Monster_InProjectile_3")->Save(L"\\animation\\Monster_InProjectile_3.anim");
+		//animator->CreateAnimation(L"Monster_InProjectile_2", enemyBmp, Vector2{ 353.0f, 0.0f }, Vector2{ 13.0f, 16.0f }, Vector2{ 18.0f, 0.0f }, 0.3f, 3);
+		//animator->Play(L"Monster_InProjectile_2", true);
+		////animator->FindAnimation(L"Monster_InProjectile_2")->Save(L"\\animation\\Monster_InProjectile_2.anim");
 
 
-		animator->CreateAnimation(L"Monster_InProjectile_4", enemyBmp, Vector2{ 461.0f, 0.0f }, Vector2{ 13.0f, 16.0f }, Vector2{ 18.0f, 0.0f }, 0.3f, 3);
-		animator->Play(L"Monster_InProjectile_4", true);
-		//animator->FindAnimation(L"Monster_InProjectile_4")->Save(L"\\animation\\Monster_InProjectile_4.anim");
+		//animator->CreateAnimation(L"Monster_InProjectile_3", enemyBmp, Vector2{ 407.0f, 0.0f }, Vector2{ 13.0f, 16.0f }, Vector2{ 18.0f, 0.0f }, 0.3f, 3);
+		//animator->Play(L"Monster_InProjectile_3", true);
+		////animator->FindAnimation(L"Monster_InProjectile_3")->Save(L"\\animation\\Monster_InProjectile_3.anim");
 
 
-		// Jump
-		animator->CreateAnimation(L"Monster_Jump_Left", enemyBmp, Vector2{ 38.0f, 0.0f }, Vector2{ 14.0f, 16.0f }, Vector2{ 19.0f, 0.0f }, { 0.5f, 0.5f }, 2);
-		animator->Play(L"Monster_Jump_Left", true);
-		animator->FindAnimation(L"Monster_Jump_Left")->Save(L"\\animation\\Monster_Jump_Left.anim");
+		//animator->CreateAnimation(L"Monster_InProjectile_4", enemyBmp, Vector2{ 461.0f, 0.0f }, Vector2{ 13.0f, 16.0f }, Vector2{ 18.0f, 0.0f }, 0.3f, 3);
+		//animator->Play(L"Monster_InProjectile_4", true);
+		////animator->FindAnimation(L"Monster_InProjectile_4")->Save(L"\\animation\\Monster_InProjectile_4.anim");
 
 
-		animator->CreateAnimation(L"Monster_Jump_Right", enemyRightBmp, { Vector2{536.0f, 0.0f }, Vector2{516.0f, 0.0f} }, Vector2{ 14.0f, 16.0f }, { 0.5f, 0.5f }, 2);
-		animator->Play(L"Monster_Jump_Right", true);
-		animator->FindAnimation(L"Monster_Jump_Right")->Save(L"\\animation\\Monster_Jump_Right.anim");
+		//// Jump
+		//animator->CreateAnimation(L"Monster_Jump_Left", enemyBmp, Vector2{ 38.0f, 0.0f }, Vector2{ 14.0f, 16.0f }, Vector2{ 19.0f, 0.0f }, { 0.5f, 0.5f }, 2);
+		//animator->Play(L"Monster_Jump_Left", true);
+		//animator->FindAnimation(L"Monster_Jump_Left")->Save(L"\\animation\\Monster_Jump_Left.anim");
 
 
-		animator->CreateAnimation(L"Monster_Jump_Angry_Left", enemyBmp, Vector2{ 112.0f, 0.0f }, Vector2{ 14.0f, 16.0f }, Vector2{ 17.0f, 0.0f }, { 0.5f, 0.5f }, 2);
-		animator->Play(L"Monster_Jump_Angry_Left", true);
-		animator->FindAnimation(L"Monster_Jump_Angry_Left")->Save(L"\\animation\\Monster_Jump_Angry_Left.anim");
+		//animator->CreateAnimation(L"Monster_Jump_Right", enemyRightBmp, { Vector2{536.0f, 0.0f }, Vector2{516.0f, 0.0f} }, Vector2{ 14.0f, 16.0f }, { 0.5f, 0.5f }, 2);
+		//animator->Play(L"Monster_Jump_Right", true);
+		//animator->FindAnimation(L"Monster_Jump_Right")->Save(L"\\animation\\Monster_Jump_Right.anim");
+
+
+		//animator->CreateAnimation(L"Monster_Jump_Angry_Left", enemyBmp, Vector2{ 112.0f, 0.0f }, Vector2{ 14.0f, 16.0f }, Vector2{ 17.0f, 0.0f }, { 0.5f, 0.5f }, 2);
+		//animator->Play(L"Monster_Jump_Angry_Left", true);
+		//animator->FindAnimation(L"Monster_Jump_Angry_Left")->Save(L"\\animation\\Monster_Jump_Angry_Left.anim");
  
 
-		animator->CreateAnimation(L"Monster_Jump_Angry_Right", enemyRightBmp, { Vector2{ 462.0f, 0.0f }, Vector2{444.0f, 0.0f} }, Vector2{ 14.0f, 16.0f }, { 0.5f, 0.5f }, 2);
-		animator->Play(L"Monster_Jump_Angry_Right", true);
-		animator->FindAnimation(L"Monster_Jump_Angry_Right")->Save(L"\\animation\\Monster_Jump_Angry_Right.anim");
+		//animator->CreateAnimation(L"Monster_Jump_Angry_Right", enemyRightBmp, { Vector2{ 462.0f, 0.0f }, Vector2{444.0f, 0.0f} }, Vector2{ 14.0f, 16.0f }, { 0.5f, 0.5f }, 2);
+		//animator->Play(L"Monster_Jump_Angry_Right", true);
+		//animator->FindAnimation(L"Monster_Jump_Angry_Right")->Save(L"\\animation\\Monster_Jump_Angry_Right.anim");
 
 		ChangeState(&moveState);
 	}

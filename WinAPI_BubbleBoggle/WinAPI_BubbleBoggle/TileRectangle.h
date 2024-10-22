@@ -54,7 +54,7 @@ namespace MomDra
 		}
 		static inline void AddTile(const TileInfo& tileInfo)
 		{
- 			tileVec.emplace_back(tileInfo);
+  			tileVec.emplace_back(tileInfo);
 		}
 
 		static inline void RemoveTile(const TileInfo& tileInfo)

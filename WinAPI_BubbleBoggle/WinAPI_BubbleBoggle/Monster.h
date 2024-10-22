@@ -207,10 +207,7 @@ namespace MomDra
 		inline void ChangeToAngryState() { ChangeState(&angryState); }
 		inline void ChangeToHittedState() { ChangeState(&hittedState); }
 
-		inline virtual std::unique_ptr<Object> Clone() const override
-		{
-			return std::make_unique<Monster>(*this);
-		}
+		inline virtual std::unique_ptr<Object> Clone() const override { return std::make_unique<Monster>(*this); }
 
 	private:
 		void ChangeState(MonsterState* state) noexcept;

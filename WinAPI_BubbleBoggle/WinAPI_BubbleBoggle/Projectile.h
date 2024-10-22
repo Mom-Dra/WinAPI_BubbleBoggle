@@ -1,10 +1,16 @@
 #pragma once
 #include "Object.h"
 #include <coroutine>
+#include "ResourceManager.h"
 
 namespace MomDra
 {
 	class Projectile;
+
+	struct ProjectileSetting
+	{
+
+	};
 
 	class ProjectileState
 	{
@@ -67,10 +73,7 @@ namespace MomDra
 
 		virtual void Update(Projectile& projectile) override;
 
-		inline virtual void OnCollisionEnter(Projectile& projectile, const Collider* other) override
-		{
-
-		}
+		inline virtual void OnCollisionEnter(Projectile& projectile, const Collider* other) override;
 
 		inline virtual void Exit(Projectile& projectile) noexcept override {}
 
@@ -80,19 +83,52 @@ namespace MomDra
 		ProjectileMovingState& operator=(const ProjectileMovingState&& other) = delete;
 	};
 
+	class ProjectileHighReachedState : public ProjectileState
+	{
+	private:
+
+	public:
+		explicit ProjectileHighReachedState() noexcept = default;
+		explicit ProjectileHighReachedState(const ProjectileHighReachedState& other) noexcept = default;
+
+		virtual void Enter(Projectile& projectile) noexcept override;
+		inline virtual void Render(const Projectile& projectile, const HDC& hdc) const noexcept override
+		{
+
+		}
+
+		virtual void Update(Projectile& projectile) override;
+
+		inline virtual void OnCollisionEnter(Projectile& projectile, const Collider* other) override;
+
+		inline virtual void Exit(Projectile& projectile) noexcept override {}
+
+	private:
+		explicit ProjectileHighReachedState(const ProjectileHighReachedState&& other) = delete;
+		ProjectileHighReachedState& operator=(const ProjectileHighReachedState& other) = delete;
+		ProjectileHighReachedState& operator=(const ProjectileHighReachedState&& other) = delete;
+	};
+
 	class Projectile : public Object
 	{
 	private:
 		ProjectileAttackState attackState;
 		ProjectileMovingState movingState;
+		ProjectileHighReachedState highReachedState;
 
 		ProjectileState* currState{ &attackState };
 		Vector2 initialDir;
 
 	public:
-		inline explicit Projectile(const Vector2& pos, const Vector2& scale, const Vector2& initialDir, const Layer& layer = Layer::Projectile) : Object{ pos, scale, layer }, initialDir{ initialDir }
+		explicit Projectile(const Vector2& pos, const Vector2& scale, const Vector2& initialDir, const Layer& layer = Layer::Projectile) : Object{ pos, scale, layer }, initialDir{ initialDir }
 		{
 			CreateCollider(scale);
+			CreateAnimator();
+
+			Animator* animator{ GetAnimator() };
+			//animator->CreateAnimation(L"Projectile_Attack", ResourceManager::LoadTexture(L"\\texture\\");
+
+			ChangeState(&attackState);
 		}
 
 		inline Vector2 GetInitialDir() const noexcept { return initialDir; }
@@ -112,12 +148,23 @@ namespace MomDra
 
 		inline bool IsAttackState() const noexcept { return currState == &attackState; }
 
-		inline void ChangeToAttackState() { currState = &attackState; }
-		inline void ChangeToMovingState() { currState = &movingState; }
+		inline void ChangeToAttackState() { ChangeState(&attackState); }
+		inline void ChangeToMovingState() { ChangeState(&movingState); }
+		inline void ChangeToHighReachedState() { ChangeState(&highReachedState); }
 
 		inline virtual std::unique_ptr<Object> Clone() const
 		{
 			return std::make_unique<Projectile>(*this);
+		}
+
+	private:
+		inline void ChangeState(ProjectileState* state)
+		{
+			state->Exit(*this);
+
+			currState = state;
+
+			currState->Enter(*this);
 		}
 	};
 }

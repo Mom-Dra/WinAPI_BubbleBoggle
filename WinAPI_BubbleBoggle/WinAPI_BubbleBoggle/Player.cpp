@@ -26,13 +26,13 @@ namespace MomDra
 		// GetAnimator()->Play(L"WALK", true);
 
 		// 여기서 애니메이션 만들어야 한다
-		Animator* animator{ GetAnimator() };
-		animator->CreateAnimation(L"WALK", ResourceManager::GetInstance().LoadTexture(L"\\texture\\player.bmp"), Vector2{ 0.0f, 0.0f }, Vector2{ 312.0f / 15.0f, 74.0f / 3.0f }, Vector2{ 312.0f / 15.0f, 0.0f }, 0.2f, 7);
+		//Animator* animator{ GetAnimator() };
+		//animator->CreateAnimation(L"WALK", ResourceManager::GetInstance().LoadTexture(L"\\texture\\player.bmp"), Vector2{ 0.0f, 0.0f }, Vector2{ 312.0f / 15.0f, 74.0f / 3.0f }, Vector2{ 312.0f / 15.0f, 0.0f }, 0.2f, 7);
 	
-		animator->FindAnimation(L"WALK")->Save(L"\\animation\\Player_Walk.anim");
+		//animator->FindAnimation(L"WALK")->Save(L"\\animation\\Player_Walk.anim");
 
-		animator->LoadAnimation(L"\\animation\\Player_Walk.anim");
-		animator->Play(L"WALK", true);
+		////animator->LoadAnimation(L"\\animation\\Player_Walk.anim");
+		//animator->Play(L"WALK", true);
 
 		/*Animation* animation{ animator->FindAnimation(L"WALK") };
 		for (unsigned int i{ 0 }; i < animation->GetMaxFrame(); ++i)

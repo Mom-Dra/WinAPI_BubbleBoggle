@@ -6,7 +6,7 @@ namespace MomDra
 {
 	void ProjectileAttackState::Enter(Projectile& projectile) noexcept
 	{
-
+		projectile.GetAnimator();
 	}
 
 	void ProjectileAttackState::Update(Projectile& projectile)
@@ -67,5 +67,32 @@ namespace MomDra
 		{
 			projectile.Destroy();
 		}
+	}
+
+	inline void ProjectileMovingState::OnCollisionEnter(Projectile& projectile, const Collider* other)
+	{
+		const Layer& otherLayer{ other->GetObj()->GetLayer() };
+
+		switch (otherLayer)
+		{
+		case Layer::Wall:
+			projectile.ChangeToHighReachedState();
+			break;
+		}
+	}
+
+	void ProjectileHighReachedState::Enter(Projectile& projectile) noexcept
+	{
+
+	}
+
+	void ProjectileHighReachedState::Update(Projectile& projectile)
+	{
+
+	}
+
+	inline void ProjectileHighReachedState::OnCollisionEnter(Projectile& projectile, const Collider* other)
+	{
+
 	}
 }

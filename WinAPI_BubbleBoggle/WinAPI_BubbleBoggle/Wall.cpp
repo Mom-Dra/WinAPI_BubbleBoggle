@@ -1,4 +1,5 @@
 #include "Wall.h"
+#include "Core.h"
 
 namespace MomDra
 {
@@ -11,9 +12,11 @@ namespace MomDra
 	{
 		Object* otherObj{ other->GetObj() };
 		const Layer& otherLayer{ otherObj->GetLayer() };
+		const Vector2& otherPos{ otherObj->GetPos() };
+
 		Collider* thisCollider{ GetCollider() };
 		float length{ thisCollider->GetScale().X / 2.0f + other->GetScale().X / 2.0f };
-		Vector2 pos{ 0.0f, otherObj->GetPos().Y };
+		Vector2 pos{ 0.0f, otherPos.Y };
 
 		if (other->GetFinalPos().X < thisCollider->GetFinalPos().X)
 			pos.X = thisCollider->GetFinalPos().X - length;
@@ -26,7 +29,25 @@ namespace MomDra
 			otherObj->SetPos(pos);
 		break;
 		case Layer::Projectile:
-			otherObj->SetPos(pos);
+			// other Collider가
+			// Wall 보다 위치가 낮다면
+			// 가운데로 몰리게 ㄱㄱ
+			if (other->GetFinalPos().Y > thisCollider->GetFinalPos().Y)
+			{
+				static int halfWidth{ Core::WINDOW_WIDTH / 2 };
+				Vector2 yPos{ otherObj->GetPos().X, thisCollider->GetFinalPos().Y + thisCollider->GetScale().Y };
+
+				if (halfWidth > otherPos.X)
+					yPos.X += TimeManager::GetInstance().GetDeltaTime() * 1000.0f;
+				else
+					yPos.X -= TimeManager::GetInstance().GetDeltaTime() * 1000.0f;
+
+				otherObj->SetPos(yPos);
+			}
+			else
+			{
+				otherObj->SetPos(pos);
+			}
 			break;
 		}
 	}
