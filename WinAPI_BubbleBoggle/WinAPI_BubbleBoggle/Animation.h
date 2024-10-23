@@ -66,6 +66,7 @@ namespace MomDra
 		void Create(std::shared_ptr<Texture> texture, const Vector2& leftTop, const Vector2& sliceSize, const Vector2& step, float duration, unsigned int frameCount);
 		void Create(std::shared_ptr<Texture> texture, const Vector2& leftTop, const Vector2& sliceSize, const Vector2& step, const std::initializer_list<float>& durations, unsigned int frameCount);
 		void Create(std::shared_ptr<Texture> texture, const std::initializer_list<Vector2>& leftTops, const Vector2& sliceSize, const std::initializer_list<float>& durations, unsigned int frameCount);
+		void Create(std::shared_ptr<Texture> texture, const std::initializer_list<Vector2>& leftTops, const std::initializer_list<Vector2>& sliceSize, float duration, unsigned int frameCount);
 
 		inline const std::wstring& GetName() const noexcept { return name; }
 		inline bool IsFinish() const noexcept { return isFinish; }

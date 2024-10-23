@@ -40,11 +40,11 @@ namespace MomDra
 		explicit MonsterMoveState() noexcept = default;
 		explicit MonsterMoveState(const MonsterMoveState& other) noexcept = default;
 
-		virtual void Enter(Monster& monster) noexcept;
+		virtual void Enter(Monster& monster) noexcept override;
 		virtual void Update(Monster& monster) noexcept override;
 		virtual void OnCollisionEnter(Monster& monster, const Collider* other) override;
 		virtual void OnCollisionExit(Monster& monster, const Collider* other) override;
-		inline virtual void Exit(Monster& monster) noexcept {}
+		inline virtual void Exit(Monster& monster) noexcept override {}
 
 	private:
 		explicit MonsterMoveState(const MonsterMoveState&& other) = delete;
@@ -88,11 +88,11 @@ namespace MomDra
 		explicit MonsterAngryState() noexcept = default;
 		explicit MonsterAngryState(const MonsterAngryState& other) noexcept = default;
 
-		virtual void Enter(Monster& monster) noexcept;
+		virtual void Enter(Monster& monster) noexcept override;
 		virtual void Update(Monster& monster) noexcept override;
 		virtual void OnCollisionEnter(Monster& monster, const Collider* other) override;
 		virtual void OnCollisionExit(Monster& monster, const Collider* other) override;
-		inline virtual void Exit(Monster& monster) noexcept {}
+		virtual void Exit(Monster& monster) noexcept override;
 
 	private:
 		explicit MonsterAngryState(const MonsterAngryState&& other) = delete;
@@ -115,7 +115,7 @@ namespace MomDra
 		virtual void Update(Monster& monster) noexcept override;
 		virtual void OnCollisionEnter(Monster& monster, const Collider* other) override;
 		virtual void OnCollisionExit(Monster& monster, const Collider* other) override {}
-		inline virtual void Exit(Monster& monster) noexcept {}
+		inline virtual void Exit(Monster& monster) noexcept override { time = 0.0f; }
 
 	private:
 		explicit MonsterHittedState(const MonsterHittedState&& other) = delete;

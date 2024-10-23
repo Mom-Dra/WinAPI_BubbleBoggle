@@ -1,5 +1,6 @@
 #include "Wall.h"
 #include "Core.h"
+#include "Monster.h"
 
 namespace MomDra
 {
@@ -29,9 +30,6 @@ namespace MomDra
 			otherObj->SetPos(pos);
 		break;
 		case Layer::Projectile:
-			// other Collider가
-			// Wall 보다 위치가 낮다면
-			// 가운데로 몰리게 ㄱㄱ
 			if (other->GetFinalPos().Y > thisCollider->GetFinalPos().Y)
 			{
 				static int halfWidth{ Core::WINDOW_WIDTH / 2 };
@@ -48,6 +46,26 @@ namespace MomDra
 			{
 				otherObj->SetPos(pos);
 			}
+			break;
+		case Layer::Monster:
+		{
+			if (other->GetFinalPos().Y > thisCollider->GetFinalPos().Y)
+			{
+				static int halfWidth{ Core::WINDOW_WIDTH / 2 };
+				Vector2 yPos{ otherObj->GetPos().X, thisCollider->GetFinalPos().Y + thisCollider->GetScale().Y };
+
+				if (halfWidth > otherPos.X)
+					yPos.X += TimeManager::GetInstance().GetDeltaTime() * MonsterSetting::HITTED_SPEED;
+				else
+					yPos.X -= TimeManager::GetInstance().GetDeltaTime() * MonsterSetting::HITTED_SPEED;
+
+				otherObj->SetPos(yPos);
+			}
+			else
+			{
+				otherObj->SetPos(pos);
+			}
+		}
 			break;
 		}
 	}

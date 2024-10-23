@@ -9,7 +9,14 @@ namespace MomDra
 
 	struct ProjectileSetting
 	{
+		static constexpr inline float PROJECTILE_1_TIME{ 10.0f };
+		static constexpr inline float PROJECTILE_2_TIME{ 5.0f };
+		static constexpr inline float PROJECTILE_3_TIME{ 2.5f };
 
+		static const inline std::wstring PROJECTILE_ATTACK{ L"Projectile_Attack" };
+		static const inline std::wstring PROJECTILE_MOVE_1{ L"Projectile_Move_1" };
+		static const inline std::wstring PROJECTILE_MOVE_2{ L"Projectile_Move_2" };
+		static const inline std::wstring PROJECTILE_MOVE_3{ L"Projectile_Move_3" };
 	};
 
 	class ProjectileState
@@ -86,6 +93,7 @@ namespace MomDra
 	class ProjectileHighReachedState : public ProjectileState
 	{
 	private:
+		float time{ 0.0f };
 
 	public:
 		explicit ProjectileHighReachedState() noexcept = default;
@@ -120,16 +128,7 @@ namespace MomDra
 		Vector2 initialDir;
 
 	public:
-		explicit Projectile(const Vector2& pos, const Vector2& scale, const Vector2& initialDir, const Layer& layer = Layer::Projectile) : Object{ pos, scale, layer }, initialDir{ initialDir }
-		{
-			CreateCollider(scale);
-			CreateAnimator();
-
-			Animator* animator{ GetAnimator() };
-			//animator->CreateAnimation(L"Projectile_Attack", ResourceManager::LoadTexture(L"\\texture\\");
-
-			ChangeState(&attackState);
-		}
+		explicit Projectile(const Vector2& pos, const Vector2& scale, const Vector2& initialDir, const Layer& layer = Layer::Projectile);
 
 		inline Vector2 GetInitialDir() const noexcept { return initialDir; }
 

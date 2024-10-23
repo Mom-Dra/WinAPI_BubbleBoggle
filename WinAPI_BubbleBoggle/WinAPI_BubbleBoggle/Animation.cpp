@@ -110,6 +110,24 @@ namespace MomDra
 		}
 	}
 
+	void Animation::Create(std::shared_ptr<Texture> texture, const std::initializer_list<Vector2>& leftTops, const std::initializer_list<Vector2>& sliceSize, float duration, unsigned int frameCount)
+	{
+		this->texture = texture;
+
+		auto it2{ leftTops.begin() };
+		auto it3{ sliceSize.begin() };
+
+		for (unsigned int i{ 0 }; i < frameCount; ++i)
+		{
+			AnimationFrame frame;
+			frame.duration = duration;
+			frame.slice = *it3++;
+			frame.leftTop = (*it2++);
+
+			frames.emplace_back(frame);
+		}
+	}
+
 	void Animation::Save(const std::wstring& relativePath)
 	{	
 		std::wstring path{ PathManager::GetContentPath() };
