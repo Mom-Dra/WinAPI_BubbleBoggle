@@ -172,6 +172,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case ID_MENUTILE:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_TILECOUNT), hWnd, TileCountProc);
                 break;
+            case ID_MENU_ANIMATION:
+                DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG1), hWnd, AnimationProc);
+                break;
             case IDM_EXIT:
                 DestroyWindow(hWnd);
                 break;

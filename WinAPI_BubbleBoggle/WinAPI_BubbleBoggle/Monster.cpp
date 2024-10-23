@@ -18,11 +18,11 @@ namespace MomDra
 		std::shared_ptr<Texture> enemyRightBmp{ ResourceManager::GetInstance().LoadTexture(L"\\texture\\Enemy_Right.bmp") };
 
 		Animator* animator{ GetAnimator() };
-		/*animator->CreateAnimation(L"Monster_Walk_Left", ResourceManager::GetInstance().LoadTexture(L"\\texture\\Enemy.bmp"),
-			Vector2{ 0.0f, 0.0f }, Vector2{ 72.0f / 4, 16.0f }, Vector2{ 72.0f / 4, 0.0f }, 0.1f, 4);*/
+		animator->CreateAnimation(L"Monster_Walk_Left", ResourceManager::GetInstance().LoadTexture(L"\\texture\\Enemy.bmp"),
+			Vector2{ 0.0f, 0.0f }, Vector2{ 72.0f / 4, 16.0f }, Vector2{ 72.0f / 4, 0.0f }, 0.1f, 4);
 
 		// Walk Animation
-		animator->LoadAnimation(L"\\animation\\Monster_Walk_Left.anim");
+		//animator->LoadAnimation(L"\\animation\\Monster_Walk_Left.anim");
 		animator->Play(L"Monster_Walk_Left", true);
 		animator->FindAnimation(L"Monster_Walk_Left")->Save(L"\\animation\\Monster_Walk_Left.anim");
 

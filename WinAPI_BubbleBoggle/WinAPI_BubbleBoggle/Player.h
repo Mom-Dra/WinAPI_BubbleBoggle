@@ -3,6 +3,15 @@
 
 namespace MomDra
 {
+	struct PlayerSetting
+	{
+		/*static constexpr float abc;
+		static constexpr float aaa;
+		static constexpr float aaaaa;
+
+		static constexpr float bbbb;*/
+	};
+
 	class Player : public Object
 	{
 	private:

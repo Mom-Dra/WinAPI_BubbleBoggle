@@ -26,21 +26,39 @@ namespace MomDra
 		GetAnimator()->Play(L"WALK", true);*/
 
 		// 여기서 애니메이션 만들어야 한다
-		Animator* animator{ GetAnimator() };
-		animator->CreateAnimation(L"WALK", ResourceManager::GetInstance().LoadTexture(L"\\texture\\player.bmp"), Vector2{ 0.0f, 0.0f }, Vector2{ 312.0f / 15.0f, 74.0f / 3.0f }, Vector2{ 312.0f / 15.0f, 0.0f }, 0.2f, 7);
-	
-		animator->FindAnimation(L"WALK")->Save(L"\\animation\\Player_Walk.anim");
+		std::shared_ptr<Texture> player_Left{ ResourceManager::GetInstance().LoadTexture(L"\\texture\\player.bmp") };
 
+		Animator* animator{ GetAnimator() };
+		//animator->CreateAnimation(L"Player_Walk_Left", player_Left, Vector2{ 1.0f, 0.0f }, Vector2{ 16.0f, 18.0f }, Vector2{ 22.0f, 0.0f }, 0.2f, 5);
+
+		std::initializer_list<Vector2> leftTops{ Vector2{1.0f, 2.0f}, Vector2{22.0f, 2.0f}, Vector2{43.0f, 2.0f }, Vector2{64.0f, 2.0f }, Vector2{85.0f, 2.0f} };
+		std::initializer_list<Vector2> sliceSizes{ Vector2{16.0f,16.0f}, Vector2{16.0f, 16.0f}, Vector2{16.0f, 16.0f}, Vector2{16.0f, 16.0f}, Vector2{16.0f, 16.0f} };
+
+		animator->CreateAnimation(L"Player_Walk_Left", player_Left, leftTops, sliceSizes, 0.2f, 5);
+		animator->FindAnimation(L"Player_Walk_Left")->Save(L"\\animation\\Player_Walk_Left.anim");
 		//animator->LoadAnimation(L"\\animation\\Player_Walk.anim");
-		animator->Play(L"WALK", true);
+		animator->Play(L"Player_Walk_Left", true);
+
+		animator->CreateAnimation(L"Player_Attack_Left", player_Left, Vector2{ 145.0f, 0.0f }, Vector2{ 312.0f / 15.0f, 18.0f }, Vector2{ 312.0f / 15.0f, 0.0f }, 0.2f, 4);
+		animator->FindAnimation(L"Player_Attack_Left")->Save(L"\\animation\\Player_Attack_Left.anim");
+		animator->Play(L"Player_Attack_Left", true);
+
+
+
+		std::initializer_list<Vector2> leftTops2{ Vector2{1.0f, 2.0f}, Vector2{22.0f, 2.0f}, Vector2{43.0f, 2.0f }, Vector2{64.0f, 2.0f }, Vector2{85.0f, 2.0f} };
+		std::initializer_list<Vector2> sliceSizes2{ Vector2{16.0f,16.0f}, Vector2{16.0f, 16.0f}, Vector2{16.0f, 16.0f}, Vector2{16.0f, 16.0f}, Vector2{16.0f, 16.0f} };
+
+
+		//animator->CreateAnimation(L"Player_Falling_Left", player_Left, )
+		
+		
+		//animator->CreateAnimation(L"Player_Walk")
 
 		/*Animation* animation{ animator->FindAnimation(L"WALK") };
 		for (unsigned int i{ 0 }; i < animation->GetMaxFrame(); ++i)
 		{
 			animation->GetFrame(i).offSet = Vector2{ 0.0f, 20.0f };
 		}*/
-
-		
 	}
 
 	void Player::Update() noexcept
