@@ -17,6 +17,7 @@ namespace MomDra
 		static const inline std::wstring PROJECTILE_MOVE_1{ L"Projectile_Move_1" };
 		static const inline std::wstring PROJECTILE_MOVE_2{ L"Projectile_Move_2" };
 		static const inline std::wstring PROJECTILE_MOVE_3{ L"Projectile_Move_3" };
+		static const inline std::wstring PROJECTILE_PON{ L"Projectile_Pon" };
 	};
 
 	class ProjectileState
