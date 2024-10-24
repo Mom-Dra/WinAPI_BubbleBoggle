@@ -8,6 +8,9 @@
 #include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Animation.cpp"
 
 
+#include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\AnimationObject.cpp"
+
+
 #include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Animator.cpp"
 
 

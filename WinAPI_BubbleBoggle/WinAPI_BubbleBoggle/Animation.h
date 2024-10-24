@@ -68,6 +68,9 @@ namespace MomDra
 		void Create(std::shared_ptr<Texture> texture, const std::initializer_list<Vector2>& leftTops, const Vector2& sliceSize, const std::initializer_list<float>& durations, unsigned int frameCount);
 		void Create(std::shared_ptr<Texture> texture, const std::initializer_list<Vector2>& leftTops, const std::initializer_list<Vector2>& sliceSize, float duration, unsigned int frameCount);
 
+		template<std::size_t N>
+		inline void Create(std::shared_ptr<Texture> texture, const std::array<Vector2, N>& leftTops, const std::array<Vector2, N>& sliceSize, float duration, unsigned int frameCount);
+
 		inline const std::wstring& GetName() const noexcept { return name; }
 		inline bool IsFinish() const noexcept { return isFinish; }
 		inline AnimationFrame& GetFrame(int frameIndex) noexcept { return frames[frameIndex]; }
@@ -81,4 +84,20 @@ namespace MomDra
 
 		friend class Animator;
 	};
+
+	template<std::size_t N>
+	inline void Animation::Create(std::shared_ptr<Texture> texture, const std::array<Vector2, N>& leftTops, const std::array<Vector2, N>& sliceSize, float duration, unsigned int frameCount)
+	{
+		this->texture = texture;
+
+		for (unsigned int i{ 0 }; i < frameCount; ++i)
+		{
+			AnimationFrame frame;
+			frame.duration = duration;
+			frame.slice = sliceSize[i];
+			frame.leftTop = leftTops[i];
+
+			frames.emplace_back(frame);
+		}
+	}
 }

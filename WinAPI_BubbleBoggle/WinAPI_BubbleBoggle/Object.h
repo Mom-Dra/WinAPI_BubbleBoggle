@@ -58,7 +58,7 @@ namespace MomDra
 		virtual void OnCollisionStay(const Collider* other) {};
 		virtual void OnCollisionExit(const Collider* other) {};
 
-		virtual std::unique_ptr<Object> Clone() const = 0;
+		virtual std::unique_ptr<Object> Clone() const abstract;
 
 	protected:
 		inline void CreateCollider(const Vector2& scale) noexcept { collider = std::make_unique<Collider>(this, scale); }

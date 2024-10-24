@@ -22,11 +22,11 @@ namespace MomDra
 	class MonsterState
 	{
 	public:
-		virtual void Enter(Monster& monster) noexcept = 0;
-		virtual void Update(Monster& monster) noexcept = 0;
-		virtual void OnCollisionEnter(Monster& monster, const Collider* other) = 0;
-		virtual void OnCollisionExit(Monster& monster, const Collider* other) = 0;
-		virtual void Exit(Monster& monster) noexcept = 0;
+		virtual void Enter(Monster& monster) noexcept abstract;
+		virtual void Update(Monster& monster) noexcept abstract;
+		virtual void OnCollisionEnter(Monster& monster, const Collider* other) abstract;
+		virtual void OnCollisionExit(Monster& monster, const Collider* other) abstract;
+		virtual void Exit(Monster& monster) noexcept abstract;
 	};
 
 	class MonsterMoveState : public MonsterState

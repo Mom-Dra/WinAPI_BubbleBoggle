@@ -37,8 +37,27 @@ namespace MomDra
 		void CreateAnimation(const std::wstring& animationName, std::shared_ptr<Texture> texture, const Vector2& leftTop, const Vector2& sliceSize, const Vector2& step, const std::initializer_list<float>& durations, unsigned int frameCount);
 		void CreateAnimation(const std::wstring& animationName, std::shared_ptr<Texture> texture, const std::initializer_list<Vector2>& leftTops, const Vector2& sliceSize, const std::initializer_list<float>& durations, unsigned int frameCount);
 		void CreateAnimation(const std::wstring& animationName, std::shared_ptr<Texture> texture, const std::initializer_list<Vector2>& leftTops, const std::initializer_list<Vector2>& sliceSize, float duration, unsigned int frameCount);
+
+		template<std::size_t N>
+		inline void CreateAnimation(const std::wstring& animationName, std::shared_ptr<Texture> texture, const std::array<Vector2, N>& leftTops, const std::array<Vector2, N>& sliceSize, float duration, unsigned int frameCount);
+
 		void Play(const std::wstring& animationName, bool repeat) noexcept;
 
 		void LoadAnimation(const std::wstring& relativePath);
 	};
+
+	template<std::size_t N>
+	inline void Animator::CreateAnimation(const std::wstring& animationName, std::shared_ptr<Texture> texture, const std::array<Vector2, N>& leftTops, const std::array<Vector2, N>& sliceSize, float duration, unsigned int frameCount)
+	{
+		if (FindAnimation(animationName) != nullptr)
+		{
+			animationMap.erase(animationName);
+		}
+
+		std::unique_ptr<Animation> animation{ std::make_unique<Animation>(animationName, this) };
+
+		animation->Create(texture, leftTops, sliceSize, duration, frameCount);
+
+		animationMap.emplace(animationName, std::move(animation));
+	}
 }

@@ -10,6 +10,14 @@ namespace MomDra
 		static constexpr float aaaaa;
 
 		static constexpr float bbbb;*/
+
+
+		static const inline std::wstring FALLING_LEFT{ L"Player_Falling_Left" };
+		static const inline std::wstring HIT_1{ L"Player_Hit_1_Left" };
+		static const inline std::wstring HIT_2{ L"Player_Hit_2_Left" }; // 처음 맞았을 때
+		static const inline std::wstring ROTATE{ L"Player_Rotate_Left" }; // 로테이트
+		static const inline std::wstring ROTATE_2{ L"Player_Rotate_2_Left" }; // 로테이트
+		static const inline std::wstring DESTROY{ L"Player_Destroy" }; // 사라짐
 	};
 
 	class Player : public Object

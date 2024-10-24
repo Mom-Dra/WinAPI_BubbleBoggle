@@ -18,7 +18,7 @@
 #define IDC_EDIT1                       1000
 #define IDC_EDIT2                       1001
 #define IDC_FRAME_COUNT                 1002
-#define IDC_EDIT1_X                     1042
+#define IDC_EDIT1_X1                    1042
 #define IDC_EDIT1_Y1                    1043
 #define IDC_EDIT1_X2                    1044
 #define IDC_EDIT1_Y2                    1045
@@ -49,6 +49,8 @@
 #define IDC_DURATIOJN                   1070
 #define ID_PLAY                         1071
 #define ID_SAVE                         1072
+#define IDC_FILE_NAME                   1073
+#define IDC_ANIMATION_NAME              1074
 #define ID_                             32771
 #define ID_MENUTILE                     32772
 #define ID_32773                        32773
@@ -63,7 +65,7 @@
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        131
 #define _APS_NEXT_COMMAND_VALUE         32776
-#define _APS_NEXT_CONTROL_VALUE         1073
+#define _APS_NEXT_CONTROL_VALUE         1075
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif

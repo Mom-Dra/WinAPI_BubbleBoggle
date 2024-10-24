@@ -122,7 +122,7 @@ namespace MomDra
 			AnimationFrame frame;
 			frame.duration = duration;
 			frame.slice = *it3++;
-			frame.leftTop = (*it2++);
+			frame.leftTop = *it2++;
 
 			frames.emplace_back(frame);
 		}

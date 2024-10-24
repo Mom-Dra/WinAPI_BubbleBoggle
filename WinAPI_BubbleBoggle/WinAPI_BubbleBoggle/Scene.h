@@ -31,8 +31,8 @@ namespace MomDra
 
 		inline void SetName(const std::wstring& sceneName) noexcept { this->sceneName = sceneName; }
 
-		virtual void Enter() noexcept = 0;
-		virtual void Exit() noexcept = 0;
+		virtual void Enter() noexcept abstract;
+		virtual void Exit() noexcept abstract;
 
 		virtual void Start() noexcept;
 		virtual void Update() noexcept;

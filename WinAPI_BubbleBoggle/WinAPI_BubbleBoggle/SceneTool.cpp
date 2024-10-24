@@ -16,6 +16,7 @@
 #include "PathManager.h"
 #include <commdlg.h>
 #include "CommandManager.h"
+#include "AnimationObject.h"
 
 namespace MomDra
 {
@@ -66,6 +67,8 @@ namespace MomDra
 
 	void SceneTool::Enter() noexcept
 	{
+ 		AddObject(std::make_unique<AnimationObject>());
+
 		// 타일 생성
 		//CreateTile(5, 5);
 
