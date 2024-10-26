@@ -2,22 +2,22 @@
 
 namespace MomDra
 {
-	/*IdleState::IdleState() noexcept : AIState{ MonsterState::IDLE }
+	/*PlayerIdleState::PlayerIdleState() noexcept : AIState{ MonsterState::IDLE }
 	{
 
 	}
 
-	void IdleState::Enter()
+	void PlayerIdleState::Enter()
 	{
 
 	}
 
-	void IdleState::Exit()
+	void PlayerIdleState::Exit()
 	{
 
 	}
 
-	void IdleState::Update()
+	void PlayerIdleState::Update()
 	{
 
 	}*/

@@ -27,7 +27,7 @@ namespace MomDra
 
 		// 몬스터에 AI 연결해야 함
 		/*std::unique_ptr<AI> ai{ std::make_unique<AI>() };
-		ai->AddState(std::make_unique<IdleState>());*/
+		ai->AddState(std::make_unique<PlayerIdleState>());*/
 
 		// 땅 생성
 		AddObject(std::make_unique<Ground>(Vector2{ 300.0f, 300.0f }, Vector2{ 200.0f, 50.0f }, Layer::Ground));

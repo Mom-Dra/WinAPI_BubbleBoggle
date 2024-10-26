@@ -15,9 +15,13 @@ namespace MomDra
         static std::array<Vector2, 7> leftTops;
         static std::array<Vector2, 7> slices;
 
+        static constexpr int initSize{ 256 };
+
         static float duration;
         static int frameCount;
         static bool isInitial{ false };
+
+        int size;
 
         UNREFERENCED_PARAMETER(lParam);
         switch (message)
@@ -59,7 +63,7 @@ namespace MomDra
                 Animator* animator{ objects[0]->GetAnimator() };
 
                 std::wstring buffer;
-                buffer.resize(256);
+                buffer.resize(initSize);
 
                 HWND hwndEdit{ GetDlgItem(hDlg, IDC_FRAME_COUNT) };
                 GetWindowText(hwndEdit, &buffer[0], buffer.size());
@@ -67,7 +71,7 @@ namespace MomDra
                 frameCount = std::stoi(buffer);
 
                 buffer.clear();
-                buffer.resize(256);
+                buffer.resize(initSize);
 
 
                 hwndEdit = GetDlgItem(hDlg, IDC_DURATIOJN);
@@ -77,7 +81,7 @@ namespace MomDra
 
                 
                 buffer.clear();
-                buffer.resize(256);
+                buffer.resize(initSize);
                 
                 
                 // 7개가 아니라 frameCount
@@ -88,7 +92,7 @@ namespace MomDra
                     leftTops[i].X = std::stof(buffer);
 
                     buffer.clear();
-                    buffer.resize(256);
+                    buffer.resize(initSize);
 
                     hwndEdit = GetDlgItem(hDlg, IDC_EDIT1_X1 + i * 2 + 1);
                     GetWindowText(hwndEdit, &buffer[0], buffer.size());
@@ -102,17 +106,15 @@ namespace MomDra
                     slices[i].X = std::stof(buffer);
 
                     buffer.clear();
-                    buffer.resize(256);
+                    buffer.resize(initSize);
 
                     hwndEdit = GetDlgItem(hDlg, IDC_EDIT1_X8 + i * 2 + 1);
                     GetWindowText(hwndEdit, &buffer[0], buffer.size());
                     slices[i].Y = std::stof(buffer);
                 }
 
-                int size;
-
-                fileName.resize(256);
-                animationName.resize(256);
+                fileName.resize(initSize);
+                animationName.resize(initSize);
 
                 hwndEdit = GetDlgItem(hDlg, IDC_FILE_NAME);
                 size = GetWindowText(hwndEdit, &fileName[0], fileName.size());
@@ -141,9 +143,22 @@ namespace MomDra
             return (INT_PTR)TRUE;
 
             case ID_PLAY:
+            {
+                const std::vector<std::unique_ptr<Object>>& objects{
+                    SceneManager::GetInstance().GetCurrentScene()->GetLayerObject(Layer::Default) };
 
+                Animator* animator{ objects[0]->GetAnimator() };
 
+                HWND hwndEdit{ GetDlgItem(hDlg, IDC_FILE_NAME) };
 
+                fileName.resize(initSize);
+                size = GetWindowText(hwndEdit, &fileName[0], fileName.size());
+                fileName.resize(size);
+
+                const std::wstring& animName{ animator->LoadAnimation(fileName) };
+
+                animator->Play(animName, true);
+            }
                 EndDialog(hDlg, LOWORD(wParam));
                 return (INT_PTR)TRUE;
             }

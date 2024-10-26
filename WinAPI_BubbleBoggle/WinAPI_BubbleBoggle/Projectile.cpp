@@ -15,14 +15,14 @@ namespace MomDra
 		Animator* animator{ GetAnimator() };
 		animator->CreateAnimation(L"Projectile_Attack", ResourceManager::GetInstance().LoadTexture(L"\\texture\\Projectile.bmp"), leftTops, sliceSizes, 0.05f, 6);
 		animator->Play(L"Projectile_Attack", true);
-		animator->FindAnimation(L"Projectile_Attack")->Save(L"\\texture\\animation\\Projectile_Attack.anim");
+		animator->FindAnimation(L"Projectile_Attack")->Save(L"\\animation\\Projectile_Attack.anim");
 
 		std::initializer_list<Vector2> leftTops2{ Vector2{1.0f, 24.0f}, Vector2{19.0f, 25.0f }, Vector2{38.0f, 24.0f} };
 		std::initializer_list<Vector2> sliceSizes2{ Vector2{14.0f, 16.0f}, Vector2{14.0f, 14.0f }, Vector2{12.0f, 16.0f} };
 
 		animator->CreateAnimation(L"Projectile_Move_1", ResourceManager::GetInstance().LoadTexture(L"\\texture\\Projectile.bmp"), leftTops2, sliceSizes2, 0.1f, 3);
 		animator->Play(L"Projectile_Move_1", true);
-		animator->FindAnimation(L"Projectile_Move_1")->Save(L"\\texture\\animation\\Projectile_Move_1.anim");
+		animator->FindAnimation(L"Projectile_Move_1")->Save(L"\\animation\\Projectile_Move_1.anim");
 
 
 
@@ -30,7 +30,7 @@ namespace MomDra
 		std::initializer_list<Vector2> sliceSizes3{ Vector2{14.0f, 16.0f}, Vector2{14.0f, 14.0f }, Vector2{12.0f, 16.0f} };
 		animator->CreateAnimation(L"Projectile_Move_2", ResourceManager::GetInstance().LoadTexture(L"\\texture\\Projectile2.bmp"), leftTops3, sliceSizes3, 0.1f, 3);
 		animator->Play(L"Projectile_Move_2", true);
-		animator->FindAnimation(L"Projectile_Move_2")->Save(L"\\texture\\animation\\Projectile_Move_2.anim");
+		animator->FindAnimation(L"Projectile_Move_2")->Save(L"\\animation\\Projectile_Move_2.anim");
 
 
 
@@ -38,7 +38,7 @@ namespace MomDra
 		std::initializer_list<Vector2> sliceSizes4{ Vector2{14.0f, 16.0f}, Vector2{14.0f, 14.0f }, Vector2{12.0f, 16.0f} };
 		animator->CreateAnimation(L"Projectile_Move_3", ResourceManager::GetInstance().LoadTexture(L"\\texture\\Projectile2.bmp"), leftTops4, sliceSizes4, 0.1f, 3);
 		animator->Play(L"Projectile_Move_3", true);
-		animator->FindAnimation(L"Projectile_Move_3")->Save(L"\\texture\\animation\\Projectile_Move_3.anim");
+		animator->FindAnimation(L"Projectile_Move_3")->Save(L"\\animation\\Projectile_Move_3.anim");
 
 
 		ChangeState(&attackState);

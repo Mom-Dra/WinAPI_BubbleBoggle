@@ -96,11 +96,16 @@ namespace MomDra
 		this->repeat = repeat;
 	}
 
-	void Animator::LoadAnimation(const std::wstring& relativePath)
+	std::wstring Animator::LoadAnimation(const std::wstring& relativePath)
 	{
 		std::unique_ptr<Animation> animation{ std::make_unique<Animation>(this) };
 
 		animation->Load(relativePath);
+
+		std::wstring name{ animation->GetName() };
+
 		animationMap.emplace(animation->GetName(), std::move(animation));
+
+		return name;
 	}
 }

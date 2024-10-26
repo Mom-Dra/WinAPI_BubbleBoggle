@@ -43,7 +43,7 @@ namespace MomDra
 
 		void Play(const std::wstring& animationName, bool repeat) noexcept;
 
-		void LoadAnimation(const std::wstring& relativePath);
+		std::wstring LoadAnimation(const std::wstring& relativePath);
 	};
 
 	template<std::size_t N>

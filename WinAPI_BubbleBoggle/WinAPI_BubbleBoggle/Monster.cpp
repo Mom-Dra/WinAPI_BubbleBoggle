@@ -142,7 +142,7 @@ namespace MomDra
 		monster.GetAnimator()->Play(MonsterSetting::WALK_RIGHT, true);
 	}
 
-	// MoveState
+	// PlayerMoveState
 	void MonsterMoveState::Update(Monster& monster) noexcept
 	{
 		static const TimeManager& timeManager{ TimeManager::GetInstance() };
@@ -256,7 +256,7 @@ namespace MomDra
 		static RigidBody* rigid{ monster.GetRigidBody() };
 
 		// 플레이어와 몬스터의 거리가 일정 거리 이상 떨어지면
-		// 다시 MoveState
+		// 다시 PlayerMoveState
 		// Player를 Follow 할거야
 		Player* player{ monster.GetPlayer() };
 

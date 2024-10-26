@@ -47,24 +47,4 @@ namespace MomDra
 		STAGE_02,
 		LAST
 	};
-
-	
-
-	enum class PlayerState
-	{
-		IDLE,
-		WALK,
-		JUMP,
-		ATTACK,
-		HIT,
-		DEAD,
-		LAST
-	};
-
-	enum class PlayerAttackState
-	{
-		NORMAL_ATTACK1,
-		NORMAL_ATTACK2,
-		LAST
-	};
 }

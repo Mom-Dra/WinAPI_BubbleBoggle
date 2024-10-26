@@ -3,13 +3,13 @@
 
 namespace MomDra
 {
-	/*class IdleState : public AIState
+	/*class PlayerIdleState : public AIState
 	{
 	private:
 
 
 	public:
-		explicit IdleState() noexcept;
+		explicit PlayerIdleState() noexcept;
 
 		virtual void Enter() override;
 		virtual void Exit() override;
