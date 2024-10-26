@@ -43,15 +43,10 @@ namespace MomDra
 		animator->FindAnimation(L"Player_Attack_Left")->Save(L"\\animation\\Player_Attack_Left.anim");
 		animator->Play(L"Player_Attack_Left", true);
 
-
-
 		std::initializer_list<Vector2> leftTops2{ Vector2{1.0f, 2.0f}, Vector2{22.0f, 2.0f}, Vector2{43.0f, 2.0f }, Vector2{64.0f, 2.0f }, Vector2{85.0f, 2.0f} };
 		std::initializer_list<Vector2> sliceSizes2{ Vector2{16.0f,16.0f}, Vector2{16.0f, 16.0f}, Vector2{16.0f, 16.0f}, Vector2{16.0f, 16.0f}, Vector2{16.0f, 16.0f} };
 
-
 		//animator->CreateAnimation(L"Player_Falling_Left", player_Left, )
-		
-		
 		//animator->CreateAnimation(L"Player_Walk")
 
 		/*Animation* animation{ animator->FindAnimation(L"WALK") };
@@ -59,15 +54,18 @@ namespace MomDra
 		{
 			animation->GetFrame(i).offSet = Vector2{ 0.0f, 20.0f };
 		}*/
+
+		ChangeState(&idleState);
 	}
 
 	void Player::Update() noexcept
 	{
-		Move();
-		Jump();
-		Attack();
+		currState->Update(*this);
 
-		UpdateState();
+
+		/*Move();
+		Jump();
+		Attack();*/
 	}
 
 	void Player::Render(const HDC& hdc) const noexcept
@@ -151,15 +149,80 @@ namespace MomDra
 		}
 	}
 
-	void Player::UpdateState()
+	void Player::ChangeState(PlayerState* state) noexcept
 	{
-		const KeyManager& keyManager{ KeyManager::GetInstance() };
+		currState->Exit(*this);
 
-		// 특정 키가 눌렸을때
-		// 특정 상태였을 때는 무시한다?
-		// 뭐 이런 로직?
+		currState = state;
 
-		// 아무키가 눌리지 않았을 때 Idle로 변경해야지!
-		// 속도에 따른 애니메이션도 여기서 해보자!
+		currState->Enter(*this);
+	}
+
+	// IdleState
+
+	void PlayerIdleState::Enter(Player& player)
+	{
+		player.GetAnimator()->Play(PlayerSetting::IDLE, true);
+	}
+
+	void PlayerIdleState::Update(Player& player)
+	{
+
+	}
+
+	void PlayerIdleState::Exit(Player& player)
+	{
+
+	}
+
+	// MoveState
+
+	void PlayerMoveState::Enter(Player& player)
+	{
+
+	}
+
+	void PlayerMoveState::Update(Player& player)
+	{
+
+	}
+
+	void PlayerMoveState::Exit(Player& player)
+	{
+
+	}
+
+	// JumpState
+
+	void PlayerJumpState::Enter(Player& player)
+	{
+
+	}
+
+	void PlayerJumpState::Update(Player& player)
+	{
+
+	}
+
+	void PlayerJumpState::Exit(Player& player)
+	{
+
+	}
+
+	// DeadState
+
+	void PlayerDeadState::Enter(Player& player)
+	{
+
+	}
+
+	void PlayerDeadState::Update(Player& player)
+	{
+
+	}
+
+	void PlayerDeadState::Exit(Player& player)
+	{
+
 	}
 }
