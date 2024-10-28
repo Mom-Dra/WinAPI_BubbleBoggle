@@ -90,7 +90,7 @@ namespace MomDra
 		animationMap.emplace(animationName, std::move(animation));
 	}
 
-	void Animator::Play(const std::wstring& animationName, bool repeat) noexcept
+	void Animator::Play(const std::wstring& animationName, bool repeat, bool isRight) noexcept
 	{
 		currAnimation = FindAnimation(animationName);
 		this->repeat = repeat;

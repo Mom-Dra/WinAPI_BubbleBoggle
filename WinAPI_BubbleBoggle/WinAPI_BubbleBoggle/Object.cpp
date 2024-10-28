@@ -49,10 +49,10 @@ namespace MomDra
 
 	void Object::ComponentRender(const HDC& hdc) const noexcept
 	{
-		if (collider)
-			collider->Render(hdc);
-
 		if (animator)
 			animator->Render(hdc);
+
+		if (collider)
+			collider->Render(hdc);
 	}
 }

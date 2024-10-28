@@ -1,6 +1,7 @@
 #include "Projectile.h"
 #include "TimeManager.h"
 #include "Monster.h"
+#include "Core.h"
 
 namespace MomDra
 {
@@ -8,40 +9,45 @@ namespace MomDra
 	{
 		CreateCollider(scale);
 		CreateAnimator();
+		CreateRigidbody();
+		GetRigidBody()->SetGravity(false);
 
-		std::initializer_list<Vector2> leftTops{ Vector2{4.0f, 6.0f}, Vector2{20.0f, 5.0f }, Vector2{37.0f, 3.0f}, Vector2{55.0f, 2.0f}, Vector2{72.0f, 3.0f}, Vector2{90.0f, 2.0f} };
-		std::initializer_list<Vector2> sliceSizes{ Vector2{5.0f, 7.0f}, Vector2{9.0f, 9.0f }, Vector2{11.0f, 13.0f}, Vector2{11.0f, 15.0f}, Vector2{13.0f, 13.0f}, Vector2{13.0f, 15.0f} };
+		/*std::initializer_list<Vector2> leftTops{ Vector2{4.0f, 6.0f}, Vector2{20.0f, 5.0f }, Vector2{37.0f, 3.0f}, Vector2{55.0f, 2.0f}, Vector2{72.0f, 3.0f}, Vector2{90.0f, 2.0f} };
+		std::initializer_list<Vector2> sliceSizes{ Vector2{5.0f, 7.0f}, Vector2{9.0f, 9.0f }, Vector2{11.0f, 13.0f}, Vector2{11.0f, 15.0f}, Vector2{13.0f, 13.0f}, Vector2{13.0f, 15.0f} };*/
 
 		Animator* animator{ GetAnimator() };
-		animator->CreateAnimation(L"Projectile_Attack", ResourceManager::GetInstance().LoadTexture(L"\\texture\\Projectile.bmp"), leftTops, sliceSizes, 0.05f, 6);
+		/*animator->CreateAnimation(L"Projectile_Attack", ResourceManager::GetInstance().LoadTexture(L"\\texture\\Projectile.bmp"), leftTops, sliceSizes, 0.05f, 6);
 		animator->Play(L"Projectile_Attack", true);
-		animator->FindAnimation(L"Projectile_Attack")->Save(L"\\animation\\Projectile_Attack.anim");
+		animator->FindAnimation(L"Projectile_Attack")->Save(L"\\animation\\Projectile_Attack.anim");*/
 
-		std::initializer_list<Vector2> leftTops2{ Vector2{1.0f, 24.0f}, Vector2{19.0f, 25.0f }, Vector2{38.0f, 24.0f} };
+		animator->LoadAnimation(L"\\animation\\Projectile_Attack.anim");
+
+		/*std::initializer_list<Vector2> leftTops2{ Vector2{1.0f, 24.0f}, Vector2{19.0f, 25.0f }, Vector2{38.0f, 24.0f} };
 		std::initializer_list<Vector2> sliceSizes2{ Vector2{14.0f, 16.0f}, Vector2{14.0f, 14.0f }, Vector2{12.0f, 16.0f} };
 
 		animator->CreateAnimation(L"Projectile_Move_1", ResourceManager::GetInstance().LoadTexture(L"\\texture\\Projectile.bmp"), leftTops2, sliceSizes2, 0.1f, 3);
 		animator->Play(L"Projectile_Move_1", true);
-		animator->FindAnimation(L"Projectile_Move_1")->Save(L"\\animation\\Projectile_Move_1.anim");
+		animator->FindAnimation(L"Projectile_Move_1")->Save(L"\\animation\\Projectile_Move_1.anim");*/
 
+		animator->LoadAnimation(L"\\animation\\Projectile_Move_1.anim");
 
-
-		std::initializer_list<Vector2> leftTops3{ Vector2{0.0f, 0.0f}, Vector2{18.0f, 1.0f }, Vector2{37.0f, 0.0f} };
+		/*std::initializer_list<Vector2> leftTops3{ Vector2{0.0f, 0.0f}, Vector2{18.0f, 1.0f }, Vector2{37.0f, 0.0f} };
 		std::initializer_list<Vector2> sliceSizes3{ Vector2{14.0f, 16.0f}, Vector2{14.0f, 14.0f }, Vector2{12.0f, 16.0f} };
 		animator->CreateAnimation(L"Projectile_Move_2", ResourceManager::GetInstance().LoadTexture(L"\\texture\\Projectile2.bmp"), leftTops3, sliceSizes3, 0.1f, 3);
 		animator->Play(L"Projectile_Move_2", true);
-		animator->FindAnimation(L"Projectile_Move_2")->Save(L"\\animation\\Projectile_Move_2.anim");
+		animator->FindAnimation(L"Projectile_Move_2")->Save(L"\\animation\\Projectile_Move_2.anim");*/
 
+		animator->LoadAnimation(L"\\animation\\Projectile_Move_2.anim");
 
-
-		std::initializer_list<Vector2> leftTops4{ Vector2{54.0f, 0.0f}, Vector2{72.0f, 1.0f }, Vector2{91.0f, 0.0f} };
+		/*std::initializer_list<Vector2> leftTops4{ Vector2{54.0f, 0.0f}, Vector2{72.0f, 1.0f }, Vector2{91.0f, 0.0f} };
 		std::initializer_list<Vector2> sliceSizes4{ Vector2{14.0f, 16.0f}, Vector2{14.0f, 14.0f }, Vector2{12.0f, 16.0f} };
 		animator->CreateAnimation(L"Projectile_Move_3", ResourceManager::GetInstance().LoadTexture(L"\\texture\\Projectile2.bmp"), leftTops4, sliceSizes4, 0.1f, 3);
 		animator->Play(L"Projectile_Move_3", true);
-		animator->FindAnimation(L"Projectile_Move_3")->Save(L"\\animation\\Projectile_Move_3.anim");
+		animator->FindAnimation(L"Projectile_Move_3")->Save(L"\\animation\\Projectile_Move_3.anim");*/
 
+		animator->LoadAnimation(L"\\animation\\Projectile_Move_3.anim");
 
-		ChangeState(&attackState);
+		ChangeToAttackState();
 	}
 
 	void ProjectileAttackState::Enter(Projectile& projectile) noexcept
@@ -111,6 +117,7 @@ namespace MomDra
 
 	inline void ProjectileMovingState::OnCollisionEnter(Projectile& projectile, const Collider* other)
 	{
+		Object* otherObject{ other->GetObj() };
 		const Layer& otherLayer{ other->GetObj()->GetLayer() };
 
 		switch (otherLayer)
@@ -118,6 +125,17 @@ namespace MomDra
 		case Layer::Wall:
 			projectile.ChangeToHighReachedState();
 			break;
+
+		/*case Layer::Projectile:
+		{
+			RigidBody* otherRigid{ otherObject->GetRigidBody() };
+
+			Vector2 dir{ otherObject->GetPos() - projectile.GetPos() };
+			dir.Normalize();
+
+			otherRigid->AddForce(dir);
+		}
+		break;*/
 		}
 	}
 
@@ -144,6 +162,16 @@ namespace MomDra
 		{
 			projectile.GetAnimator()->Play(ProjectileSetting::PROJECTILE_MOVE_2, true);
 		}
+
+		static int halfWidth{ Core::WINDOW_WIDTH / 2 };
+		Vector2 pos{ projectile.GetPos() };
+
+		if (halfWidth > pos.X)
+			pos.X += TimeManager::GetInstance().GetDeltaTime() * MonsterSetting::HITTED_SPEED;
+		else
+			pos.X -= TimeManager::GetInstance().GetDeltaTime() * MonsterSetting::HITTED_SPEED;
+
+		projectile.SetPos(pos);
 	}
 
 	inline void ProjectileHighReachedState::OnCollisionEnter(Projectile& projectile, const Collider* other)

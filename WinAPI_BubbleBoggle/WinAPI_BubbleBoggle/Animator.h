@@ -41,7 +41,7 @@ namespace MomDra
 		template<std::size_t N>
 		inline void CreateAnimation(const std::wstring& animationName, std::shared_ptr<Texture> texture, const std::array<Vector2, N>& leftTops, const std::array<Vector2, N>& sliceSize, float duration, unsigned int frameCount);
 
-		void Play(const std::wstring& animationName, bool repeat) noexcept;
+		void Play(const std::wstring& animationName, bool repeat, bool isRight = false) noexcept;
 
 		std::wstring LoadAnimation(const std::wstring& relativePath);
 	};

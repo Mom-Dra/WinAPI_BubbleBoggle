@@ -14,7 +14,8 @@ namespace MomDra
 		static constexpr float bbbb;*/
 		static const inline std::wstring IDLE{ L"Player_Idle_Left" };
 		static const inline std::wstring WALK{ L"Player_Walk_Left" };
-		static const inline std::wstring FALLING_LEFT{ L"Player_Falling_Left" };
+		static const inline std::wstring FALL{ L"Player_Falling_Left" };
+		static const inline std::wstring JUMP{ L"Player_Jump_Left" };
 		//static const inline std::wstring HIT_1{ L"Player_Hit_1_Left" };
 
 		static const inline std::wstring ATTACK{ L"Player_Attack_Left" };
@@ -30,6 +31,8 @@ namespace MomDra
 		virtual void Enter(Player& player) abstract;
 		virtual void Update(Player& player) abstract;
 		virtual void Exit(Player& player) abstract;
+
+		virtual void OnCollisionEnter(Player& player, const Collider* other) abstract;
 	};
 
 	class PlayerIdleState : public PlayerState
@@ -42,26 +45,30 @@ namespace MomDra
 		virtual void Update(Player& player) override;
 		virtual void Exit(Player& player) override;
 
+		inline virtual void OnCollisionEnter(Player& player, const Collider* other) override {}
+
 	private:
 		explicit PlayerIdleState(PlayerIdleState&& other) noexcept = delete;
 		PlayerIdleState& operator=(const PlayerIdleState& other) noexcept = delete;
 		PlayerIdleState& operator=(PlayerIdleState&& other) noexcept = delete;
 	};
 
-	class PlayerMoveState : public PlayerState
+	class PlayerFallState : public PlayerState
 	{
 	public:
-		explicit PlayerMoveState() noexcept = default;
-		explicit PlayerMoveState(const PlayerMoveState& other) noexcept = default;
+		explicit PlayerFallState() noexcept = default;
+		explicit PlayerFallState(const PlayerFallState& other) noexcept = default;
 
 		virtual void Enter(Player& player) override;
 		virtual void Update(Player& player) override;
 		virtual void Exit(Player& player) override;
 
+		virtual void OnCollisionEnter(Player& player, const Collider* other) override;
+
 	private:
-		explicit PlayerMoveState(PlayerMoveState&& other) noexcept = delete;
-		PlayerMoveState& operator=(const PlayerMoveState& other) noexcept = delete;
-		PlayerMoveState& operator=(PlayerMoveState&& other) noexcept = delete;
+		explicit PlayerFallState(PlayerFallState&& other) noexcept = delete;
+		PlayerFallState& operator=(const PlayerFallState& other) noexcept = delete;
+		PlayerFallState& operator=(PlayerFallState&& other) noexcept = delete;
 	};
 
 	class PlayerJumpState : public PlayerState
@@ -73,6 +80,8 @@ namespace MomDra
 		virtual void Enter(Player& player) override;
 		virtual void Update(Player& player) override;
 		virtual void Exit(Player& player) override;
+
+		inline virtual void OnCollisionEnter(Player& player, const Collider* other) override {}
 
 	private:
 		explicit PlayerJumpState(PlayerJumpState&& other) noexcept = delete;
@@ -90,6 +99,8 @@ namespace MomDra
 		virtual void Update(Player& player) override;
 		virtual void Exit(Player& player) override;
 
+		inline virtual void OnCollisionEnter(Player& player, const Collider* other) override {}
+
 	private:
 		explicit PlayerDeadState(PlayerDeadState&& other) noexcept = delete;
 		PlayerDeadState& operator=(const PlayerDeadState& other) noexcept = delete;
@@ -99,11 +110,11 @@ namespace MomDra
 	class Player : public Object
 	{
 	private:
-		Vector2 forward;
+		Vector2 forward{ -Vector2::UnitX };
 		bool isGround;
 
 		PlayerIdleState idleState;
-		PlayerMoveState moveState;
+		PlayerFallState fallState;
 		PlayerJumpState jumpState;
 		PlayerDeadState deadState;
 		PlayerState* currState{ &idleState };
@@ -114,14 +125,12 @@ namespace MomDra
 		virtual void Update() noexcept override;
 		virtual void Render(const HDC& hdc) const noexcept override;
 
-		inline bool IsGround() const noexcept { return isGround; }
-
 		virtual void OnCollisionEnter(const Collider* other) override;
 		virtual void OnCollisionStay(const Collider* other) override;
 		virtual void OnCollisionExit(const Collider* other) override;
 
 		inline void ChangeToIdleState() noexcept { ChangeState(&idleState); }
-		inline void ChangeToMoveState() noexcept { ChangeState(&moveState); }
+		inline void ChangeToFallState() noexcept { ChangeState(&fallState); }
 		inline void ChangeToJumpState() noexcept { ChangeState(&jumpState); }
 		inline void ChangeToDeadState() noexcept { ChangeState(&deadState); }
 
@@ -130,11 +139,14 @@ namespace MomDra
 			return std::make_unique<Player>(*this);
 		}
 
-	private:
-		void Attack() const noexcept;
+	public:
 		void Move();
+		void FallMove();
+		void Attack() const noexcept;
 		void Jump();
+		void Fall();
 
+	private:
 		void ChangeState(PlayerState* state) noexcept;
 	};
 }

@@ -8,8 +8,8 @@ namespace MomDra
 	{
 		CreateAnimator();
 
-		GetAnimator()->LoadAnimation(L"\\animation\\Player_Destory.anim");
-		GetAnimator()->Play(PlayerSetting::ROTATE_2, true);
+		/*GetAnimator()->LoadAnimation(L"\\animation\\Player_Destroy.anim");
+		GetAnimator()->Play(PlayerSetting::ROTATE_2, true);*/
 	}
 
 	void AnimationObject::Update() noexcept

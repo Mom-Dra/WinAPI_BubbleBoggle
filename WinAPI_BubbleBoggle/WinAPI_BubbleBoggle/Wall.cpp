@@ -30,19 +30,7 @@ namespace MomDra
 			otherObj->SetPos(pos);
 		break;
 		case Layer::Projectile:
-			if (other->GetFinalPos().Y > thisCollider->GetFinalPos().Y)
-			{
-				static int halfWidth{ Core::WINDOW_WIDTH / 2 };
-				Vector2 yPos{ otherObj->GetPos().X, thisCollider->GetFinalPos().Y + thisCollider->GetScale().Y };
-
-				if (halfWidth > otherPos.X)
-					yPos.X += TimeManager::GetInstance().GetDeltaTime() * 1000.0f;
-				else
-					yPos.X -= TimeManager::GetInstance().GetDeltaTime() * 1000.0f;
-
-				otherObj->SetPos(yPos);
-			}
-			else
+			if (other->GetFinalPos().X < thisCollider->GetFinalPos().X - thisCollider->GetScale().X / 2.0f || thisCollider->GetFinalPos().X + thisCollider->GetScale().X / 2.0f < other->GetFinalPos().X)
 			{
 				otherObj->SetPos(pos);
 			}
@@ -66,7 +54,7 @@ namespace MomDra
 				otherObj->SetPos(pos);
 			}
 		}
-			break;
+		break;
 		}
 	}
 

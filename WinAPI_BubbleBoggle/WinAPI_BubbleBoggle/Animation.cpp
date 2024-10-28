@@ -53,8 +53,8 @@ namespace MomDra
 
 		pos = Camera::GetInstance().GetRenderPos(pos);
 
-
 		TransparentBlt(hdc, static_cast<int>(pos.X - slice.X / 2.0f * scale.X), static_cast<int>(pos.Y - slice.Y / 2.0f * scale.Y), static_cast<int>(slice.X * scale.X), static_cast<int>(slice.Y * scale.Y), texture->GetDC(), static_cast<int>(leftTop.X), static_cast<int>(leftTop.Y), static_cast<int>(slice.X), static_cast<int>(slice.Y), RGB(255, 0, 255));
+		
 		// Left ÄÚµå
 		//TransparentBlt(hdc, static_cast<int>(pos.X - slice.X / 2.0f * scale.X), static_cast<int>(pos.Y - slice.Y / 2.0f * scale.Y), static_cast<int>(slice.X * scale.X), static_cast<int>(slice.Y * scale.Y), texture->GetDC(), texture->GetWidth() - static_cast<int>(leftTop.X) - static_cast<int>(slice.X), static_cast<int>(leftTop.Y), static_cast<int>(slice.X), static_cast<int>(slice.Y), RGB(255, 0, 255));
 		//TransparentBlt(hdc, static_cast<int>(pos.X - slice.X / 2.0f), static_cast<int>(pos.Y - slice.Y / 2.0f), static_cast<int>(slice.X), static_cast<int>(slice.Y), texture->GetDC(), static_cast<int>(leftTop.X), static_cast<int>(leftTop.Y), static_cast<int>(slice.X), static_cast<int>(slice.Y), RGB(255, 255, 255));
