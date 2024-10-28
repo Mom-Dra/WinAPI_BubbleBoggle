@@ -131,7 +131,7 @@ namespace MomDra
 
                 animator->Play(animationName, true);
 
-                std::wstring animationFilePath{ L"\\animation\\" };
+                std::wstring animationFilePath{ L"\\animation2\\" };
                 animationFilePath.append(animationName);
                 animationFilePath.append(L".anim");
 
