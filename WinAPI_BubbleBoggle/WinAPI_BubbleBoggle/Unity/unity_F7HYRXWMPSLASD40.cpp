@@ -62,6 +62,9 @@
 #include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Player.cpp"
 
 
+#include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Pon.cpp"
+
+
 #include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Projectile.cpp"
 
 

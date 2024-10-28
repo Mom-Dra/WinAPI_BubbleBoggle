@@ -2,10 +2,11 @@
 #include "TimeManager.h"
 #include "Monster.h"
 #include "Core.h"
+#include "Pon.h"
 
 namespace MomDra
 {
-	Projectile::Projectile(const Vector2& pos, const Vector2& scale, const Vector2& initialDir, const Layer& layer) : Object{ pos, scale, layer }, initialDir{ initialDir }
+	Projectile::Projectile(const Vector2& pos, const Vector2& scale, const Vector2& initialDir, const Layer& layer) : Object{ pos, scale, layer }, initialDir{ initialDir }, isExplode{ false }
 	{
 		CreateCollider(scale);
 		CreateAnimator();
@@ -126,16 +127,57 @@ namespace MomDra
 			projectile.ChangeToHighReachedState();
 			break;
 
-		/*case Layer::Projectile:
+		case Layer::Projectile:
 		{
-			RigidBody* otherRigid{ otherObject->GetRigidBody() };
+			// 서로 밀쳐내는 로직
+			/*RigidBody* otherRigid{ otherObject->GetRigidBody() };
 
 			Vector2 dir{ otherObject->GetPos() - projectile.GetPos() };
 			dir.Normalize();
 
-			otherRigid->AddForce(dir);
+			otherRigid->AddForce(dir);*/
+
+			Projectile* otherProjectile{ dynamic_cast<Projectile*>(otherObject) };
+			projectile.AddCollidingProjectile(otherProjectile);
 		}
-		break;*/
+		break;
+
+		case Layer::Player:
+			// 이 투사체와 충돌중인 오브젝트 다 터치기
+			projectile.Explode();
+			break;
+		}
+	}
+
+	void ProjectileMovingState::OnCollisionStay(Projectile& projectile, const Collider* other)
+	{
+		Object* otherObject{ other->GetObj() };
+		const Layer& otherLayer{ other->GetObj()->GetLayer() };
+
+		switch (otherLayer)
+		{
+		case Layer::Projectile:
+		{
+			Projectile* otherProjectile{ dynamic_cast<Projectile*>(otherObject) };
+			projectile.AddCollidingProjectile(otherProjectile);
+		}
+			break;
+		}
+	}
+
+	void ProjectileMovingState::OnCollisionExit(Projectile& projectile, const Collider* other)
+	{
+		Object* otherObject{ other->GetObj() };
+		const Layer& otherLayer{ other->GetObj()->GetLayer() };
+
+		switch (otherLayer)
+		{
+		case Layer::Projectile:
+		{
+			Projectile* otherProjectile{ dynamic_cast<Projectile*>(otherObject) };
+			projectile.RemoveCollidingProjectile(otherProjectile);
+		}
+		break;
 		}
 	}
 
@@ -152,7 +194,7 @@ namespace MomDra
 
 		if (time >= ProjectileSetting::PROJECTILE_1_TIME + ProjectileSetting::PROJECTILE_2_TIME + ProjectileSetting::PROJECTILE_3_TIME)
 		{
-			projectile.Destroy();
+			projectile.Explode();
 		}
 		else if (time >= ProjectileSetting::PROJECTILE_1_TIME + ProjectileSetting::PROJECTILE_2_TIME)
 		{

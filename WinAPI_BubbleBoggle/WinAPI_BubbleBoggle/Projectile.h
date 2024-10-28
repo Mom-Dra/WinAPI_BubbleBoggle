@@ -2,6 +2,8 @@
 #include "Object.h"
 #include <coroutine>
 #include "ResourceManager.h"
+#include "Pon.h"
+#include <unordered_set>
 
 namespace MomDra
 {
@@ -25,10 +27,12 @@ namespace MomDra
 	public:
 
 	public:
-		virtual void Enter(Projectile& projectile) noexcept = 0;
-		virtual void Update(Projectile& projectile) = 0;
-		virtual void OnCollisionEnter(Projectile& projectile, const Collider* other) = 0;
-		virtual void Exit(Projectile& projectile) noexcept = 0;
+		virtual void Enter(Projectile& projectile) noexcept abstract;
+		virtual void Update(Projectile& projectile) abstract;
+		virtual void OnCollisionEnter(Projectile& projectile, const Collider* other) abstract;
+		virtual void OnCollisionStay(Projectile& projectile, const Collider* other) abstract;
+		virtual void OnCollisionExit(Projectile& projectile, const Collider* other) abstract;
+		virtual void Exit(Projectile& projectile) noexcept abstract;
 	};
 
 	class ProjectileAttackState : public ProjectileState
@@ -46,6 +50,8 @@ namespace MomDra
 		virtual void Update(Projectile& projectile) override;
 
 		inline virtual void OnCollisionEnter(Projectile& projectile, const Collider* other) override;
+		inline virtual void OnCollisionStay(Projectile& projectile, const Collider* other) override {}
+		inline virtual void OnCollisionExit(Projectile& projectile, const Collider* other) override {}
 
 		inline virtual void Exit(Projectile& projectile) noexcept override {}
 
@@ -70,7 +76,9 @@ namespace MomDra
 
 		virtual void Update(Projectile& projectile) override;
 
-		inline virtual void OnCollisionEnter(Projectile& projectile, const Collider* other) override;
+		virtual void OnCollisionEnter(Projectile& projectile, const Collider* other) override;
+		virtual void OnCollisionStay(Projectile& projectile, const Collider* other) override;
+		virtual void OnCollisionExit(Projectile& projectile, const Collider* other) override;
 
 		inline virtual void Exit(Projectile& projectile) noexcept override {}
 
@@ -94,6 +102,8 @@ namespace MomDra
 		virtual void Update(Projectile& projectile) override;
 
 		inline virtual void OnCollisionEnter(Projectile& projectile, const Collider* other) override;
+		inline virtual void OnCollisionStay(Projectile& projectile, const Collider* other) override {}
+		virtual void OnCollisionExit(Projectile& projectile, const Collider* other) override {}
 
 		inline virtual void Exit(Projectile& projectile) noexcept override {}
 
@@ -113,10 +123,15 @@ namespace MomDra
 		ProjectileState* currState{ &attackState };
 		Vector2 initialDir;
 
+		std::unordered_set<Projectile*> collidingProjectiles;
+
+		bool isExplode;
+
 	public:
 		explicit Projectile(const Vector2& pos, const Vector2& scale, const Vector2& initialDir, const Layer& layer = Layer::Projectile);
 
 		inline Vector2 GetInitialDir() const noexcept { return initialDir; }
+		inline bool GetIsExplode() const noexcept{ return isExplode; }
 
 		inline virtual void Update() noexcept override { currState->Update(*this); }
 
@@ -127,7 +142,27 @@ namespace MomDra
 			currState->OnCollisionEnter(*this, other);
 		}
 
+		inline virtual void OnCollisionStay(const Collider* other) override
+		{
+			currState->OnCollisionStay(*this, other);
+		}
+
 		inline bool IsAttackState() const noexcept { return currState == &attackState; }
+
+		inline void AddCollidingProjectile(Projectile* projectile) { collidingProjectiles.emplace(projectile); }
+		inline void RemoveCollidingProjectile(Projectile* projectile) { collidingProjectiles.erase(projectile); }
+
+		inline void Explode() noexcept
+		{
+			if (isExplode) return;
+			isExplode = true;
+
+			for (const auto& projectile : collidingProjectiles)
+				projectile->Explode();
+
+			EventManager::GetInstance().Instantiate(new Pon(GetPos(), GetScale(), Layer::Default));
+			Destroy();
+		}
 
 		inline void ChangeToAttackState() { ChangeState(&attackState); }
 		inline void ChangeToMovingState() { ChangeState(&movingState); }
