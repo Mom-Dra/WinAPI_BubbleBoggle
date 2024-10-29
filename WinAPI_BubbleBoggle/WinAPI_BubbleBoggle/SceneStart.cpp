@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "IdleState.h"
 #include "Ground.h"
+#include "ResourceManager.h"
 
 namespace MomDra
 {	
@@ -48,6 +49,9 @@ namespace MomDra
 		// Camera Look ÁöÁ¡
 		Vector2 resolution{ Core::GetInstance().GetResolution() };
 		Camera::GetInstance().SetLookAt(resolution / 2.0f);
+
+		// Sound
+		ResourceManager::GetInstance().LoadSound(L"\\sound\\Main.wav")->PlayToBGM(true);
 
 		Start();
 	}

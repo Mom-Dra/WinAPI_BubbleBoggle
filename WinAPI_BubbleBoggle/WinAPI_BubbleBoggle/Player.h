@@ -13,7 +13,7 @@ namespace MomDra
 		static const inline std::wstring JUMP_LEFT{ L"Player_Jump_Left" };
 		static const inline std::wstring ATTACK_LEFT{ L"Player_Attack_Left" };
 		static const inline std::wstring HIT_LEFT{ L"Player_Hit_Left" }; // 처음 맞았을 때
-		static const inline std::wstring ROTATE_1{ L"Player_Rotate_Left" }; // LEFT, RIGHT 공통
+		static const inline std::wstring ROTATE_1{ L"Player_Rotate_1_Left" }; // LEFT, RIGHT 공통
 		static const inline std::wstring ROTATE_2{ L"Player_Rotate_2_Left" }; // LEFT, RIGHT 공통
 		static const inline std::wstring DESTROY{ L"Player_Destroy" };
 
@@ -26,6 +26,11 @@ namespace MomDra
 
 		static constexpr inline float MovePower{ 200.0f };
 		static constexpr inline float FallMovePower{ 100.0f };
+
+		static constexpr inline float HIT_TIME{ 0.5f };
+		static constexpr inline float ROTATE_1_TIME{ 1.0f };
+		static constexpr inline float ROTATE_2_TIME{ 1.0f };
+		static constexpr inline float DESTROY_TIME{ 1.0f };
 	};
 
 	class PlayerState
@@ -98,6 +103,9 @@ namespace MomDra
 
 	class PlayerDeadState : public PlayerState
 	{
+	private:
+		float time{ 0.0f };
+
 	public:
 		explicit PlayerDeadState() noexcept = default;
 		explicit PlayerDeadState(const PlayerDeadState& other) noexcept = default;
@@ -118,13 +126,13 @@ namespace MomDra
 	{
 	private:
 		Vector2 forward{ -Vector2::UnitX };
-		bool isGround;
+		bool isCollideSideOfGround{ false };
 
 		PlayerIdleState idleState;
 		PlayerFallState fallState;
 		PlayerJumpState jumpState;
 		PlayerDeadState deadState;
-		PlayerState* currState{ &idleState };
+		PlayerState* currState;
 
 	public:
 		explicit Player(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::Player) noexcept;
@@ -132,8 +140,13 @@ namespace MomDra
 		virtual void Update() noexcept override;
 		virtual void Render(const HDC& hdc) const noexcept override;
 
-		inline bool isRight() const noexcept { return forward == Vector2::UnitX; }
+		inline bool IsCollideSideOfGround() const noexcept { return isCollideSideOfGround; }
 
+		inline bool IsRight() const noexcept { return forward == Vector2::UnitX; }
+		void Die() noexcept;
+
+		inline void SetIsCollideSideOfGround(bool isCollideSideOfGround) noexcept { this->isCollideSideOfGround = isCollideSideOfGround; }
+		
 		virtual void OnCollisionEnter(const Collider* other) override;
 		virtual void OnCollisionStay(const Collider* other) override;
 		virtual void OnCollisionExit(const Collider* other) override;

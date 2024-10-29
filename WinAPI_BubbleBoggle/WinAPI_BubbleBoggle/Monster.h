@@ -52,6 +52,7 @@ namespace MomDra
 		MonsterMoveState& operator=(const MonsterMoveState&& other) = delete;
 
 		void Move(Monster& monster, float deltaTime) noexcept;
+		void WalkAnimation(Monster& monster);
 	};
 
 	class MonsterTraceState : public MonsterState
@@ -100,6 +101,7 @@ namespace MomDra
 		MonsterAngryState& operator=(const MonsterAngryState&& other) = delete;
 
 		void Move(Monster& monster, float deltaTime) noexcept;
+		void WalkAnimation(Monster& monster);
 	};
 
 	class MonsterHittedState : public MonsterState
@@ -172,7 +174,7 @@ namespace MomDra
 
 		// ÈÄ¿¡ Object·Î »©µµ ±¦ÂúÀ» µí
 		Vector2 forwardDir{ Vector2::UnitX };
-		Vector2 upDir{ Vector2{0.0f, -1.0f} };
+		Vector2 upDir{ -Vector2::UnitY };
 
 		Player* player{ nullptr };
 		bool onGround{ false };
@@ -193,6 +195,8 @@ namespace MomDra
 		inline void SetForwardDir(const Vector2 forwardDir) noexcept { this->forwardDir = forwardDir; }
 		inline void SetUpDir(const Vector2 forwardDir) noexcept { this->upDir = upDir; }
 		inline void SetOnGround(bool onGround) noexcept { this->onGround = onGround; }
+
+		inline bool IsRight() const noexcept { return forwardDir == Vector2::UnitX; }
 
 		void ChangeDir() noexcept;
 		void GetintoProjectile() noexcept;

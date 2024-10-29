@@ -159,6 +159,8 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="Ray.h" />
+    <ClInclude Include="Sound.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="TileRectangle.h" />
     <ClInclude Include="Res.h" />
     <ClInclude Include="Resource.h" />
@@ -207,6 +209,8 @@
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Ray.cpp" />
+    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="TileRectangle.cpp" />
     <ClCompile Include="Res.cpp" />
     <ClCompile Include="ResourceManager.cpp" />

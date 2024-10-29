@@ -21,7 +21,9 @@ namespace MomDra
 	private:
 		explicit UIManager() noexcept = default;
 		explicit UIManager(const UIManager& other) = delete;
+		explicit UIManager(UIManager&& other) = delete;
 		UIManager& operator=(const UIManager& other) = delete;
+		UIManager& operator=(UIManager&& other) = delete;
 
 		UI* GetFocusedUI() noexcept;
 		UI* GetTargetUI(UI* parentUI) const noexcept;

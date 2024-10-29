@@ -41,12 +41,11 @@ namespace MomDra
 			// 아래에서 위로 올라가는 경우 무시!
 			if (rigid->GetVelocity().Y < 0.0f && thisCollider->GetFinalPos().Y < other->GetFinalPos().Y) return;
 
-
 			rigid->SetGravity(false);
 			rigid->SetVelocity(Vector2{ rigid->GetVelocity().X, 0.0f });
 			otherObj->SetPos(Vector2{ otherObj->GetPos().X, yPos });
 		}
-			break;
+		break;
 
 		case Layer::Monster:
 
@@ -88,18 +87,29 @@ namespace MomDra
 			float left2{ std::abs(other->GetFinalPos().X - thisCollider->GetFinalPos().X) };
 			float right2{ other->GetScale().X / 2.0f + thisCollider->GetScale().X / 2.0f - 0.01f };
 
+			Player* player{ dynamic_cast<Player*>(otherObj) };
+
 			// 벽 면에 부딪쳤을 때
 			if (other->GetFinalPos().Y + other->GetScale().Y / 2.0f > thisCollider->GetFinalPos().Y - thisCollider->GetScale().Y / 2.0f + 0.2f)
 			{
+				
 				if (std::abs(other->GetFinalPos().X - thisCollider->GetFinalPos().X) > other->GetScale().X / 2.0f + thisCollider->GetScale().X / 2.0f -  0.2f)
 				{
 					rigid->SetVelocity(Vector2{ 0.0f, rigid->GetVelocity().Y });
+					
+					
+					player->SetIsCollideSideOfGround(true);
 				}
-				else rigid->SetGravity(false);
+				else
+				{
+					rigid->SetGravity(false);
+					player->SetIsCollideSideOfGround(false);
+				}
 			}
 			else
 			{
 				rigid->SetGravity(false);
+				player->SetIsCollideSideOfGround(false);
 			}
 		}
 			break;
@@ -117,7 +127,12 @@ namespace MomDra
 		switch (otherLayer)
 		{
 		case Layer::Player:
+		{
+			Player* player{ dynamic_cast<Player*>(otherObj) };
+			player->SetIsCollideSideOfGround(false);
 			rigid->SetGravity(true);
+		}
+			
 			break;
 		case Layer::Monster:
 			rigid->SetGravity(true);	

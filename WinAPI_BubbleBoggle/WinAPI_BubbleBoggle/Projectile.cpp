@@ -22,6 +22,9 @@ namespace MomDra
 		animator->FindAnimation(L"Projectile_Attack")->Save(L"\\animation\\Projectile_Attack.anim");*/
 
 		animator->LoadAnimation(L"\\animation\\Projectile_Attack.anim");
+		animator->LoadAnimation(L"\\animation\\Projectile_Move_1.anim");
+		animator->LoadAnimation(L"\\animation\\Projectile_Move_2.anim");
+		animator->LoadAnimation(L"\\animation\\Projectile_Move_3.anim");
 
 		/*std::initializer_list<Vector2> leftTops2{ Vector2{1.0f, 24.0f}, Vector2{19.0f, 25.0f }, Vector2{38.0f, 24.0f} };
 		std::initializer_list<Vector2> sliceSizes2{ Vector2{14.0f, 16.0f}, Vector2{14.0f, 14.0f }, Vector2{12.0f, 16.0f} };
@@ -30,7 +33,6 @@ namespace MomDra
 		animator->Play(L"Projectile_Move_1", true);
 		animator->FindAnimation(L"Projectile_Move_1")->Save(L"\\animation\\Projectile_Move_1.anim");*/
 
-		animator->LoadAnimation(L"\\animation\\Projectile_Move_1.anim");
 
 		/*std::initializer_list<Vector2> leftTops3{ Vector2{0.0f, 0.0f}, Vector2{18.0f, 1.0f }, Vector2{37.0f, 0.0f} };
 		std::initializer_list<Vector2> sliceSizes3{ Vector2{14.0f, 16.0f}, Vector2{14.0f, 14.0f }, Vector2{12.0f, 16.0f} };
@@ -38,7 +40,6 @@ namespace MomDra
 		animator->Play(L"Projectile_Move_2", true);
 		animator->FindAnimation(L"Projectile_Move_2")->Save(L"\\animation\\Projectile_Move_2.anim");*/
 
-		animator->LoadAnimation(L"\\animation\\Projectile_Move_2.anim");
 
 		/*std::initializer_list<Vector2> leftTops4{ Vector2{54.0f, 0.0f}, Vector2{72.0f, 1.0f }, Vector2{91.0f, 0.0f} };
 		std::initializer_list<Vector2> sliceSizes4{ Vector2{14.0f, 16.0f}, Vector2{14.0f, 14.0f }, Vector2{12.0f, 16.0f} };
@@ -46,9 +47,30 @@ namespace MomDra
 		animator->Play(L"Projectile_Move_3", true);
 		animator->FindAnimation(L"Projectile_Move_3")->Save(L"\\animation\\Projectile_Move_3.anim");*/
 
-		animator->LoadAnimation(L"\\animation\\Projectile_Move_3.anim");
-
 		ChangeToAttackState();
+	}
+
+	inline void Projectile::Explode() noexcept
+	{
+		if (isExplode) return;
+
+		isExplode = true;
+
+		for (const auto& projectile : collidingProjectiles)
+			projectile->Explode();
+
+		EventManager::GetInstance().Instantiate(new Pon(GetPos(), GetScale(), Layer::Default));
+		Destroy();
+	}
+
+	inline void Projectile::ExplodeSelf() noexcept
+	{
+		if (isExplode) return;
+
+		isExplode = true;
+
+		EventManager::GetInstance().Instantiate(new Pon(GetPos(), GetScale(), Layer::Default));
+		Destroy();
 	}
 
 	void ProjectileAttackState::Enter(Projectile& projectile) noexcept
@@ -183,18 +205,19 @@ namespace MomDra
 
 	void ProjectileHighReachedState::Enter(Projectile& projectile) noexcept
 	{
-
+		targetYpos = projectile.GetPos().Y;
 	}
 
 	void ProjectileHighReachedState::Update(Projectile& projectile)
 	{
 		static const TimeManager& timeManager{ TimeManager::GetInstance() };
+		float deltaTime{ timeManager.GetDeltaTime() };
 
-		time += timeManager.GetDeltaTime();
+		time += deltaTime;
 
 		if (time >= ProjectileSetting::PROJECTILE_1_TIME + ProjectileSetting::PROJECTILE_2_TIME + ProjectileSetting::PROJECTILE_3_TIME)
 		{
-			projectile.Explode();
+			projectile.ExplodeSelf();
 		}
 		else if (time >= ProjectileSetting::PROJECTILE_1_TIME + ProjectileSetting::PROJECTILE_2_TIME)
 		{
@@ -206,18 +229,40 @@ namespace MomDra
 		}
 
 		static int halfWidth{ Core::WINDOW_WIDTH / 2 };
+
+		static Vector2 targetPos{ static_cast<float>(halfWidth), targetYpos };
 		Vector2 pos{ projectile.GetPos() };
 
-		if (halfWidth > pos.X)
+		projectile.SetPos(pos + (targetPos - pos).GetNormalize() * MonsterSetting::HITTED_SPEED * deltaTime);
+
+		/*if (halfWidth > pos.X)
 			pos.X += TimeManager::GetInstance().GetDeltaTime() * MonsterSetting::HITTED_SPEED;
 		else
 			pos.X -= TimeManager::GetInstance().GetDeltaTime() * MonsterSetting::HITTED_SPEED;
 
-		projectile.SetPos(pos);
+		projectile.SetPos(pos);*/
 	}
 
-	inline void ProjectileHighReachedState::OnCollisionEnter(Projectile& projectile, const Collider* other)
+	void ProjectileHighReachedState::OnCollisionEnter(Projectile& projectile, const Collider* other)
 	{
+		Object* otherObject{ other->GetObj() };
 
+		const Layer& otherLayer{ otherObject->GetLayer() };
+
+		switch (otherLayer)
+		{
+		case Layer::Projectile:
+		{
+			RigidBody* otherRigid{ otherObject->GetRigidBody() };
+			Vector2 dir{ otherObject->GetPos() - projectile.GetPos() };
+
+			otherRigid->AddVelocity(dir.GetNormalize() * ProjectileSetting::ProjectilePower);
+		}
+		break;
+		
+		case Layer::Player:
+			projectile.Explode();
+			break;
+		}
 	}
 }

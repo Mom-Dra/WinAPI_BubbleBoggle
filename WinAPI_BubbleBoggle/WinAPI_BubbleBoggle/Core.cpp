@@ -116,6 +116,7 @@ namespace MomDra
         KeyManager::GetInstance().Initialize();
         TimeManager::GetInstance().Initialize();
         SceneManager::GetInstance().Initialize();
+        SoundManager::GetInstance().Initialize();
         //ResourceManager::GetInstance().
     }
 }

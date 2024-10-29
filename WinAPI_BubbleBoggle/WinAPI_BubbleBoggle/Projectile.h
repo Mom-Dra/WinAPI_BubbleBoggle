@@ -20,12 +20,12 @@ namespace MomDra
 		static const inline std::wstring PROJECTILE_MOVE_2{ L"Projectile_Move_2" };
 		static const inline std::wstring PROJECTILE_MOVE_3{ L"Projectile_Move_3" };
 		static const inline std::wstring PROJECTILE_PON{ L"Projectile_Pon" };
+
+		static constexpr inline float ProjectilePower{ 1.0f };
 	};
 
 	class ProjectileState
 	{
-	public:
-
 	public:
 		virtual void Enter(Projectile& projectile) noexcept abstract;
 		virtual void Update(Projectile& projectile) abstract;
@@ -92,16 +92,16 @@ namespace MomDra
 	{
 	private:
 		float time{ 0.0f };
+		float targetYpos;
 
 	public:
 		explicit ProjectileHighReachedState() noexcept = default;
 		explicit ProjectileHighReachedState(const ProjectileHighReachedState& other) noexcept = default;
 
 		virtual void Enter(Projectile& projectile) noexcept override;
-
 		virtual void Update(Projectile& projectile) override;
 
-		inline virtual void OnCollisionEnter(Projectile& projectile, const Collider* other) override;
+		virtual void OnCollisionEnter(Projectile& projectile, const Collider* other) override;
 		inline virtual void OnCollisionStay(Projectile& projectile, const Collider* other) override {}
 		virtual void OnCollisionExit(Projectile& projectile, const Collider* other) override {}
 
@@ -134,35 +134,18 @@ namespace MomDra
 		inline bool GetIsExplode() const noexcept{ return isExplode; }
 
 		inline virtual void Update() noexcept override { currState->Update(*this); }
-
 		inline virtual void Render(const HDC& hdc) const noexcept override { Object::Render(hdc); }
 
-		inline virtual void OnCollisionEnter(const Collider* other) override
-		{
-			currState->OnCollisionEnter(*this, other);
-		}
-
-		inline virtual void OnCollisionStay(const Collider* other) override
-		{
-			currState->OnCollisionStay(*this, other);
-		}
+		inline virtual void OnCollisionEnter(const Collider* other) override { currState->OnCollisionEnter(*this, other); }
+		inline virtual void OnCollisionStay(const Collider* other) override { currState->OnCollisionStay(*this, other); }
 
 		inline bool IsAttackState() const noexcept { return currState == &attackState; }
-
 		inline void AddCollidingProjectile(Projectile* projectile) { collidingProjectiles.emplace(projectile); }
 		inline void RemoveCollidingProjectile(Projectile* projectile) { collidingProjectiles.erase(projectile); }
 
-		inline void Explode() noexcept
-		{
-			if (isExplode) return;
-			isExplode = true;
-
-			for (const auto& projectile : collidingProjectiles)
-				projectile->Explode();
-
-			EventManager::GetInstance().Instantiate(new Pon(GetPos(), GetScale(), Layer::Default));
-			Destroy();
-		}
+		inline void Explode() noexcept;
+		inline void ExplodeSelf() noexcept;
+		
 
 		inline void ChangeToAttackState() { ChangeState(&attackState); }
 		inline void ChangeToMovingState() { ChangeState(&movingState); }

@@ -22,4 +22,29 @@ namespace MomDra
 		
 		return std::dynamic_pointer_cast<Texture>(textureMap[filePath]);
 	}
+
+	std::shared_ptr<Sound> ResourceManager::LoadSound(const std::wstring& filePath)
+	{
+		auto it{ soundMap.find(filePath) };
+
+		if (it == soundMap.end())
+		{
+			std::shared_ptr<Sound> sound{ std::make_shared<Sound>(filePath) };
+			soundMap.emplace(filePath, sound);
+		}
+
+		return std::dynamic_pointer_cast<Sound>(soundMap[filePath]);
+	}
+
+	std::shared_ptr<Sound> ResourceManager::FindSound(const std::wstring& filePath)
+	{
+		auto it{ soundMap.find(filePath) };
+		
+		if (it == soundMap.end())
+		{
+			return nullptr;
+		}
+
+		return std::dynamic_pointer_cast<Sound>(it->second);
+	}
 }

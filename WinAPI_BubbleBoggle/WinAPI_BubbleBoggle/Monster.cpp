@@ -27,14 +27,18 @@ namespace MomDra
 		animator->FindAnimation(L"Monster_Walk_Left")->Save(L"\\animation\\Monster_Walk_Left.anim");*/
 
 		animator->LoadAnimation(L"\\animation\\Monster_Walk_Left.anim");
+		animator->LoadAnimation(L"\\animation\\Monster_Walk_Right.anim");
 		animator->LoadAnimation(L"\\animation\\Monster_Walk_Angry_Left.anim");
+		animator->LoadAnimation(L"\\animation\\Monster_Walk_Angry_Right.anim");
 		animator->LoadAnimation(L"\\animation\\Monster_InProjectile_1.anim");
 		animator->LoadAnimation(L"\\animation\\Monster_InProjectile_2.anim");
 		animator->LoadAnimation(L"\\animation\\Monster_InProjectile_3.anim");
 		animator->LoadAnimation(L"\\animation\\Monster_InProjectile_4.anim");
-		animator->LoadAnimation(L"\\animation\\Monster_Jump_Left.anim");
-		animator->LoadAnimation(L"\\animation\\Monster_Jump_Angry_Left.anim");
 
+		ResourceManager::GetInstance().LoadSound(L"\\sound\\AttackMonster.wav");
+
+		/*animator->LoadAnimation(L"\\animation\\Monster_Jump_Left.anim");
+		animator->LoadAnimation(L"\\animation\\Monster_Jump_Angry_Left.anim");*/
 
 		/*animator->CreateAnimation(L"Monster_Walk_Right", enemyRightBmp, Vector2{ 516.0f, 0.0f }, Vector2{ 14.0f, 16.0f }, Vector2{ 19.0f, 0.0f }, 0.2f, 4);
 		animator->Play(L"Monster_Walk_Right", true);
@@ -150,7 +154,7 @@ namespace MomDra
 
 	void MonsterMoveState::Enter(Monster& monster) noexcept
 	{
-		monster.GetAnimator()->Play(MonsterSetting::WALK_LEFT, true);
+		WalkAnimation(monster);
 	}
 
 	// PlayerFallState
@@ -172,6 +176,7 @@ namespace MomDra
 			if (Random::GetPossibility(MonsterSetting::CHANGE_DIR_POSSIBILITY))
 			{
 				monster.ChangeDir();
+				WalkAnimation(monster);
 			}
 
 			changeDirTime = 0.0f;
@@ -195,6 +200,13 @@ namespace MomDra
 			}
 		}
 		break;
+
+		case Layer::Player:
+		{
+			Player* player{ dynamic_cast<Player*>(otherObject) };
+			player->Die();
+		}
+			break;
 		}
 	}
 
@@ -232,6 +244,7 @@ namespace MomDra
 		else if (Ray::RayCast(pos, monster.GetForwardDir() * MonsterSetting::GROUND_RAY_DISTANCE, Layer::Wall, collider))
 		{
 			monster.ChangeDir();
+			WalkAnimation(monster);
 		}
 
 		jumpTime += deltaTime;
@@ -243,7 +256,7 @@ namespace MomDra
 				jumpTime = 0.0f;
 				monster.Jump();
 
-				monster.GetAnimator()->Play(MonsterSetting::JUMP_LEFT, true);
+				//monster.GetAnimator()->Play(MonsterSetting::JUMP_LEFT, true);
 			}
 		}
 
@@ -256,9 +269,19 @@ namespace MomDra
 				forwardJumpTime = 0.0f;
 				monster.JumpForward();
 
-				monster.GetAnimator()->Play(MonsterSetting::JUMP_LEFT, true);
+				//monster.GetAnimator()->Play(MonsterSetting::JUMP_LEFT, true);
 			}
 		}
+	}
+
+	void MonsterMoveState::WalkAnimation(Monster& monster)
+	{
+		static Animator* animator{ monster.GetAnimator() };
+
+		if (monster.IsRight())
+			animator->Play(MonsterSetting::WALK_RIGHT, true);
+		else
+			animator->Play(MonsterSetting::WALK_LEFT, true);
 	}
 
 	// TraceState
@@ -355,6 +378,8 @@ namespace MomDra
 			// 아이템 생성!
 			EventManager::GetInstance().Instantiate(new Item{ monster.GetPos() });
 
+			ResourceManager::GetInstance().FindSound(L"\\sound\\AttackMonster.wav")->Play();
+
 			// 몬스터 삭제
 			monster.Destroy();
 		}
@@ -364,7 +389,7 @@ namespace MomDra
 
 	void MonsterAngryState::Enter(Monster& monster) noexcept
 	{
-		monster.GetAnimator()->Play(MonsterSetting::WALK_ANGRY_LEFT, true);
+		WalkAnimation(monster);
 		monster.GetRigidBody()->SetGravity(true);
 	}
 
@@ -386,6 +411,7 @@ namespace MomDra
 			if (Random::GetPossibility(MonsterSetting::CHANGE_DIR_POSSIBILITY))
 			{
 				monster.ChangeDir();
+				WalkAnimation(monster);
 			}
 
 			changeDirTime = 0.0f;
@@ -408,6 +434,14 @@ namespace MomDra
 				monster.GetintoProjectile();
 			}
 		}
+		break;
+		
+		case Layer::Player:
+		{
+			Player* player{ dynamic_cast<Player*>(otherObject) };
+			player->Die();
+		}
+			break;
 		}
 	}
 
@@ -450,6 +484,7 @@ namespace MomDra
 		else if (Ray::RayCast(pos, monster.GetForwardDir() * MonsterSetting::GROUND_RAY_DISTANCE, Layer::Wall, collider))
 		{
 			monster.ChangeDir();
+			WalkAnimation(monster);
 		}
 
 		jumpTime += deltaTime;
@@ -460,8 +495,6 @@ namespace MomDra
 				// Jump 로직, 떨어지는 도중에 발생할 수도 있음
 				jumpTime = 0.0f;
 				monster.Jump();
-
-				monster.GetAnimator()->Play(MonsterSetting::JUMP_ANGRY_LEFT, true);
 			}
 		}
 
@@ -473,9 +506,17 @@ namespace MomDra
 			{
 				forwardJumpTime = 0.0f;
 				monster.JumpForward();
-
-				monster.GetAnimator()->Play(MonsterSetting::JUMP_ANGRY_LEFT, true);
 			}
 		}
+	}
+
+	void MonsterAngryState::WalkAnimation(Monster& monster)
+	{
+		static Animator* animator{ monster.GetAnimator() };
+
+		if (monster.IsRight())
+			animator->Play(MonsterSetting::WALK_ANGRY_RIGHT, true);
+		else
+			animator->Play(MonsterSetting::WALK_ANGRY_LEFT, true);
 	}
 }

@@ -19,6 +19,8 @@ namespace MomDra
 	private:
 		explicit PathManager() = default;
 		explicit PathManager(const PathManager& other) = delete;
+		explicit PathManager(PathManager&& other) = delete;
 		PathManager& operator=(const PathManager& other) = delete;
+		PathManager& operator=(PathManager&& other) = delete;
 	};
 }
