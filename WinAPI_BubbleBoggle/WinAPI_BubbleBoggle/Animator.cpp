@@ -3,34 +3,54 @@
 
 namespace MomDra
 {
-	Animator::Animator(Object* owner) noexcept : currAnimation{ nullptr }, owner{ owner }, repeat{ false }
+	Animator::Animator(Object* owner) noexcept : currAnimation{ nullptr }, owner{ owner }, repeat{ false }, oneShotAnimation{ nullptr }, oneShotMode{ false }
 	{
 
 	}
 
-	Animator::Animator(const Animator& other) noexcept : currAnimation{ nullptr }, owner{ nullptr }, repeat{ other.repeat }
+	Animator::Animator(const Animator& other) noexcept : currAnimation{ nullptr }, owner{ nullptr }, repeat{ other.repeat }, oneShotAnimation{ other.oneShotAnimation }, oneShotMode{ other.oneShotMode }
 	{
 		// unorderd_map은 어떻게 복사하나요?
 
 	}
 
-	void Animator::LateUpdate() const noexcept
+	void Animator::LateUpdate() noexcept
 	{
-		if (currAnimation)
+		if (oneShotMode)
 		{
-			currAnimation->Update();
+			oneShotAnimation->Update();
 
-			if (repeat && currAnimation->IsFinish())
+			if (oneShotAnimation->IsFinish())
 			{
-				currAnimation->SetFrame(0);
+				oneShotMode = false;
+			}
+		}
+		else
+		{
+			if (currAnimation)
+			{
+				currAnimation->Update();
+
+				if (repeat && currAnimation->IsFinish())
+				{
+					currAnimation->SetFrame(0);
+				}
 			}
 		}
 	}
 
 	void Animator::Render(const HDC& hdc) const noexcept
 	{
-		if (currAnimation)
-			currAnimation->Render(hdc);
+		if (oneShotMode)
+		{
+			if (oneShotAnimation)
+				oneShotAnimation->Render(hdc);
+		}
+		else
+		{
+			if (currAnimation)
+				currAnimation->Render(hdc);
+		}
 	}
 
 	Animation* Animator::FindAnimation(const std::wstring& animationName) const noexcept
@@ -90,10 +110,19 @@ namespace MomDra
 		animationMap.emplace(animationName, std::move(animation));
 	}
 
-	void Animator::Play(const std::wstring& animationName, bool repeat, bool isRight) noexcept
+	void Animator::Play(const std::wstring& animationName, bool repeat) noexcept
 	{
+		if (currAnimation == FindAnimation(animationName)) return;
+
 		currAnimation = FindAnimation(animationName);
 		this->repeat = repeat;
+	}
+
+	void Animator::PlayOneShot(const std::wstring& animationName) noexcept
+	{
+		oneShotAnimation = FindAnimation(animationName);
+		oneShotAnimation->SetFrame(0);
+		oneShotMode = true;
 	}
 
 	std::wstring Animator::LoadAnimation(const std::wstring& relativePath)

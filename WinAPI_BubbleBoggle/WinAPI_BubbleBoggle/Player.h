@@ -7,22 +7,25 @@ namespace MomDra
 
 	struct PlayerSetting
 	{
-		/*static constexpr float abc;
-		static constexpr float aaa;
-		static constexpr float aaaaa;
-
-		static constexpr float bbbb;*/
-		static const inline std::wstring IDLE{ L"Player_Idle_Left" };
-		static const inline std::wstring WALK{ L"Player_Walk_Left" };
-		static const inline std::wstring FALL{ L"Player_Falling_Left" };
-		static const inline std::wstring JUMP{ L"Player_Jump_Left" };
-		//static const inline std::wstring HIT_1{ L"Player_Hit_1_Left" };
-
-		static const inline std::wstring ATTACK{ L"Player_Attack_Left" };
-		static const inline std::wstring HIT{ L"Player_Hit_2_Left" }; // 처음 맞았을 때
-		static const inline std::wstring ROTATE{ L"Player_Rotate_Left" };
-		static const inline std::wstring ROTATE_2{ L"Player_Rotate_2_Left" };
+		static const inline std::wstring IDLE_LEFT{ L"Player_Idle_Left" };
+		static const inline std::wstring WALK_LEFT{ L"Player_Walk_Left" };
+		static const inline std::wstring FALL_LEFT{ L"Player_Fall_Left" };
+		static const inline std::wstring JUMP_LEFT{ L"Player_Jump_Left" };
+		static const inline std::wstring ATTACK_LEFT{ L"Player_Attack_Left" };
+		static const inline std::wstring HIT_LEFT{ L"Player_Hit_Left" }; // 처음 맞았을 때
+		static const inline std::wstring ROTATE_1{ L"Player_Rotate_Left" }; // LEFT, RIGHT 공통
+		static const inline std::wstring ROTATE_2{ L"Player_Rotate_2_Left" }; // LEFT, RIGHT 공통
 		static const inline std::wstring DESTROY{ L"Player_Destroy" };
+
+		static const inline std::wstring IDLE_RIGHT{ L"Player_Idle_Right" };
+		static const inline std::wstring WALK_RIGHT{ L"Player_Walk_Right" };
+		static const inline std::wstring FALL_RIGHT{ L"Player_Fall_Right" };
+		static const inline std::wstring JUMP_RIGHT{ L"Player_Jump_Right" };
+		static const inline std::wstring ATTACK_RIGHT{ L"Player_Attack_Right" };
+		static const inline std::wstring HIT_RIGHT{ L"Player_Hit_Right" };
+
+		static constexpr inline float MovePower{ 200.0f };
+		static constexpr inline float FallMovePower{ 100.0f };
 	};
 
 	class PlayerState
@@ -69,6 +72,8 @@ namespace MomDra
 		explicit PlayerFallState(PlayerFallState&& other) noexcept = delete;
 		PlayerFallState& operator=(const PlayerFallState& other) noexcept = delete;
 		PlayerFallState& operator=(PlayerFallState&& other) noexcept = delete;
+
+		void FallAnimation(Player& player);
 	};
 
 	class PlayerJumpState : public PlayerState
@@ -87,6 +92,8 @@ namespace MomDra
 		explicit PlayerJumpState(PlayerJumpState&& other) noexcept = delete;
 		PlayerJumpState& operator=(const PlayerJumpState& other) noexcept = delete;
 		PlayerJumpState& operator=(PlayerJumpState&& other) noexcept = delete;
+
+		void JumpAnimation(Player& player);
 	};
 
 	class PlayerDeadState : public PlayerState
@@ -125,6 +132,8 @@ namespace MomDra
 		virtual void Update() noexcept override;
 		virtual void Render(const HDC& hdc) const noexcept override;
 
+		inline bool isRight() const noexcept { return forward == Vector2::UnitX; }
+
 		virtual void OnCollisionEnter(const Collider* other) override;
 		virtual void OnCollisionStay(const Collider* other) override;
 		virtual void OnCollisionExit(const Collider* other) override;
@@ -144,7 +153,7 @@ namespace MomDra
 		void FallMove();
 		void Attack() const noexcept;
 		void Jump();
-		void Fall();
+		void CheckFall();
 
 	private:
 		void ChangeState(PlayerState* state) noexcept;

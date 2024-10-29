@@ -20,8 +20,10 @@ namespace MomDra
 	void Animation::Update() noexcept
 	{
 		if (isFinish) return;
+		
+		static const TimeManager& timeManager{ TimeManager::GetInstance() };
 
-		time += TimeManager::GetInstance().GetDeltaTime();
+		time += timeManager.GetDeltaTime();
 
 		if (frames[currFrame].duration < time)
 		{

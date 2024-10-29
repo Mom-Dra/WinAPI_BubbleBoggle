@@ -21,6 +21,9 @@ namespace MomDra
 		Object* owner;
 		bool repeat;
 
+		Animation* oneShotAnimation;
+		bool oneShotMode;
+
 	public:
 		explicit Animator(Object* owner) noexcept;
 		explicit Animator(const Animator& other) noexcept;
@@ -29,7 +32,7 @@ namespace MomDra
 		inline Object* GetOwner() const noexcept { return owner; }
 		inline void SetOwner(Object* owner) noexcept { this->owner = owner; }
 
-		void LateUpdate() const noexcept;
+		void LateUpdate() noexcept;
 		void Render(const HDC& hdc) const noexcept;
 
 		Animation* FindAnimation(const std::wstring& animationName) const noexcept;
@@ -41,7 +44,8 @@ namespace MomDra
 		template<std::size_t N>
 		inline void CreateAnimation(const std::wstring& animationName, std::shared_ptr<Texture> texture, const std::array<Vector2, N>& leftTops, const std::array<Vector2, N>& sliceSize, float duration, unsigned int frameCount);
 
-		void Play(const std::wstring& animationName, bool repeat, bool isRight = false) noexcept;
+		void Play(const std::wstring& animationName, bool repeat) noexcept;
+		void PlayOneShot(const std::wstring& animationName) noexcept;
 
 		std::wstring LoadAnimation(const std::wstring& relativePath);
 	};

@@ -47,8 +47,16 @@ namespace MomDra
 		animator->LoadAnimation(L"\\animation\\Player_Attack_Left.anim");
 		animator->LoadAnimation(L"\\animation\\Player_Idle_Left.anim");
 		animator->LoadAnimation(L"\\animation\\Player_Jump_Left.anim");
-		animator->LoadAnimation(L"\\animation\\Player_Falling_Left.anim");
+		animator->LoadAnimation(L"\\animation\\Player_Fall_Left.anim");
 		animator->LoadAnimation(L"\\animation\\Player_Rotate_2_Left.anim");
+		animator->LoadAnimation(L"\\animation\\Player_Hit_Left.anim");
+
+		animator->LoadAnimation(L"\\animation\\Player_Walk_Right.anim");
+		animator->LoadAnimation(L"\\animation\\Player_Attack_Right.anim");
+		animator->LoadAnimation(L"\\animation\\Player_Idle_Right.anim");
+		animator->LoadAnimation(L"\\animation\\Player_Jump_Right.anim");
+		animator->LoadAnimation(L"\\animation\\Player_Fall_Right.anim");
+		animator->LoadAnimation(L"\\animation\\Player_Hit_Right.anim");
 		
 
 		/*std::initializer_list<Vector2> leftTops2{ Vector2{1.0f, 2.0f}, Vector2{22.0f, 2.0f}, Vector2{43.0f, 2.0f }, Vector2{64.0f, 2.0f }, Vector2{85.0f, 2.0f} };
@@ -69,10 +77,6 @@ namespace MomDra
 	void Player::Update() noexcept
 	{
 		currState->Update(*this);
-
-		/*Move();
-		Jump();
-		Attack();*/
 	}
 
 	void Player::Render(const HDC& hdc) const noexcept
@@ -109,13 +113,20 @@ namespace MomDra
 
 	void Player::Attack() const noexcept
 	{
+		static Animator* animator{ GetAnimator() };
+
 		// Projectile 积己!
 		// EventManager俊 积己 殿废!!
 
 		if (KeyManager::GetInstance().GetKeyDown(Key::A))
 		{
 			EventManager::GetInstance().Instantiate(new Projectile{ GetPos() + forward * 5.0f, Vector2{40.0f, 40.0f}, forward, Layer::Projectile });
-			GetAnimator()->Play(PlayerSetting::ATTACK, false);
+
+			if (isRight())
+				//animator->PlayOneShot(PlayerSetting::ATTACK_RIGHT);
+				animator->PlayOneShot(PlayerSetting::ATTACK_RIGHT);
+			else
+				animator->PlayOneShot(PlayerSetting::ATTACK_LEFT);
 		}
 	}
 
@@ -124,53 +135,37 @@ namespace MomDra
 		static RigidBody* rigid{ GetRigidBody() };
 		const KeyManager& keyManager{ KeyManager::GetInstance() };
 
-		static constexpr float AddPower{ 200.0f };
+		bool leftPressed{ keyManager.GetKey(Key::LEFT) };
+		bool RightPressed{ keyManager.GetKey(Key::RIGHT) };
+
 		int move{ 0 };
 
-		if (keyManager.GetKeyDown(Key::LEFT))
+		if (!leftPressed || !RightPressed)
 		{
-			forward = -Vector2::UnitX;
-			rigid->AddVelocity(Vector2(-AddPower, 0.0f));
+			if (keyManager.GetKey(Key::LEFT))
+			{
+				rigid->AddVelocity(Vector2{ -PlayerSetting::MovePower, 0.0f });
+				forward = -Vector2::UnitX;
 
-			move = -1;
-		}
-		else if (keyManager.GetKey(Key::LEFT))
-		{
-			rigid->AddForce(Vector2(-AddPower, 0.0f));
-
-			forward = -Vector2::UnitX;
-			move = -1;
-		}
-
-		if (keyManager.GetKeyDown(Key::RIGHT))
-		{
-			forward = Vector2::UnitX;
-			rigid->AddVelocity(Vector2(AddPower, 0.0f));
-
+				move = -1;
+			}
 			
-			move = 1;
-		}
-		else if (keyManager.GetKey(Key::RIGHT))
-		{
-			rigid->AddForce(Vector2(AddPower, 0.0f));
+			if (keyManager.GetKey(Key::RIGHT))
+			{
+				rigid->AddVelocity(Vector2{ PlayerSetting::MovePower, 0.0f });
+				forward = Vector2::UnitX;
 
-			forward = Vector2::UnitX;
-			move = 1;
+				move = 1;
+			}
 		}
 
 		if (move == 1)
 		{
-			GetAnimator()->Play(PlayerSetting::WALK, true, true);
-			//ChangeState(&fallState);
+			GetAnimator()->Play(PlayerSetting::WALK_RIGHT, true);
 		}
 		else if (move == -1)
 		{
-			GetAnimator()->Play(PlayerSetting::WALK, true, false);
-			//ChangeState(&fallState);
-		}
-		else
-		{
-			ChangeState(&idleState);
+			GetAnimator()->Play(PlayerSetting::WALK_LEFT, true);
 		}
 	}
 
@@ -179,37 +174,22 @@ namespace MomDra
 		static RigidBody* rigid{ GetRigidBody() };
 		const KeyManager& keyManager{ KeyManager::GetInstance() };
 
-		static constexpr float AddPower{ 100.0f };
-		int move{ 0 };
+		bool leftPressed{ keyManager.GetKey(Key::LEFT) };
+		bool RightPressed{ keyManager.GetKey(Key::RIGHT) };
 
-		if (keyManager.GetKeyDown(Key::LEFT))
+		if (!leftPressed || !RightPressed)
 		{
-			forward = -Vector2::UnitX;
-			rigid->AddVelocity(Vector2(-AddPower, 0.0f));
+			if (keyManager.GetKey(Key::LEFT))
+			{
+				rigid->AddVelocity(Vector2{ -PlayerSetting::FallMovePower, 0.0f });
+				forward = -Vector2::UnitX;
+			}
 
-			move = -1;
-		}
-		else if (keyManager.GetKey(Key::LEFT))
-		{
-			rigid->AddForce(Vector2(-AddPower, 0.0f));
-
-			forward = -Vector2::UnitX;
-			move = -1;
-		}
-
-		if (keyManager.GetKeyDown(Key::RIGHT))
-		{
-			forward = Vector2::UnitX;
-			rigid->AddVelocity(Vector2(AddPower, 0.0f));
-
-			move = 1;
-		}
-		else if (keyManager.GetKey(Key::RIGHT))
-		{
-			rigid->AddForce(Vector2(AddPower, 0.0f));
-
-			forward = Vector2::UnitX;
-			move = 1;
+			if (keyManager.GetKey(Key::RIGHT))
+			{
+				rigid->AddVelocity(Vector2{ PlayerSetting::FallMovePower, 0.0f });
+				forward = Vector2::UnitX;
+			}
 		}
 	}
 
@@ -224,7 +204,7 @@ namespace MomDra
 		}
 	}
 
-	void Player::Fall()
+	void Player::CheckFall()
 	{
 		static RigidBody* rigid{ GetRigidBody() };
 		static Animator* animator{ GetAnimator() };
@@ -246,7 +226,10 @@ namespace MomDra
 
 	void PlayerIdleState::Enter(Player& player)
 	{
-		player.GetAnimator()->Play(PlayerSetting::IDLE, true);
+		if (player.isRight())
+			player.GetAnimator()->Play(PlayerSetting::IDLE_RIGHT, true);
+		else
+			player.GetAnimator()->Play(PlayerSetting::IDLE_LEFT, true);
 	}
 
 	void PlayerIdleState::Update(Player& player)
@@ -254,7 +237,7 @@ namespace MomDra
 		player.Move();
 		player.Jump();
 		player.Attack();
-		player.Fall();
+		player.CheckFall();
 	}
 
 	void PlayerIdleState::Exit(Player& player)
@@ -266,12 +249,15 @@ namespace MomDra
 
 	void PlayerFallState::Enter(Player& player)
 	{
-		player.GetAnimator()->Play(PlayerSetting::FALL, true);
+		
 	}
 
 	void PlayerFallState::Update(Player& player)
 	{
 		player.FallMove();
+
+		FallAnimation(player);
+
 		player.Attack();
 	}
 
@@ -306,22 +292,44 @@ namespace MomDra
 		}
 	}
 
+	void PlayerFallState::FallAnimation(Player& player)
+	{
+		static Animator* animator{ player.GetAnimator() };
+		if (player.isRight())
+			animator->Play(PlayerSetting::FALL_RIGHT, true);
+		else
+			animator->Play(PlayerSetting::FALL_LEFT, true);
+	}
+
 	// JumpState
 
 	void PlayerJumpState::Enter(Player& player)
 	{
-		player.GetAnimator()->Play(PlayerSetting::JUMP, true);
+		
 	}
 
 	void PlayerJumpState::Update(Player& player)
 	{
+		player.FallMove();
 		player.Attack();
-		player.Fall();
+		player.CheckFall();
+
+		JumpAnimation(player);
 	}
 
 	void PlayerJumpState::Exit(Player& player)
 	{
 
+	}
+
+	void PlayerJumpState::JumpAnimation(Player& player)
+	{
+		static Animator* animator{ player.GetAnimator() };
+
+		if (player.isRight())
+			animator->Play(PlayerSetting::JUMP_RIGHT, true);
+		else
+			animator->Play(PlayerSetting::JUMP_LEFT, true);
 	}
 
 	// DeadState
