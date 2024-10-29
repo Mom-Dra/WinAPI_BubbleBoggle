@@ -17,8 +17,8 @@ namespace MomDra
 		explicit SceneTool() noexcept = default;
 		explicit SceneTool(const std::wstring& name) noexcept;
 
-		virtual void Update() noexcept override;
 		virtual void Enter() noexcept override;
+		virtual void Update() noexcept override;
 		virtual void Exit() noexcept override;
 
 		void MakeTileInput(bool isWall) noexcept;

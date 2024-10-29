@@ -121,6 +121,9 @@ namespace MomDra
 	void Animator::PlayOneShot(const std::wstring& animationName) noexcept
 	{
 		oneShotAnimation = FindAnimation(animationName);
+
+		if (!oneShotAnimation) return;
+
 		oneShotAnimation->SetFrame(0);
 		oneShotMode = true;
 	}

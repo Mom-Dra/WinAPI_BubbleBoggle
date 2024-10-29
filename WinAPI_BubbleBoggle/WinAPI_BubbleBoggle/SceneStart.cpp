@@ -50,8 +50,7 @@ namespace MomDra
 		Vector2 resolution{ Core::GetInstance().GetResolution() };
 		Camera::GetInstance().SetLookAt(resolution / 2.0f);
 
-		// Sound
-		ResourceManager::GetInstance().LoadSound(L"\\sound\\Main.wav")->PlayToBGM(true);
+		
 
 		Start();
 	}

@@ -50,7 +50,7 @@ namespace MomDra
 		inline void Destroy() noexcept { EventManager::GetInstance().Destory(this); }
 
 		virtual void Start() {};
-		virtual void Update() noexcept = 0;
+		virtual void Update() noexcept abstract;
 		virtual void LateUpdate() noexcept;
 		virtual void Render(const HDC& hdc) const noexcept;
 

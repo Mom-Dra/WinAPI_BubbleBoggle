@@ -43,8 +43,9 @@ namespace MomDra
 	{
 		TOOL,
 		START,
-		STAGE_01,
-		STAGE_02,
+		Intro,
+		STAGE_1,
+		STAGE_2,
 		LAST
 	};
 }

@@ -113,10 +113,10 @@ namespace MomDra
         // Manager √ ±‚»≠
         //PathManager::GetInstance().Initialize();
         PathManager::Initialize();
+        SoundManager::GetInstance().Initialize();
         KeyManager::GetInstance().Initialize();
         TimeManager::GetInstance().Initialize();
         SceneManager::GetInstance().Initialize();
-        SoundManager::GetInstance().Initialize();
         //ResourceManager::GetInstance().
     }
 }

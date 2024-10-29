@@ -80,6 +80,5 @@ namespace MomDra
 
 		// t_min이 최대 거리 이내인지 확인
 		return t_min <= t_max;
-
 	}
 }

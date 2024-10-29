@@ -74,6 +74,18 @@
 #include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Ray.cpp"
 
 
+#include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\SceneIntro.cpp"
+
+
+#include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\SceneStage1.cpp"
+
+
+#include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Sound.cpp"
+
+
+#include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\SoundManager.cpp"
+
+
 #include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\TileRectangle.cpp"
 
 

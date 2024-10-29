@@ -17,5 +17,10 @@ namespace MomDra
 
         virtual void Update() noexcept override;
         virtual void Render(const HDC& hdc) const noexcept override;
+
+        inline std::unique_ptr<Object> Clone() const override
+        {
+            return std::make_unique<ImageObject>(*this);
+        }
     };
 }

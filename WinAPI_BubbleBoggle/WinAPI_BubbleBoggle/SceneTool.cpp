@@ -17,6 +17,7 @@
 #include <commdlg.h>
 #include "CommandManager.h"
 #include "AnimationObject.h"
+#include "ImageObject.h"
 
 namespace MomDra
 {
@@ -67,6 +68,7 @@ namespace MomDra
 
 	void SceneTool::Enter() noexcept
 	{
+		AddObject(std::make_unique<ImageObject>(Core::GetInstance().GetResolution() / 2.0f, Core::GetInstance().GetResolution(), L"\\texture\\Stage1.bmp", Layer::Default));
  		AddObject(std::make_unique<AnimationObject>());
 
 		// 타일 생성

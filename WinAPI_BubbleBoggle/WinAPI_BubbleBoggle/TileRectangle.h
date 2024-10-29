@@ -36,8 +36,8 @@ namespace MomDra
 		static inline TileVec tileVec;
 
 	public:
-		static constexpr inline int TILE_SIZE_X{ 40 };
-		static constexpr inline int TILE_SIZE_Y{ 40 };
+		static constexpr inline int TILE_SIZE_X{ 35 };
+		static constexpr inline int TILE_SIZE_Y{ 35 };
 		static constexpr inline Vector2 TILE_SIZE{ TILE_SIZE_X, TILE_SIZE_Y };
 
 	public:

@@ -21,10 +21,10 @@ namespace MomDra
 		animator->Play(L"Projectile_Attack", true);
 		animator->FindAnimation(L"Projectile_Attack")->Save(L"\\animation\\Projectile_Attack.anim");*/
 
-		animator->LoadAnimation(L"\\animation\\Projectile_Attack.anim");
+		/*animator->LoadAnimation(L"\\animation\\Projectile_Attack.anim");
 		animator->LoadAnimation(L"\\animation\\Projectile_Move_1.anim");
 		animator->LoadAnimation(L"\\animation\\Projectile_Move_2.anim");
-		animator->LoadAnimation(L"\\animation\\Projectile_Move_3.anim");
+		animator->LoadAnimation(L"\\animation\\Projectile_Move_3.anim");*/
 
 		/*std::initializer_list<Vector2> leftTops2{ Vector2{1.0f, 24.0f}, Vector2{19.0f, 25.0f }, Vector2{38.0f, 24.0f} };
 		std::initializer_list<Vector2> sliceSizes2{ Vector2{14.0f, 16.0f}, Vector2{14.0f, 14.0f }, Vector2{12.0f, 16.0f} };

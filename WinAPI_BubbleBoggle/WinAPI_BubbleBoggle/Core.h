@@ -30,7 +30,7 @@ namespace MomDra
 		static Core& GetInstance() noexcept;
 
 		// 화면 크기
-		static constexpr int WINDOW_WIDTH{ 800 };
+		static constexpr int WINDOW_WIDTH{ 1024 };
 		static constexpr int WINDOW_HEIGHT{ 800 };
 
 		void Initialize(const HWND& hWnd, const Vector2& resolution) noexcept;

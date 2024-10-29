@@ -43,7 +43,7 @@ namespace MomDra
 		
 		//animator->Play(L"Player_Attack_Left", true);
 
-		animator->LoadAnimation(L"\\animation\\Player_Walk_Left.anim");
+		/*animator->LoadAnimation(L"\\animation\\Player_Walk_Left.anim");
 		animator->LoadAnimation(L"\\animation\\Player_Attack_Left.anim");
 		animator->LoadAnimation(L"\\animation\\Player_Idle_Left.anim");
 		animator->LoadAnimation(L"\\animation\\Player_Jump_Left.anim");
@@ -57,7 +57,7 @@ namespace MomDra
 		animator->LoadAnimation(L"\\animation\\Player_Idle_Right.anim");
 		animator->LoadAnimation(L"\\animation\\Player_Jump_Right.anim");
 		animator->LoadAnimation(L"\\animation\\Player_Fall_Right.anim");
-		animator->LoadAnimation(L"\\animation\\Player_Hit_Right.anim");
+		animator->LoadAnimation(L"\\animation\\Player_Hit_Right.anim");*/
 
 		ResourceManager::GetInstance().LoadSound(L"\\sound\\PlayerAttack.wav");
 		ResourceManager::GetInstance().LoadSound(L"\\sound\\PlayerJump.wav");
@@ -100,7 +100,6 @@ namespace MomDra
 
 	void Player::Die() noexcept
 	{
-		ResourceManager::GetInstance().FindSound(L"\\sound\\PlayerDie.wav")->Play();
 		ChangeToDeadState();
 	}
 
@@ -134,7 +133,6 @@ namespace MomDra
 			ResourceManager::GetInstance().FindSound(L"\\sound\\PlayerAttack.wav")->Play();
 
 			if (IsRight())
-				//animator->PlayOneShot(PlayerSetting::ATTACK_RIGHT);
 				animator->PlayOneShot(PlayerSetting::ATTACK_RIGHT);
 			else
 				animator->PlayOneShot(PlayerSetting::ATTACK_LEFT);
@@ -357,6 +355,7 @@ namespace MomDra
 
 	void PlayerDeadState::Enter(Player& player)
 	{
+		ResourceManager::GetInstance().FindSound(L"\\sound\\PlayerDie.wav")->Play();
 		player.GetRigidBody()->SetVelocity(Vector2::Zero);
 
 		if (player.IsRight())
