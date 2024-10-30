@@ -30,7 +30,7 @@ namespace MomDra
 		bool isAlive;
 
 	public:
-		explicit Object(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::Default) noexcept;
+		explicit Object(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::DEFAULT) noexcept;
 		explicit Object(const Object& other) noexcept;
 		virtual ~Object() noexcept = default;
 

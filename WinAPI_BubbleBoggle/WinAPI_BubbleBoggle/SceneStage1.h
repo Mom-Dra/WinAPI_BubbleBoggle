@@ -7,6 +7,7 @@ namespace MomDra
 	class SceneStage1 : public Scene
 	{
 	private:
+		static constexpr inline int NUM_OF_MONSTER{ 5 };
 
 	public:
 		explicit SceneStage1() noexcept = default;

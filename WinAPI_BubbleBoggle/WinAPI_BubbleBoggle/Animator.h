@@ -46,6 +46,7 @@ namespace MomDra
 
 		void Play(const std::wstring& animationName, bool repeat) noexcept;
 		void PlayOneShot(const std::wstring& animationName) noexcept;
+		void StopAndPlayOneShot(const std::wstring& animationName) noexcept;
 
 		std::wstring LoadAnimation(const std::wstring& relativePath);
 	};

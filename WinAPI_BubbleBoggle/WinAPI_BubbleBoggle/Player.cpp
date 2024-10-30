@@ -9,6 +9,7 @@
 #include "ResourceManager.h"
 #include "Camera.h"
 #include "Ray.h"
+#include "GameManager.h"
 
 namespace MomDra
 {
@@ -19,31 +20,8 @@ namespace MomDra
 		CreateAnimator();
 		CreateRigidbody();
 
-		/*std::wstring filePath{ PathManager::GetContentPath() };
-		filePath.append(L"\\texture\\player2.bmp");*/
-
-		/*GetAnimator()->CreateAnimation(L"WALK", ResourceManager::GetInstance().LoadTexture(filePath), Vector2{ 0.0f, 710.0f / 8.0f * 4.0f }, Vector2{ 820.0f / 10.0f, 710.0f / 8.0f }, Vector2{ 820.0f / 10.0f, 0.0f }, 0.1f, 10);
-		GetAnimator()->Play(L"WALK", true);*/
-
-		// 여기서 애니메이션 만들어야 한다
-		std::shared_ptr<Texture> player_Left{ ResourceManager::GetInstance().LoadTexture(L"\\texture\\player.bmp") };
-
 		Animator* animator{ GetAnimator() };
-		//animator->CreateAnimation(L"Player_Walk_Left", player_Left, Vector2{ 1.0f, 0.0f }, Vector2{ 16.0f, 18.0f }, Vector2{ 22.0f, 0.0f }, 0.2f, 5);
-
-		/*std::initializer_list<Vector2> leftTops{ Vector2{1.0f, 2.0f}, Vector2{22.0f, 2.0f}, Vector2{43.0f, 2.0f }, Vector2{64.0f, 2.0f }, Vector2{85.0f, 2.0f} };
-		std::initializer_list<Vector2> sliceSizes{ Vector2{16.0f,16.0f}, Vector2{16.0f, 16.0f}, Vector2{16.0f, 16.0f}, Vector2{16.0f, 16.0f}, Vector2{16.0f, 16.0f} };*/
-
-		//animator->CreateAnimation(L"Player_Walk_Left", player_Left, leftTops, sliceSizes, 0.2f, 5);
-		//animator->FindAnimation(L"Player_Walk_Left")->Save(L"\\animation\\Player_Walk_Left.anim");
-		//animator->Play(L"Player_Walk_Left", true);
-
-		/*animator->CreateAnimation(L"Player_Attack_Left", player_Left, Vector2{ 145.0f, 0.0f }, Vector2{ 312.0f / 15.0f, 18.0f }, Vector2{ 312.0f / 15.0f, 0.0f }, 0.2f, 4);
-		animator->FindAnimation(L"Player_Attack_Left")->Save(L"\\animation\\Player_Attack_Left.anim");*/
-		
-		//animator->Play(L"Player_Attack_Left", true);
-
-		/*animator->LoadAnimation(L"\\animation\\Player_Walk_Left.anim");
+		animator->LoadAnimation(L"\\animation\\Player_Walk_Left.anim");
 		animator->LoadAnimation(L"\\animation\\Player_Attack_Left.anim");
 		animator->LoadAnimation(L"\\animation\\Player_Idle_Left.anim");
 		animator->LoadAnimation(L"\\animation\\Player_Jump_Left.anim");
@@ -51,29 +29,18 @@ namespace MomDra
 		animator->LoadAnimation(L"\\animation\\Player_Rotate_1_Left.anim");
 		animator->LoadAnimation(L"\\animation\\Player_Rotate_2_Left.anim");
 		animator->LoadAnimation(L"\\animation\\Player_Hit_Left.anim");
+		animator->LoadAnimation(L"\\animation\\Player_Destroy.anim");
 
 		animator->LoadAnimation(L"\\animation\\Player_Walk_Right.anim");
 		animator->LoadAnimation(L"\\animation\\Player_Attack_Right.anim");
 		animator->LoadAnimation(L"\\animation\\Player_Idle_Right.anim");
 		animator->LoadAnimation(L"\\animation\\Player_Jump_Right.anim");
 		animator->LoadAnimation(L"\\animation\\Player_Fall_Right.anim");
-		animator->LoadAnimation(L"\\animation\\Player_Hit_Right.anim");*/
+		animator->LoadAnimation(L"\\animation\\Player_Hit_Right.anim");
 
 		ResourceManager::GetInstance().LoadSound(L"\\sound\\PlayerAttack.wav");
 		ResourceManager::GetInstance().LoadSound(L"\\sound\\PlayerJump.wav");
 		ResourceManager::GetInstance().LoadSound(L"\\sound\\PlayerDie.wav");
-
-		/*std::initializer_list<Vector2> leftTops2{ Vector2{1.0f, 2.0f}, Vector2{22.0f, 2.0f}, Vector2{43.0f, 2.0f }, Vector2{64.0f, 2.0f }, Vector2{85.0f, 2.0f} };
-		std::initializer_list<Vector2> sliceSizes2{ Vector2{16.0f,16.0f}, Vector2{16.0f, 16.0f}, Vector2{16.0f, 16.0f}, Vector2{16.0f, 16.0f}, Vector2{16.0f, 16.0f} };*/
-
-		//animator->CreateAnimation(L"Player_Falling_Left", player_Left, )
-		//animator->CreateAnimation(L"Player_Walk")
-
-		/*Animation* animation{ animator->FindAnimation(L"WALK") };
-		for (unsigned int i{ 0 }; i < animation->GetMaxFrame(); ++i)
-		{
-			animation->GetFrame(i).offSet = Vector2{ 0.0f, 20.0f };
-		}*/
 
 		ChangeState(&idleState);
 	}
@@ -92,8 +59,6 @@ namespace MomDra
 
 		float halfScaleX{ scale.X / 2.0f };
 		float halfScaleY{ scale.Y / 2.0f };
-
-		//Rectangle(hdc, static_cast<int>(renderPos.X - halfScaleX), static_cast<int>(renderPos.Y - halfScaleY), static_cast<int> (renderPos.X + halfScaleX), static_cast<int>(renderPos.Y + halfScaleY));
 
 		Object::Render(hdc);
 	}
@@ -122,14 +87,11 @@ namespace MomDra
 
 	void Player::Attack() const noexcept
 	{
-		static Animator* animator{ GetAnimator() };
-
-		// Projectile 생성!
-		// EventManager에 생성 등록!!
+		Animator* animator{ GetAnimator() };
 
 		if (KeyManager::GetInstance().GetKeyDown(Key::A))
 		{
-			EventManager::GetInstance().Instantiate(new Projectile{ GetPos() + forward * 5.0f, Vector2{40.0f, 40.0f}, forward, Layer::Projectile });
+			EventManager::GetInstance().Instantiate(new Projectile{ GetPos() + forward * 5.0f, Vector2{40.0f, 40.0f}, forward, Layer::PROJECTILE });
 			ResourceManager::GetInstance().FindSound(L"\\sound\\PlayerAttack.wav")->Play();
 
 			if (IsRight())
@@ -141,9 +103,9 @@ namespace MomDra
 
 	void Player::Move()
 	{
-		static RigidBody* rigid{ GetRigidBody() };
-		static Animator* animator{ GetAnimator() };
-		const KeyManager& keyManager{ KeyManager::GetInstance() };
+		RigidBody* rigid{ GetRigidBody() };
+		Animator* animator{ GetAnimator() };
+		static const KeyManager& keyManager{ KeyManager::GetInstance() };
 
 		bool leftPressed{ keyManager.GetKey(Key::LEFT) };
 		bool RightPressed{ keyManager.GetKey(Key::RIGHT) };
@@ -154,7 +116,7 @@ namespace MomDra
 		{
 			if (keyManager.GetKey(Key::LEFT))
 			{
-				rigid->AddVelocity(Vector2{ -PlayerSetting::MovePower, 0.0f });
+				rigid->AddVelocity(Vector2{ -PlayerSetting::MOVE_POWER, 0.0f });
 				forward = -Vector2::UnitX;
 
 				move = -1;
@@ -162,7 +124,7 @@ namespace MomDra
 			
 			if (keyManager.GetKey(Key::RIGHT))
 			{
-				rigid->AddVelocity(Vector2{ PlayerSetting::MovePower, 0.0f });
+				rigid->AddVelocity(Vector2{ PlayerSetting::MOVE_POWER, 0.0f });
 				forward = Vector2::UnitX;
 
 				move = 1;
@@ -185,7 +147,7 @@ namespace MomDra
 
 	void Player::FallMove()
 	{
-		static RigidBody* rigid{ GetRigidBody() };
+		RigidBody* rigid{ GetRigidBody() };
 		const KeyManager& keyManager{ KeyManager::GetInstance() };
 
 		bool leftPressed{ keyManager.GetKey(Key::LEFT) };
@@ -195,13 +157,13 @@ namespace MomDra
 		{
 			if (keyManager.GetKey(Key::LEFT))
 			{
-				rigid->AddVelocity(Vector2{ -PlayerSetting::FallMovePower, 0.0f });
+				rigid->AddVelocity(Vector2{ -PlayerSetting::FALL_MOVE_POWER, 0.0f });
 				forward = -Vector2::UnitX;
 			}
 
 			if (keyManager.GetKey(Key::RIGHT))
 			{
-				rigid->AddVelocity(Vector2{ PlayerSetting::FallMovePower, 0.0f });
+				rigid->AddVelocity(Vector2{ PlayerSetting::FALL_MOVE_POWER, 0.0f });
 				forward = Vector2::UnitX;
 			}
 		}
@@ -212,7 +174,7 @@ namespace MomDra
 		if (KeyManager::GetInstance().GetKeyDown(Key::S))
 		{
 			RigidBody* rigid{ GetRigidBody() };
-			rigid->AddVelocity(Vector2{ 0.0f, -300.0f });
+			rigid->AddVelocity(Vector2{ 0.0f, -PlayerSetting::JUMP_POWER });
 
 			ResourceManager::GetInstance().FindSound(L"\\sound\\PlayerJump.wav")->Play();
 
@@ -222,8 +184,8 @@ namespace MomDra
 
 	void Player::CheckFall()
 	{
-		static RigidBody* rigid{ GetRigidBody() };
-		static Animator* animator{ GetAnimator() };
+		RigidBody* rigid{ GetRigidBody() };
+		Animator* animator{ GetAnimator() };
 
 		if (rigid->GetVelocity().Y > 0.0f)
 			ChangeToFallState();
@@ -292,7 +254,7 @@ namespace MomDra
 
 		switch (otherLayer)
 		{
-		case Layer::Ground:
+		case Layer::GROUND:
 		{
 			Collider* thisCollider{ player.GetCollider() };
 			RigidBody* rigid{ player.GetRigidBody() };
@@ -313,7 +275,7 @@ namespace MomDra
 
 	void PlayerFallState::FallAnimation(Player& player)
 	{
-		static Animator* animator{ player.GetAnimator() };
+		Animator* animator{ player.GetAnimator() };
 		if (player.IsRight())
 			animator->Play(PlayerSetting::FALL_RIGHT, true);
 		else
@@ -343,7 +305,7 @@ namespace MomDra
 
 	void PlayerJumpState::JumpAnimation(Player& player)
 	{
-		static Animator* animator{ player.GetAnimator() };
+		Animator* animator{ player.GetAnimator() };
 
 		if (player.IsRight())
 			animator->Play(PlayerSetting::JUMP_RIGHT, true);
@@ -362,6 +324,11 @@ namespace MomDra
 			player.GetAnimator()->Play(PlayerSetting::HIT_RIGHT, true);
 		else
 			player.GetAnimator()->Play(PlayerSetting::HIT_LEFT, true);
+
+		player.DecreaseLife();
+
+		if (player.IsDead())
+			GameManager::GetInstance().GameOver();
 	}
 
 	void PlayerDeadState::Update(Player& player)
@@ -377,7 +344,11 @@ namespace MomDra
 		}
 		else if (time >= PlayerSetting::HIT_TIME + PlayerSetting::ROTATE_1_TIME + PlayerSetting::ROTATE_2_TIME)
 		{
-			animator->Play(PlayerSetting::DESTROY, true);
+			if (isPlayedDestroyAnim) return;
+
+			isPlayedDestroyAnim = true;
+
+			animator->StopAndPlayOneShot(PlayerSetting::DESTROY);
 		}
 		else if (time >= PlayerSetting::HIT_TIME + PlayerSetting::ROTATE_1_TIME)
 		{
@@ -392,5 +363,6 @@ namespace MomDra
 	void PlayerDeadState::Exit(Player& player)
 	{
 		time = 0.0f;
+		isPlayedDestroyAnim = false;
 	}
 }

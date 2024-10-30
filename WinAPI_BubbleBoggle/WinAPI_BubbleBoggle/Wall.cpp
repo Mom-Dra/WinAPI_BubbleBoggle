@@ -26,18 +26,18 @@ namespace MomDra
 
 		switch (otherLayer)
 		{
-		case Layer::Player:
+		case Layer::PLAYER:
 			otherObj->SetPos(pos);
 		break;
-		case Layer::Projectile:
+		case Layer::PROJECTILE:
 			if (other->GetFinalPos().X < thisCollider->GetFinalPos().X - thisCollider->GetScale().X / 2.0f || thisCollider->GetFinalPos().X + thisCollider->GetScale().X / 2.0f < other->GetFinalPos().X)
 			{
 				otherObj->SetPos(pos);
 			}
 			break;
-		case Layer::Monster:
+		case Layer::MONSTER:
 		{
-			if (other->GetFinalPos().Y > thisCollider->GetFinalPos().Y)
+			/*if (other->GetFinalPos().Y > thisCollider->GetFinalPos().Y)
 			{
 				static int halfWidth{ Core::WINDOW_WIDTH / 2 };
 				Vector2 yPos{ otherObj->GetPos().X, thisCollider->GetFinalPos().Y + thisCollider->GetScale().Y };
@@ -52,7 +52,7 @@ namespace MomDra
 			else
 			{
 				otherObj->SetPos(pos);
-			}
+			}*/
 		}
 		break;
 		}

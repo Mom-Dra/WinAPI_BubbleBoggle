@@ -4,14 +4,14 @@ namespace MomDra
 {
 	enum class Layer
 	{
-		Default,
-		Player,
-		Monster,
-		Projectile,
-		Tile,
-		Ground,
-		Wall,
-		Item,
+		DEFAULT,
+		PLAYER,
+		MONSTER,
+		PROJECTILE,
+		TILE,
+		GROUND,
+		WALL,
+		ITEM,
 		UI,
 		LAST
 	};
@@ -43,9 +43,10 @@ namespace MomDra
 	{
 		TOOL,
 		START,
-		Intro,
+		INTRO,
 		STAGE_1,
 		STAGE_2,
+		GAME_OVER,
 		LAST
 	};
 }

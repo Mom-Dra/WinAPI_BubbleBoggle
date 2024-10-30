@@ -4,12 +4,9 @@
 
 namespace MomDra
 {
-	AnimationObject::AnimationObject() noexcept : Object{ Core::GetInstance().GetResolution() / 2.0f, Vector2::One * 20.0f }
+	AnimationObject::AnimationObject() noexcept : Object{ Core::GetInstance().GetResolution() / 2.0f, Vector2::One * 20.0f, Layer::DEFAULT }
 	{
 		CreateAnimator();
-
-		/*GetAnimator()->LoadAnimation(L"\\animation\\Player_Destroy.anim");
-		GetAnimator()->Play(PlayerSetting::ROTATE_2, true);*/
 	}
 
 	void AnimationObject::Update() noexcept

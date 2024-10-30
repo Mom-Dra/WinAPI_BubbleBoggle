@@ -30,16 +30,15 @@ namespace MomDra
 
 		switch (otherLayer)
 		{
-		case Layer::Player:
+		case Layer::PLAYER:
 		{
-			// rigidbody 쪽에 땅이라고 설정!
-
 			// 옆면 무시
-			if (std::abs(other->GetFinalPos().X - thisCollider->GetFinalPos().X) >= other->GetScale().X / 2.0f + thisCollider->GetScale().X / 2.0f - 0.2f)
+			if (std::abs(other->GetFinalPos().X - thisCollider->GetFinalPos().X) >= other->GetScale().X / 2.0f + thisCollider->GetScale().X / 2.0f - 0.4f)
 				return;
 
 			// 아래에서 위로 올라가는 경우 무시!
-			if (rigid->GetVelocity().Y < 0.0f && thisCollider->GetFinalPos().Y < other->GetFinalPos().Y) return;
+			if (rigid->GetVelocity().Y < 0.0f && thisCollider->GetFinalPos().Y < other->GetFinalPos().Y)
+				return;
 
 			rigid->SetGravity(false);
 			rigid->SetVelocity(Vector2{ rigid->GetVelocity().X, 0.0f });
@@ -47,7 +46,7 @@ namespace MomDra
 		}
 		break;
 
-		case Layer::Monster:
+		case Layer::MONSTER:
 
 			// 아래서 위로 점프 할 때
 			if (thisCollider->GetFinalPos().Y < other->GetFinalPos().Y) return;
@@ -61,7 +60,7 @@ namespace MomDra
 			otherObj->SetPos(Vector2{ otherObj->GetPos().X, yPos });
 			break;
 
-		case Layer::Item:
+		case Layer::ITEM:
 			rigid->SetGravity(false);
 			rigid->SetVelocity(Vector2{ rigid->GetVelocity().X, 0.0f });
 
@@ -79,7 +78,7 @@ namespace MomDra
 
 		switch (otherLayer)
 		{
-		case Layer::Player:
+		case Layer::PLAYER:
 		{
 			float left{ other->GetFinalPos().Y + other->GetScale().Y / 2.0f };
 			float right{ thisCollider->GetFinalPos().Y - thisCollider->GetScale().Y / 2.0f + 0.4f };
@@ -92,12 +91,9 @@ namespace MomDra
 			// 벽 면에 부딪쳤을 때
 			if (other->GetFinalPos().Y + other->GetScale().Y / 2.0f > thisCollider->GetFinalPos().Y - thisCollider->GetScale().Y / 2.0f + 0.2f)
 			{
-				
 				if (std::abs(other->GetFinalPos().X - thisCollider->GetFinalPos().X) > other->GetScale().X / 2.0f + thisCollider->GetScale().X / 2.0f -  0.2f)
 				{
 					rigid->SetVelocity(Vector2{ 0.0f, rigid->GetVelocity().Y });
-					
-					
 					player->SetIsCollideSideOfGround(true);
 				}
 				else
@@ -113,7 +109,7 @@ namespace MomDra
 			}
 		}
 			break;
-		case Layer::Monster:
+		case Layer::MONSTER:
 			break;
 		}
 	}
@@ -126,7 +122,7 @@ namespace MomDra
 
 		switch (otherLayer)
 		{
-		case Layer::Player:
+		case Layer::PLAYER:
 		{
 			Player* player{ dynamic_cast<Player*>(otherObj) };
 			player->SetIsCollideSideOfGround(false);
@@ -134,7 +130,7 @@ namespace MomDra
 		}
 			
 			break;
-		case Layer::Monster:
+		case Layer::MONSTER:
 			rigid->SetGravity(true);	
 			dynamic_cast<Monster*>(otherObj)->SetOnGround(false);
 			break;

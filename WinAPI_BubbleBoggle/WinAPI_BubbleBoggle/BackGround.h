@@ -6,7 +6,7 @@ namespace MomDra
 	class BackGround : public Object
 	{
 	public:
-		inline explicit BackGround() noexcept : Object{ Vector2::Zero, Vector2::Zero, Layer::Default } {}
+		inline explicit BackGround() noexcept : Object{ Vector2::Zero, Vector2::Zero, Layer::DEFAULT } {}
 
 
 	private:

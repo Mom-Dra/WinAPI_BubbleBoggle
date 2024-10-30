@@ -11,7 +11,7 @@ namespace MomDra
 	private:
 		std::array<std::unique_ptr<AIState>, static_cast<int>(MonsterState::LAST)> states;
 		AIState* currState;
-		Monster* owner;
+		MONSTER* owner;
 
 	public:
 		explicit AI();

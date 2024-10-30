@@ -92,7 +92,7 @@ namespace MomDra
 	{
 	private:
 		float time{ 0.0f };
-		float targetYpos;
+		float targetYpos{ 0.0f };
 
 	public:
 		explicit ProjectileHighReachedState() noexcept = default;
@@ -105,7 +105,7 @@ namespace MomDra
 		inline virtual void OnCollisionStay(Projectile& projectile, const Collider* other) override {}
 		virtual void OnCollisionExit(Projectile& projectile, const Collider* other) override {}
 
-		inline virtual void Exit(Projectile& projectile) noexcept override {}
+		inline virtual void Exit(Projectile& projectile) noexcept override { time = 0.0f; targetYpos = 0.0f; }
 
 	private:
 		explicit ProjectileHighReachedState(ProjectileHighReachedState&& other) = delete;
@@ -128,7 +128,7 @@ namespace MomDra
 		bool isExplode;
 
 	public:
-		explicit Projectile(const Vector2& pos, const Vector2& scale, const Vector2& initialDir, const Layer& layer = Layer::Projectile);
+		explicit Projectile(const Vector2& pos, const Vector2& scale, const Vector2& initialDir, const Layer& layer = Layer::PROJECTILE);
 
 		inline Vector2 GetInitialDir() const noexcept { return initialDir; }
 		inline bool GetIsExplode() const noexcept { return isExplode; }

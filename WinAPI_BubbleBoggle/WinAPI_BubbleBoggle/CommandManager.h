@@ -14,8 +14,8 @@ namespace MomDra
 	public:
 		virtual ~Command() = default;
 
-		virtual void Execute() = 0;
-		virtual void Undo() = 0;
+		virtual void Execute() abstract;
+		virtual void Undo() abstract;
 	};
 
 	class AddTileCommand : public Command
@@ -33,7 +33,7 @@ namespace MomDra
 
 		inline void Execute() override
 		{
-			auto tileUniqPtr{ std::make_unique<TileRectangle>(TileRectangle::GetRealTilePos(tileInfo.pos), tileInfo.scale, Layer::Tile) };
+			auto tileUniqPtr{ std::make_unique<TileRectangle>(tileInfo.pos, tileInfo.scale, Layer::TILE) };
 			addedTile = tileUniqPtr.get();
 			scene->AddObject(std::move(tileUniqPtr));
 

@@ -8,12 +8,12 @@ using namespace CK;
 
 namespace MomDra
 {
-	RigidBody::RigidBody(Object* owner) noexcept : owner{ owner }, mass{ 1.0f }, fricCoeff{ 100.0f }, maxVelocity{ Vector2{100.0f, 300.0f} }, isGravity{ true }
+	RigidBody::RigidBody(Object* owner) noexcept : owner{ owner }, mass{ 1.0f }, fricCoeff{ 100.0f }, isGravity{ true }
 	{
 
 	}
 
-	RigidBody::RigidBody(const RigidBody& other) noexcept : owner{ nullptr }, mass{ other.mass }, fricCoeff{ other.fricCoeff }, maxVelocity{ other.maxVelocity }, isGravity{ other.isGravity }
+	RigidBody::RigidBody(const RigidBody& other) noexcept : owner{ nullptr }, mass{ other.mass }, fricCoeff{ other.fricCoeff }, isGravity{ other.isGravity }
 	{
 
 	}

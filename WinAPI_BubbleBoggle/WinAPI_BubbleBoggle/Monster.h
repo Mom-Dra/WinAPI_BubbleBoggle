@@ -8,16 +8,49 @@ namespace MomDra
 	class Monster;
 	class Player;
 
-	/*enum class MonsterState
+	struct MonsterSetting
 	{
-		IDLE,
-		PATROL,
-		TRACE,
-		ATTACK,
-		RUN,
-		DEAD,
-		LAST
-	};*/
+		static constexpr inline float CHANGE_DIR_TIME{ 3.0f };
+		static constexpr inline int CHANGE_DIR_POSSIBILITY{ 20 };
+		static constexpr inline int JUMP_POSSIBILITY{ 3 };
+		static constexpr inline int FORWARD_JUMP_POSSIBILITY{ 50 };
+		static constexpr inline float SPEED{ 200.0f };
+		static constexpr inline float FALL_SPEED{ 0.0f };
+		static constexpr inline float JUMP_POWER{ 610.0f };
+		static constexpr inline float JUMP_COOL_DOWN{ 5.0f };
+
+		// Ray
+		static constexpr inline float FORWARD_RAY_DISTANCE{ 30.0f };
+		static constexpr inline float UP_RAY_DISTANCE{ 120.0f };
+		static constexpr inline float DOWN_RAY_DISTANCE{ 30.0f };
+
+		// Angry
+		static constexpr inline float ANGRY_SPEED{ SPEED * 2 };
+
+		// Hitted
+		static constexpr inline float HITTED_SPEED{ 100.0f };
+
+		// Animation
+		static constexpr inline float PROJECTILE_1_TIME{ 10.0f };
+		static constexpr inline float PROJECTILE_2_TIME{ 5.0f };
+		static constexpr inline float PROJECTILE_3_TIME{ 2.5f };
+		static constexpr inline float PROJECTILE_4_TIME{ 1.25f };
+
+		static const inline std::wstring WALK_LEFT{ L"Monster_Walk_Left" };
+		static const inline std::wstring WALK_RIGHT{ L"Monster_Walk_Right" };
+		static const inline std::wstring WALK_ANGRY_LEFT{ L"Monster_Walk_Angry_Left" };
+		static const inline std::wstring WALK_ANGRY_RIGHT{ L"Monster_Walk_Angry_Right" };
+
+		static const inline std::wstring INPROJECTILE_1{ L"Monster_InProjectile_1" };
+		static const inline std::wstring INPROJECTILE_2{ L"Monster_InProjectile_2" };
+		static const inline std::wstring INPROJECTILE_3{ L"Monster_InProjectile_3" };
+		static const inline std::wstring INPROJECTILE_4{ L"Monster_InProjectile_4" };
+
+		static const inline std::wstring JUMP_LEFT{ L"Monster_Jump_Left" };
+		static const inline std::wstring JUMP_RIGHT{ L"Monster_Jump_Right" };
+		static const inline std::wstring JUMP_ANGRY_LEFT{ L"Monster_Jump_Angry_Left" };
+		static const inline std::wstring JUMP_ANGRY_RIGHT{ L"Monster_Jump_Angry_Right" };
+	};
 
 	class MonsterState
 	{
@@ -44,38 +77,15 @@ namespace MomDra
 		virtual void Update(Monster& monster) noexcept override;
 		virtual void OnCollisionEnter(Monster& monster, const Collider* other) override;
 		virtual void OnCollisionExit(Monster& monster, const Collider* other) override;
-		inline virtual void Exit(Monster& monster) noexcept override {}
+		virtual void Exit(Monster& monster) noexcept override;
 
 	private:
-		explicit MonsterMoveState(const MonsterMoveState&& other) = delete;
+		explicit MonsterMoveState(MonsterMoveState&& other) = delete;
 		MonsterMoveState& operator=(const MonsterMoveState& other) = delete;
-		MonsterMoveState& operator=(const MonsterMoveState&& other) = delete;
+		MonsterMoveState& operator=(MonsterMoveState&& other) = delete;
 
 		void Move(Monster& monster, float deltaTime) noexcept;
 		void WalkAnimation(Monster& monster);
-	};
-
-	class MonsterTraceState : public MonsterState
-	{
-	private:
-
-	public:
-		explicit MonsterTraceState() noexcept = default;
-		explicit MonsterTraceState(const MonsterTraceState& other) noexcept = default;
-
-		inline virtual void Enter(Monster& monster) noexcept {}
-		virtual void Update(Monster& monster) noexcept override;
-		virtual void OnCollisionEnter(Monster& monster, const Collider* other) override;
-		virtual void OnCollisionExit(Monster& monster, const Collider* other) override
-		{
-
-		}
-		inline virtual void Exit(Monster& monster) noexcept {}
-
-	private:
-		explicit MonsterTraceState(const MonsterTraceState&& other) = delete;
-		MonsterTraceState& operator=(const MonsterTraceState& other) = delete;
-		MonsterTraceState& operator=(const MonsterTraceState&& other) = delete;
 	};
 
 	class MonsterAngryState : public MonsterState
@@ -96,9 +106,9 @@ namespace MomDra
 		virtual void Exit(Monster& monster) noexcept override;
 
 	private:
-		explicit MonsterAngryState(const MonsterAngryState&& other) = delete;
+		explicit MonsterAngryState(MonsterAngryState&& other) = delete;
 		MonsterAngryState& operator=(const MonsterAngryState& other) = delete;
-		MonsterAngryState& operator=(const MonsterAngryState&& other) = delete;
+		MonsterAngryState& operator=(MonsterAngryState&& other) = delete;
 
 		void Move(Monster& monster, float deltaTime) noexcept;
 		void WalkAnimation(Monster& monster);
@@ -120,56 +130,40 @@ namespace MomDra
 		inline virtual void Exit(Monster& monster) noexcept override { time = 0.0f; }
 
 	private:
-		explicit MonsterHittedState(const MonsterHittedState&& other) = delete;
+		explicit MonsterHittedState(MonsterHittedState&& other) = delete;
 		MonsterHittedState& operator=(const MonsterHittedState& other) = delete;
-		MonsterHittedState& operator=(const MonsterHittedState&& other) = delete;
+		MonsterHittedState& operator=(MonsterHittedState&& other) = delete;
 	};
 
-	struct MonsterSetting
+	class MonsterHighState : public MonsterState
 	{
-		static constexpr inline float CHANGE_DIR_TIME{ 3.0f };
-		static constexpr inline int CHANGE_DIR_POSSIBILITY{ 20 };
-		static constexpr inline float SPEED{ 150.0f };
-		static constexpr inline float JUMP_POWER{ 300.0f };
-		static constexpr inline float PLAYER_FORWARD_RAY_DISTANCE{ 50.0f };
-		static constexpr inline float JUMP_COOL_DOWN{ 5.0f };
+	private:
+		float time{ 0.0f };
+		float targetYpos{ 0.0f };
 
-		static constexpr inline float ANGRY_SPEED{ SPEED * 2 };
+	public:
+		explicit MonsterHighState() noexcept = default;
+		explicit MonsterHighState(const MonsterHighState& other) noexcept = default;
 
-		// 정면에 땅이 있는지 체크, 나중에 Wall로 바꿔야 한다
-		static constexpr inline float GROUND_RAY_DISTANCE{ 30.0f };
+		virtual void Enter(Monster& monster) noexcept override;
+		virtual void Update(Monster& monster) noexcept override;
+		virtual void OnCollisionEnter(Monster& monster, const Collider* other) override;
+		virtual void OnCollisionExit(Monster& monster, const Collider* other) override {}
+		inline virtual void Exit(Monster& monster) noexcept override { time = 0.0f; targetYpos = 0.0f; }
 
-		// HittedState
-		static constexpr inline float HITTED_SPEED{ 100.0f };
-		
-		static constexpr inline float PROJECTILE_1_TIME{ 10.0f };
-		static constexpr inline float PROJECTILE_2_TIME{ 5.0f };
-		static constexpr inline float PROJECTILE_3_TIME{ 2.5f };
-		static constexpr inline float PROJECTILE_4_TIME{ 1.25f };
-
-		static const inline std::wstring WALK_LEFT{ L"Monster_Walk_Left" };
-		static const inline std::wstring WALK_RIGHT{ L"Monster_Walk_Right" };
-		static const inline std::wstring WALK_ANGRY_LEFT{ L"Monster_Walk_Angry_Left" };
-		static const inline std::wstring WALK_ANGRY_RIGHT{ L"Monster_Walk_Angry_Right" };
-
-		static const inline std::wstring INPROJECTILE_1{ L"Monster_InProjectile_1" };
-		static const inline std::wstring INPROJECTILE_2{ L"Monster_InProjectile_2" };
-		static const inline std::wstring INPROJECTILE_3{ L"Monster_InProjectile_3" };
-		static const inline std::wstring INPROJECTILE_4{ L"Monster_InProjectile_4" };
-
-		static const inline std::wstring JUMP_LEFT{ L"Monster_Jump_Left" };
-		static const inline std::wstring JUMP_RIGHT{ L"Monster_Jump_Right" };
-		static const inline std::wstring JUMP_ANGRY_LEFT{ L"Monster_Jump_Angry_Left" };
-		static const inline std::wstring JUMP_ANGRY_RIGHT{ L"Monster_Jump_Angry_Right" };
+	private:
+		explicit MonsterHighState(MonsterHittedState&& other) = delete;
+		MonsterHighState& operator=(const MonsterHighState& other) = delete;
+		MonsterHighState& operator=(MonsterHighState&& other) = delete;
 	};
 
 	class Monster : public Object
 	{
 	private:
 		MonsterMoveState moveState;
-		//MonsterTraceState traceState;
 		MonsterAngryState angryState;
 		MonsterHittedState hittedState;
+		MonsterHighState highState;
 		MonsterState* currState{ &moveState };
 
 		// 후에 Object로 빼도 괜찮을 듯
@@ -180,7 +174,7 @@ namespace MomDra
 		bool onGround{ false };
 
 	public:
-		explicit Monster(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::Monster);
+		explicit Monster(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::MONSTER);
 
 		inline virtual void Update() noexcept override { currState->Update(*this); }
 		virtual void OnCollisionEnter(const Collider* other) override;
@@ -197,19 +191,21 @@ namespace MomDra
 		inline void SetOnGround(bool onGround) noexcept { this->onGround = onGround; }
 
 		inline bool IsRight() const noexcept { return forwardDir == Vector2::UnitX; }
+		inline bool CheckFall() const noexcept { return GetRigidBody()->GetVelocity().Y > 0.0f; }
 
 		void ChangeDir() noexcept;
 		void GetintoProjectile() noexcept;
+		void Die() noexcept;
 
-		inline void MoveForward(float speed) const noexcept { GetRigidBody()->AddForce(forwardDir * speed); }
+		inline void MoveForward(float speed) const noexcept { GetRigidBody()->AddVelocity(forwardDir * speed); }
 		inline void Jump() const noexcept { GetRigidBody()->AddVelocity(Vector2{ 0.0f, -MonsterSetting::JUMP_POWER }); }
-		inline void JumpForward() const noexcept { GetRigidBody()->AddVelocity(Vector2{ forwardDir.X * MonsterSetting::JUMP_POWER, -MonsterSetting::JUMP_POWER }); }
+		inline void JumpForward() const noexcept { GetRigidBody()->AddVelocity(Vector2{ forwardDir.X * MonsterSetting::JUMP_POWER, -MonsterSetting::JUMP_POWER / 1.5f }); }
 		bool CanJump() const noexcept;
 
 		inline void ChangeToMoveState() { ChangeState(&moveState); }
-		//inline void ChangeToTraceState() { currState = &traceState; }
 		inline void ChangeToAngryState() { ChangeState(&angryState); }
 		inline void ChangeToHittedState() { ChangeState(&hittedState); }
+		inline void ChangeToHighState() { ChangeState(&highState); }
 
 		inline virtual std::unique_ptr<Object> Clone() const override { return std::make_unique<Monster>(*this); }
 

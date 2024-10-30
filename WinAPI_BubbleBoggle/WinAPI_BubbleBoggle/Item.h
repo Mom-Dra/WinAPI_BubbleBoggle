@@ -14,7 +14,7 @@ namespace MomDra
 		bool canCollision{ false };
 
 	public:
-		explicit Item(const Vector2& pos, const Vector2& scale = itemScale, const Layer& layer = Layer::Item) noexcept;
+		explicit Item(const Vector2& pos, const Vector2& scale = itemScale, const Layer& layer = Layer::ITEM) noexcept;
 
 		virtual void Update() noexcept override;
 

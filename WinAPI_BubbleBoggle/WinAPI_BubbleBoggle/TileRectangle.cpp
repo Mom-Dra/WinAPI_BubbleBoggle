@@ -15,7 +15,7 @@ namespace MomDra
     {
         unsigned int size{ static_cast<unsigned int>(tileVec.size()) };
 
-        out << size << ' ';
+        out << size << '\n';
 
         for (const TileInfo& tileInfo : tileVec)
         {

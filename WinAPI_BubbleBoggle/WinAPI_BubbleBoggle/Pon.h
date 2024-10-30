@@ -14,7 +14,7 @@ namespace MomDra
 		float time{ 0.0f };
 
 	public:
-		explicit Pon(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::Default) noexcept;
+		explicit Pon(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::DEFAULT) noexcept;
 
 		void Update() noexcept override;
 

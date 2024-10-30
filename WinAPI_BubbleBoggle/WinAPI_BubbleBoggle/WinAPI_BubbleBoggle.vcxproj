@@ -146,6 +146,7 @@
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Core.h" />
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="ImageObject.h" />
@@ -160,6 +161,7 @@
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="Ray.h" />
+    <ClInclude Include="SceneGameOver.h" />
     <ClInclude Include="SceneIntro.h" />
     <ClInclude Include="SceneStage1.h" />
     <ClInclude Include="Sound.h" />
@@ -199,6 +201,7 @@
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="EventManager.cpp" />
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="ImageObject.cpp" />
@@ -213,6 +216,7 @@
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Ray.cpp" />
+    <ClCompile Include="SceneGameOver.cpp" />
     <ClCompile Include="SceneIntro.cpp" />
     <ClCompile Include="SceneStage1.cpp" />
     <ClCompile Include="Sound.cpp" />

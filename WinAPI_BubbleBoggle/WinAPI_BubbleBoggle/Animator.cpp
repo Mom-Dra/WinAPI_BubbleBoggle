@@ -128,6 +128,17 @@ namespace MomDra
 		oneShotMode = true;
 	}
 
+	void Animator::StopAndPlayOneShot(const std::wstring& animationName) noexcept
+	{
+		currAnimation = nullptr;
+		oneShotAnimation = FindAnimation(animationName);
+
+		if (!oneShotAnimation) return;
+
+		oneShotAnimation->SetFrame(0);
+		oneShotMode = true;
+	}
+
 	std::wstring Animator::LoadAnimation(const std::wstring& relativePath)
 	{
 		std::unique_ptr<Animation> animation{ std::make_unique<Animation>(this) };

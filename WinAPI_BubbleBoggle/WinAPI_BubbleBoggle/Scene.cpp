@@ -15,7 +15,6 @@
 #undef max
 #endif // min
 
-
 using namespace CK;
 
 namespace MomDra
@@ -82,7 +81,7 @@ namespace MomDra
 
 	void Scene::CreateTile(unsigned int xCount, unsigned int yCount)
 	{
-		DeleteLayerObject(Layer::Tile);
+		DeleteLayerObject(Layer::TILE);
 
 		tileXY.first = xCount;
 		tileXY.second = yCount;
@@ -92,7 +91,7 @@ namespace MomDra
 		{
 			for (unsigned int j{ 0 }; j < xCount; ++j)
 			{
-				AddObject(std::make_unique<TileRectangle>(Vector2{ static_cast<int> (j * TileRectangle::TILE_SIZE_X), static_cast<int>(i * TileRectangle::TILE_SIZE_Y) }, Vector2{ TileRectangle::TILE_SIZE_X, TileRectangle::TILE_SIZE_Y }, Layer::Tile));
+				AddObject(std::make_unique<TileRectangle>(Vector2{ static_cast<int> (j * TileRectangle::TILE_SIZE_X), static_cast<int>(i * TileRectangle::TILE_SIZE_Y) }, Vector2{ TileRectangle::TILE_SIZE_X, TileRectangle::TILE_SIZE_Y }, Layer::TILE));
 			}
 		}
 	}
@@ -102,21 +101,13 @@ namespace MomDra
 		Vector2 pos{ static_cast<float>(xPos), static_cast<float>(yPos) };
 		TileRectangle::AddTile(pos, TileRectangle::TILE_SIZE);
 
-		AddObject(std::make_unique<TileRectangle>(TileRectangle::GetRealTilePos(xPos, yPos), TileRectangle::TILE_SIZE, Layer::Tile));
+		AddObject(std::make_unique<TileRectangle>(TileRectangle::GetRealTilePos(xPos, yPos), TileRectangle::TILE_SIZE, Layer::TILE));
 	}
 
-	void Scene::CreateTileAtMouseDrag(unsigned int startXPos, unsigned int startYPos, unsigned int endXPos, unsigned int endYPos, bool isWall)
+	void Scene::CreateTileAtMouseDrag(float startXPos, float startYPos, float endXPos, float endYPos, bool isWall)
 	{
-		Vector2 pos{ static_cast<float> ((startXPos + endXPos) / 2.0f), static_cast<float> ((startYPos + endYPos) / 2.0f) };
-
-		float scaleX{ static_cast<float>((endXPos - startXPos + 1) * TileRectangle::TILE_SIZE_X) };
-		float scaleY{ static_cast<float>((endYPos - startYPos + 1) * TileRectangle::TILE_SIZE_Y) };
-
-		Vector2 scale{ scaleX, scaleY };
-
-		//TileRectangle::AddTile(pos, scale);
-
-		//AddObject(std::make_unique<TileRectangle>(TileRectangle::GetRealTilePos(pos), scale, Layer::TILE));
+		Vector2 pos{ (startXPos + endXPos) / 2.0f,(startYPos + endYPos) / 2.0f };
+		Vector2 scale{ std::abs(endXPos - startXPos), std::abs(endYPos - startYPos) };
 
 		CommandManager::Execute(std::make_unique<AddTileCommand>(this, TileRectangle::TileInfo{ pos, scale, isWall }));
 	}
@@ -134,29 +125,12 @@ namespace MomDra
 			return;
 		}
 
-		//unsigned int xCount;
-		//unsigned int yCount;
-
-		//// 타일 개수 읽어오기
-		//in >> xCount >> yCount;
-
-		//CreateTile(xCount, yCount);
-
-		//const std::vector<std::unique_ptr<Object>>& tiles{ GetLayerObject(Layer::TILE) };
-
-		// 각 타일 데이터 읽어오기
-		/*for (const auto& tile : tiles)
-		{
-			TileRectangle* tilePtr{ dynamic_cast<TileRectangle*>(tile.get()) };
-			tilePtr->LoadFile(in);
-		}*/
-
 		TileRectangle::LoadFile(in);
 		const TileRectangle::TileVec& tileVec{ TileRectangle::GetTileVec() };
 
 		for (const TileRectangle::TileInfo& tileInfo : tileVec)
 		{
-			AddObject(std::make_unique<TileRectangle>(TileRectangle::GetRealTilePos(tileInfo.pos), tileInfo.scale, Layer::Tile));
+			AddObject(std::make_unique<TileRectangle>(tileInfo.pos, tileInfo.scale, Layer::TILE));
 
 			std::cout << "Add Tile: " << tileInfo << std::endl;
 		}
@@ -171,9 +145,9 @@ namespace MomDra
 		for (const TileRectangle::TileInfo& tileInfo : tileVec)
 		{
 			if (tileInfo.isWall)
-				AddObject(std::make_unique<Wall>(TileRectangle::GetRealTilePos(tileInfo.pos), tileInfo.scale, Layer::Wall));
+				AddObject(std::make_unique<Wall>(tileInfo.pos, tileInfo.scale, Layer::WALL));
 			else
-				AddObject(std::make_unique<Ground>(TileRectangle::GetRealTilePos(tileInfo.pos), tileInfo.scale, Layer::Ground));
+				AddObject(std::make_unique<Ground>(tileInfo.pos, tileInfo.scale, Layer::GROUND));
 		}
 	}
 

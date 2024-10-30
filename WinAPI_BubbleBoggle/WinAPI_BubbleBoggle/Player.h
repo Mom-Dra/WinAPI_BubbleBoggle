@@ -24,13 +24,16 @@ namespace MomDra
 		static const inline std::wstring ATTACK_RIGHT{ L"Player_Attack_Right" };
 		static const inline std::wstring HIT_RIGHT{ L"Player_Hit_Right" };
 
-		static constexpr inline float MovePower{ 200.0f };
-		static constexpr inline float FallMovePower{ 100.0f };
+		static constexpr inline float MOVE_POWER{ 200.0f };
+		static constexpr inline float FALL_MOVE_POWER{ 1.0f };
+		static constexpr inline float JUMP_POWER{ 610.0f };
 
 		static constexpr inline float HIT_TIME{ 0.5f };
 		static constexpr inline float ROTATE_1_TIME{ 1.0f };
 		static constexpr inline float ROTATE_2_TIME{ 1.0f };
 		static constexpr inline float DESTROY_TIME{ 1.0f };
+
+		static constexpr inline int LIFE{ 3 };
 	};
 
 	class PlayerState
@@ -105,6 +108,7 @@ namespace MomDra
 	{
 	private:
 		float time{ 0.0f };
+		bool isPlayedDestroyAnim{ false };
 
 	public:
 		explicit PlayerDeadState() noexcept = default;
@@ -125,7 +129,7 @@ namespace MomDra
 	class Player : public Object
 	{
 	private:
-		Vector2 forward{ -Vector2::UnitX };
+		Vector2 forward{ Vector2::UnitX };
 		bool isCollideSideOfGround{ false };
 
 		PlayerIdleState idleState;
@@ -134,8 +138,10 @@ namespace MomDra
 		PlayerDeadState deadState;
 		PlayerState* currState;
 
+		int life{ PlayerSetting::LIFE };
+
 	public:
-		explicit Player(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::Player) noexcept;
+		explicit Player(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::PLAYER) noexcept;
 
 		virtual void Update() noexcept override;
 		virtual void Render(const HDC& hdc) const noexcept override;
@@ -144,6 +150,9 @@ namespace MomDra
 
 		inline bool IsRight() const noexcept { return forward == Vector2::UnitX; }
 		void Die() noexcept;
+
+		inline void DecreaseLife() noexcept { if (IsDead()) return; --life; }
+		inline bool IsDead() const noexcept { return life == 0; }
 
 		inline void SetIsCollideSideOfGround(bool isCollideSideOfGround) noexcept { this->isCollideSideOfGround = isCollideSideOfGround; }
 		

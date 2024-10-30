@@ -48,7 +48,7 @@ namespace MomDra
 
 		switch (otherLayer)
 		{
-		case Layer::Player:
+		case Layer::PLAYER:
 			Destroy();
 			break;
 		}
