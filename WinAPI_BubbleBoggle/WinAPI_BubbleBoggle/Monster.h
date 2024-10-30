@@ -21,6 +21,7 @@ namespace MomDra
 		static constexpr inline float FALL_SPEED{ 0.0f };
 		static constexpr inline float JUMP_POWER{ 610.0f };
 		static constexpr inline float JUMP_COOL_DOWN{ 5.0f };
+		static constexpr inline float ANGRY_JUMP_COOL_DOWN{ 2.5f };
 
 		// Ray
 		static constexpr inline float FORWARD_RAY_DISTANCE{ 30.0f };

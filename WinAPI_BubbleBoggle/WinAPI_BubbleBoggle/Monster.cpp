@@ -260,7 +260,13 @@ namespace MomDra
 	void MonsterAngryState::Enter(Monster& monster) noexcept
 	{
 		WalkAnimation(monster);
-		monster.GetRigidBody()->SetGravity(true);
+		
+		RigidBody* rigid{ monster.GetRigidBody() };
+		rigid->SetGravity(true);
+		
+		const Vector2& maxVelocity{ rigid->GetMaxVelocity() };
+
+		rigid->SetMaxVelocity(Vector2{ maxVelocity.X * 2.0f, maxVelocity.Y });
 	}
 
 	void MonsterAngryState::Update(Monster& monster) noexcept
@@ -352,7 +358,7 @@ namespace MomDra
 
 		// Jump
 		jumpTime += deltaTime;
-		if (monster.CanJump() && jumpTime >= MonsterSetting::JUMP_COOL_DOWN)
+		if (monster.CanJump() && jumpTime >= MonsterSetting::ANGRY_JUMP_COOL_DOWN)
 		{
 			if (Random::GetPossibility(MonsterSetting::JUMP_POSSIBILITY))
 			{
@@ -363,7 +369,7 @@ namespace MomDra
 
 		// JumpForward
 		forwardJumpTime += deltaTime;
-		if (!Ray::RayCast(pos, Vector2::UnitY * MonsterSetting::DOWN_RAY_DISTANCE, Layer::Ground, collider) && monster.GetOnGround() && forwardJumpTime >= MonsterSetting::JUMP_COOL_DOWN)
+		if (!Ray::RayCast(pos, Vector2::UnitY * MonsterSetting::DOWN_RAY_DISTANCE, Layer::Ground, collider) && monster.GetOnGround() && forwardJumpTime >= MonsterSetting::ANGRY_JUMP_COOL_DOWN)
 		{
 			if (Random::GetPossibility(MonsterSetting::FORWARD_JUMP_POSSIBILITY))
 			{
