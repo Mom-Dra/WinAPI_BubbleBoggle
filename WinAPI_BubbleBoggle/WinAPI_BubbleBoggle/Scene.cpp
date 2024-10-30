@@ -81,7 +81,7 @@ namespace MomDra
 
 	void Scene::CreateTile(unsigned int xCount, unsigned int yCount)
 	{
-		DeleteLayerObject(Layer::TILE);
+		DeleteLayerObject(Layer::Tile);
 
 		tileXY.first = xCount;
 		tileXY.second = yCount;
@@ -91,7 +91,7 @@ namespace MomDra
 		{
 			for (unsigned int j{ 0 }; j < xCount; ++j)
 			{
-				AddObject(std::make_unique<TileRectangle>(Vector2{ static_cast<int> (j * TileRectangle::TILE_SIZE_X), static_cast<int>(i * TileRectangle::TILE_SIZE_Y) }, Vector2{ TileRectangle::TILE_SIZE_X, TileRectangle::TILE_SIZE_Y }, Layer::TILE));
+				AddObject(std::make_unique<TileRectangle>(Vector2{ static_cast<int> (j * TileRectangle::TILE_SIZE_X), static_cast<int>(i * TileRectangle::TILE_SIZE_Y) }, Vector2{ TileRectangle::TILE_SIZE_X, TileRectangle::TILE_SIZE_Y }, Layer::Tile));
 			}
 		}
 	}
@@ -101,7 +101,7 @@ namespace MomDra
 		Vector2 pos{ static_cast<float>(xPos), static_cast<float>(yPos) };
 		TileRectangle::AddTile(pos, TileRectangle::TILE_SIZE);
 
-		AddObject(std::make_unique<TileRectangle>(TileRectangle::GetRealTilePos(xPos, yPos), TileRectangle::TILE_SIZE, Layer::TILE));
+		AddObject(std::make_unique<TileRectangle>(TileRectangle::GetRealTilePos(xPos, yPos), TileRectangle::TILE_SIZE, Layer::Tile));
 	}
 
 	void Scene::CreateTileAtMouseDrag(float startXPos, float startYPos, float endXPos, float endYPos, bool isWall)
@@ -130,7 +130,7 @@ namespace MomDra
 
 		for (const TileRectangle::TileInfo& tileInfo : tileVec)
 		{
-			AddObject(std::make_unique<TileRectangle>(tileInfo.pos, tileInfo.scale, Layer::TILE));
+			AddObject(std::make_unique<TileRectangle>(tileInfo.pos, tileInfo.scale, Layer::Tile));
 
 			std::cout << "Add Tile: " << tileInfo << std::endl;
 		}
@@ -145,9 +145,9 @@ namespace MomDra
 		for (const TileRectangle::TileInfo& tileInfo : tileVec)
 		{
 			if (tileInfo.isWall)
-				AddObject(std::make_unique<Wall>(tileInfo.pos, tileInfo.scale, Layer::WALL));
+				AddObject(std::make_unique<Wall>(tileInfo.pos, tileInfo.scale, Layer::Wall));
 			else
-				AddObject(std::make_unique<Ground>(tileInfo.pos, tileInfo.scale, Layer::GROUND));
+				AddObject(std::make_unique<Ground>(tileInfo.pos, tileInfo.scale, Layer::Ground));
 		}
 	}
 

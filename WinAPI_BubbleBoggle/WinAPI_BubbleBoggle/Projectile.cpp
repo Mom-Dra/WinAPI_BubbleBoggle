@@ -32,7 +32,7 @@ namespace MomDra
 		for (const auto& projectile : collidingProjectiles)
 			projectile->Explode();
 
-		EventManager::GetInstance().Instantiate(new Pon(GetPos(), GetScale(), Layer::DEFAULT));
+		EventManager::GetInstance().Instantiate(new Pon(GetPos(), GetScale(), Layer::Default));
 		Destroy();
 	}
 
@@ -42,7 +42,7 @@ namespace MomDra
 
 		isExplode = true;
 
-		EventManager::GetInstance().Instantiate(new Pon(GetPos(), GetScale(), Layer::DEFAULT));
+		EventManager::GetInstance().Instantiate(new Pon(GetPos(), GetScale(), Layer::Default));
 		Destroy();
 	}
 
@@ -56,14 +56,14 @@ namespace MomDra
 		static const TimeManager& timeManager{ TimeManager::GetInstance() };
 		float deltaTime{ timeManager.GetDeltaTime() };
 
-		time += timeManager.GetDeltaTime();
+		time += deltaTime;
 
-		if (time < moveTime)
+		if (time < ProjectileSetting::ATTACK_MOVE_TIME)
 		{
 			const Vector2& pos{ projectile.GetPos() };
 			const Vector2& initialDir{ projectile.GetInitialDir() };
 
-			projectile.SetPos(pos + initialDir * speed * deltaTime);
+			projectile.SetPos(pos + initialDir * ProjectileSetting::ATTACK_SPEED * deltaTime);
 		}
 		else
 		{
@@ -78,7 +78,7 @@ namespace MomDra
 
 		switch (otherLayer)
 		{
-		case Layer::MONSTER:
+		case Layer::Monster:
 		{
 			Monster* monster{ dynamic_cast<Monster*>(otherObject) };
 
@@ -96,19 +96,9 @@ namespace MomDra
 	void ProjectileMovingState::Update(Projectile& projectile)
 	{
 		static const TimeManager& timeManager{ TimeManager::GetInstance() };
-		float deltaTime{ timeManager.GetDeltaTime() };
 
-		time += deltaTime;
-
-		if (time < moveTime)
-		{
-			const Vector2& pos{ projectile.GetPos() };
-			projectile.SetPos(pos + -Vector2::UnitY * speed * deltaTime);
-		}
-		else
-		{
-			projectile.Destroy();
-		}
+		const Vector2& pos{ projectile.GetPos() };
+		projectile.SetPos(pos + -Vector2::UnitY * ProjectileSetting::MOVE_SPEED * timeManager.GetDeltaTime());
 	}
 
 	inline void ProjectileMovingState::OnCollisionEnter(Projectile& projectile, const Collider* other)
@@ -118,18 +108,18 @@ namespace MomDra
 
 		switch (otherLayer)
 		{
-		case Layer::WALL:
+		case Layer::Wall:
 			projectile.ChangeToHighReachedState();
 			break;
 
-		case Layer::PROJECTILE:
+		case Layer::Projectile:
 		{
 			Projectile* otherProjectile{ dynamic_cast<Projectile*>(otherObject) };
 			projectile.AddCollidingProjectile(otherProjectile);
 		}
 		break;
 
-		case Layer::PLAYER:
+		case Layer::Player:
 			projectile.Explode();
 			break;
 		}
@@ -142,7 +132,7 @@ namespace MomDra
 
 		switch (otherLayer)
 		{
-		case Layer::PROJECTILE:
+		case Layer::Projectile:
 		{
 			Projectile* otherProjectile{ dynamic_cast<Projectile*>(otherObject) };
 			projectile.AddCollidingProjectile(otherProjectile);
@@ -158,7 +148,7 @@ namespace MomDra
 
 		switch (otherLayer)
 		{
-		case Layer::PROJECTILE:
+		case Layer::Projectile:
 		{
 			Projectile* otherProjectile{ dynamic_cast<Projectile*>(otherObject) };
 			projectile.RemoveCollidingProjectile(otherProjectile);
@@ -207,16 +197,16 @@ namespace MomDra
 
 		switch (otherLayer)
 		{
-		case Layer::PROJECTILE:
+		case Layer::Projectile:
 		{
 			RigidBody* otherRigid{ otherObject->GetRigidBody() };
 			Vector2 dir{ otherObject->GetPos() - projectile.GetPos() };
 
-			otherRigid->AddVelocity(dir.GetNormalize() * ProjectileSetting::ProjectilePower);
+			otherRigid->AddVelocity(dir.GetNormalize() * ProjectileSetting::PROJECTILE_POWER);
 		}
 		break;
 		
-		case Layer::PLAYER:
+		case Layer::Player:
 			projectile.Explode();
 			break;
 		}

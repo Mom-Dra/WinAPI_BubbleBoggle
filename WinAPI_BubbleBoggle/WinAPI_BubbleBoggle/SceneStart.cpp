@@ -23,24 +23,24 @@ namespace MomDra
 		std::wstring filePath{ PathManager::GetContentPath() };
 		filePath.append(L"\\texture\\player.bmp");
 
-		AddObject(std::make_unique<Player>(Vector2{ 640.0f, 384.0f }, Vector2{ 40.0f, 40.0f }, Layer::PLAYER));
-		AddObject(std::make_unique<Monster>(Vector2{ 200.0f, 200.0f }, Vector2{ 40.0f, 40.0f }, Layer::MONSTER));
+		AddObject(std::make_unique<Player>(Vector2{ 640.0f, 384.0f }, Vector2{ 40.0f, 40.0f }, Layer::Player));
+		AddObject(std::make_unique<Monster>(Vector2{ 200.0f, 200.0f }, Vector2{ 40.0f, 40.0f }, Layer::Monster));
 
 		// 땅 생성
-		AddObject(std::make_unique<Ground>(Vector2{ 300.0f, 300.0f }, Vector2{ 200.0f, 50.0f }, Layer::GROUND));
+		AddObject(std::make_unique<Ground>(Vector2{ 300.0f, 300.0f }, Vector2{ 200.0f, 50.0f }, Layer::Ground));
 
 		// 충돌 지정
-		CollisionManager::GetInstance().CheckLayer(Layer::PLAYER, Layer::MONSTER);
-		CollisionManager::GetInstance().CheckLayer(Layer::MONSTER, Layer::PROJECTILE);
-		CollisionManager::GetInstance().CheckLayer(Layer::PLAYER, Layer::GROUND);
-		CollisionManager::GetInstance().CheckLayer(Layer::MONSTER, Layer::GROUND);
-		CollisionManager::GetInstance().CheckLayer(Layer::ITEM, Layer::GROUND);
-		CollisionManager::GetInstance().CheckLayer(Layer::ITEM, Layer::PLAYER);
-		CollisionManager::GetInstance().CheckLayer(Layer::PLAYER, Layer::WALL);
-		CollisionManager::GetInstance().CheckLayer(Layer::PROJECTILE, Layer::WALL);
-		CollisionManager::GetInstance().CheckLayer(Layer::MONSTER, Layer::WALL);
-		CollisionManager::GetInstance().CheckLayer(Layer::PLAYER, Layer::PROJECTILE);
-		CollisionManager::GetInstance().CheckLayer(Layer::PROJECTILE, Layer::PROJECTILE);
+		CollisionManager::GetInstance().CheckLayer(Layer::Player, Layer::Monster);
+		CollisionManager::GetInstance().CheckLayer(Layer::Monster, Layer::Projectile);
+		CollisionManager::GetInstance().CheckLayer(Layer::Player, Layer::Ground);
+		CollisionManager::GetInstance().CheckLayer(Layer::Monster, Layer::Ground);
+		CollisionManager::GetInstance().CheckLayer(Layer::Item, Layer::Ground);
+		CollisionManager::GetInstance().CheckLayer(Layer::Item, Layer::Player);
+		CollisionManager::GetInstance().CheckLayer(Layer::Player, Layer::Wall);
+		CollisionManager::GetInstance().CheckLayer(Layer::Projectile, Layer::Wall);
+		CollisionManager::GetInstance().CheckLayer(Layer::Monster, Layer::Wall);
+		CollisionManager::GetInstance().CheckLayer(Layer::Player, Layer::Projectile);
+		CollisionManager::GetInstance().CheckLayer(Layer::Projectile, Layer::Projectile);
 
 		// Camera Look 지점
 		Vector2 resolution{ Core::GetInstance().GetResolution() };

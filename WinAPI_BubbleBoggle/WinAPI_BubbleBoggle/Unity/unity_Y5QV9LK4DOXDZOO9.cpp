@@ -14,6 +14,9 @@
 #include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Animator.cpp"
 
 
+#include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\BackGround.cpp"
+
+
 #include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\BtnUI.cpp"
 
 
@@ -30,6 +33,9 @@
 
 
 #include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\EventManager.cpp"
+
+
+#include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\GameManager.cpp"
 
 
 #include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Ground.cpp"
@@ -74,10 +80,16 @@
 #include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Ray.cpp"
 
 
+#include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\SceneGameOver.cpp"
+
+
 #include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\SceneIntro.cpp"
 
 
 #include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\SceneStage1.cpp"
+
+
+#include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\SceneWin.cpp"
 
 
 #include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Sound.cpp"

@@ -4,22 +4,22 @@ namespace MomDra
 {
 	enum class Layer
 	{
-		DEFAULT,
-		PLAYER,
-		MONSTER,
-		PROJECTILE,
-		TILE,
-		GROUND,
-		WALL,
-		ITEM,
+		Default,
+		Player,
+		Monster,
+		Projectile,
+		Tile,
+		Ground,
+		Wall,
+		Item,
 		UI,
-		LAST
+		Last
 	};
 
 	enum class BrushType
 	{
-		HOLLOW,
-		LAST
+		Hollow,
+		Last
 	};
 
 	enum class PenType
@@ -28,25 +28,26 @@ namespace MomDra
 		Green,
 		Blue,
 		Orange,
-		LAST
+		Last
 	};
 
 	enum class EventType
 	{
-		CREATEOBJECT,
-		DELETEOBJECT,
-		CHANGESCENE,
-		LAST
+		CreateObject,
+		DeleteObject,
+		ChangeScene,
+		Last
 	};
 
 	enum class SceneType
 	{
-		TOOL,
-		START,
-		INTRO,
-		STAGE_1,
-		STAGE_2,
-		GAME_OVER,
-		LAST
+		Tool,
+		Start,
+		Intro,
+		Stage1,
+		Stage2,
+		GameOver,
+		GameWin,
+		Last
 	};
 }

@@ -24,7 +24,7 @@ namespace MomDra
 	void EventManager::Instantiate(Object* obj) noexcept
 	{
 		Event event;
-		event.eventType = EventType::CREATEOBJECT;
+		event.eventType = EventType::CreateObject;
 		event.lParam = (DWORD_PTR)(obj);
 
 		AddEvent(event);
@@ -33,7 +33,7 @@ namespace MomDra
 	void EventManager::Destory(Object* obj) noexcept
 	{
 		Event event;
-		event.eventType = EventType::DELETEOBJECT;
+		event.eventType = EventType::DeleteObject;
 		event.lParam = (DWORD_PTR)(obj);
 
 		AddEvent(event);
@@ -42,7 +42,7 @@ namespace MomDra
 	void EventManager::ChangeScene(const SceneType& sceneType) noexcept
 	{
 		Event event;
-		event.eventType = EventType::CHANGESCENE;
+		event.eventType = EventType::ChangeScene;
 		event.lParam = (DWORD_PTR)(sceneType);
 
 		AddEvent(event);
@@ -52,7 +52,7 @@ namespace MomDra
 	{
 		switch (event.eventType)
 		{
-		case EventType::CREATEOBJECT:
+		case EventType::CreateObject:
 		{
 			// lParam : Object Address
 			// rParam : Layer
@@ -63,7 +63,7 @@ namespace MomDra
 			SceneManager::GetInstance().GetCurrentScene()->AddObject(obj);
 		}
 		break;
-		case EventType::DELETEOBJECT:
+		case EventType::DeleteObject:
 		{
 			// 바로 삭제 안하고, Dead 상태로 바꾼다음
 			// 나머지 Update 애들도 다알 수 있도록
@@ -77,7 +77,7 @@ namespace MomDra
 			obj->SetDead();
 		}
 		break;
-		case EventType::CHANGESCENE:
+		case EventType::ChangeScene:
 			// lParam : Next Scene Type
 			SceneManager::GetInstance().ChangeScene(static_cast<SceneType>(event.lParam));
 			UIManager::GetInstance().SetFocusedUI(nullptr);

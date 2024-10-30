@@ -56,7 +56,7 @@ namespace MomDra
     void Core::CreateBrushPen() noexcept
     {
         // hollow brush
-        brushes[static_cast <int> (BrushType::HOLLOW)] = static_cast<HBRUSH> (GetStockObject(HOLLOW_BRUSH));
+        brushes[static_cast <int> (BrushType::Hollow)] = static_cast<HBRUSH> (GetStockObject(HOLLOW_BRUSH));
 
         // red pen
         pens[static_cast<int>(PenType::Red)] = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));

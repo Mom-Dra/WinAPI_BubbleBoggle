@@ -26,16 +26,16 @@ namespace MomDra
 
 		switch (otherLayer)
 		{
-		case Layer::PLAYER:
+		case Layer::Player:
 			otherObj->SetPos(pos);
 		break;
-		case Layer::PROJECTILE:
+		case Layer::Projectile:
 			if (other->GetFinalPos().X < thisCollider->GetFinalPos().X - thisCollider->GetScale().X / 2.0f || thisCollider->GetFinalPos().X + thisCollider->GetScale().X / 2.0f < other->GetFinalPos().X)
 			{
 				otherObj->SetPos(pos);
 			}
 			break;
-		case Layer::MONSTER:
+		case Layer::Monster:
 		{
 			/*if (other->GetFinalPos().Y > thisCollider->GetFinalPos().Y)
 			{

@@ -1,7 +1,10 @@
 #include "GameManager.h"
-#include "EventManager.h"
+#include "SceneManager.h"
 
 namespace MomDra
 {
-	
+	void GameManager::ReSpawn()
+	{
+		
+	}
 }

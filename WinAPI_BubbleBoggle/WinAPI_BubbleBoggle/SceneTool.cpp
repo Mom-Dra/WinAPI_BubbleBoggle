@@ -30,7 +30,7 @@ namespace MomDra
 
 	void SceneTool::Enter() noexcept
 	{
-		AddObject(std::make_unique<ImageObject>(Core::GetInstance().GetResolution() / 2.0f, Core::GetInstance().GetResolution(), L"\\texture\\Stage1.bmp", Layer::DEFAULT));
+		AddObject(std::make_unique<ImageObject>(Core::GetInstance().GetResolution() / 2.0f, Core::GetInstance().GetResolution(), L"\\texture\\Stage1.bmp", Layer::Default));
 		AddObject(std::make_unique<AnimationObject>());
 
 		// Camera Look At ÁöÁ¤
@@ -54,7 +54,7 @@ namespace MomDra
 
 		if (KeyManager::GetInstance().GetKeyDown(Key::SPACE))
 		{
-			EventManager::GetInstance().ChangeScene(SceneType::INTRO);
+			EventManager::GetInstance().ChangeScene(SceneType::Intro);
 		}
 
 		if (keyManager.GetKey(Key::CTRL))
@@ -182,7 +182,7 @@ namespace MomDra
 
 	void ChangeScene(DWORD_PTR, DWORD_PTR)
 	{
-		EventManager::GetInstance().ChangeScene(SceneType::START);
+		EventManager::GetInstance().ChangeScene(SceneType::Start);
 	}
 
 	// TILE Count Windows Proc
@@ -206,7 +206,7 @@ namespace MomDra
 				if (!toolScene)
 					throw std::runtime_error("It's Not Tool Scene");
 
-				toolScene->DeleteLayerObject(Layer::TILE);
+				toolScene->DeleteLayerObject(Layer::Tile);
 				toolScene->CreateTile(xCount, yCount);
 
 				EndDialog(hDlg, LOWORD(wParam));

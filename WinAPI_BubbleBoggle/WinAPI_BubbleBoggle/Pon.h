@@ -9,12 +9,12 @@ namespace MomDra
 	class Pon : public Object
 	{
 	private:
-		static constexpr inline float duration{ 1.0f };
+		static constexpr inline float DURATION{ 1.0f };
 
 		float time{ 0.0f };
 
 	public:
-		explicit Pon(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::DEFAULT) noexcept;
+		explicit Pon(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::Default) noexcept;
 
 		void Update() noexcept override;
 

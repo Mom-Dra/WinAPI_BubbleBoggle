@@ -8,7 +8,7 @@ namespace MomDra
 	private:
 
 	public:
-		explicit Ground(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::GROUND);
+		explicit Ground(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::Ground);
 
 		virtual void OnCollisionEnter(const Collider* other) override;
 		virtual void OnCollisionStay(const Collider* other) override;

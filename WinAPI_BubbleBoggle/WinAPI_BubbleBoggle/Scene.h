@@ -15,7 +15,7 @@ namespace MomDra
 	private:
 		using Pair = std::pair<unsigned int, unsigned int>;
 
-		std::array<std::vector<std::unique_ptr<Object>>, static_cast<int>(Layer::LAST)> objects;
+		std::array<std::vector<std::unique_ptr<Object>>, static_cast<int>(Layer::Last)> objects;
 		std::wstring sceneName;
 
 		Pair tileXY;
@@ -48,7 +48,7 @@ namespace MomDra
 
 		inline void DeleteTile(TileRectangle* tilePtr) noexcept
 		{
-			std::vector<std::unique_ptr<Object>>& tileVec{ objects[static_cast<int>(Layer::TILE)] };
+			std::vector<std::unique_ptr<Object>>& tileVec{ objects[static_cast<int>(Layer::Tile)] };
 			auto it{ std::remove_if(tileVec.begin(), tileVec.end(), [tilePtr](const std::unique_ptr<Object>& obj) {return obj.get() == tilePtr; }) };
 			tileVec.erase(it, tileVec.end());
 		}

@@ -33,7 +33,7 @@ namespace MomDra
 
 		inline void Execute() override
 		{
-			auto tileUniqPtr{ std::make_unique<TileRectangle>(tileInfo.pos, tileInfo.scale, Layer::TILE) };
+			auto tileUniqPtr{ std::make_unique<TileRectangle>(tileInfo.pos, tileInfo.scale, Layer::Tile) };
 			addedTile = tileUniqPtr.get();
 			scene->AddObject(std::move(tileUniqPtr));
 

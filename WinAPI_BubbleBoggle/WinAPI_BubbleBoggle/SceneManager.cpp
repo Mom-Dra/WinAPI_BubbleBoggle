@@ -4,6 +4,7 @@
 #include "SceneStage1.h"
 #include "SceneIntro.h"
 #include "SceneGameOver.h"
+#include "SceneWin.h"
 
 namespace MomDra
 {
@@ -17,13 +18,14 @@ namespace MomDra
 	void SceneManager::Initialize() noexcept
 	{
 		// ¾À »ý¼º
-		Scenes[static_cast<int> (SceneType::START)] = std::make_unique<SceneStart>(L"StartScene");
-		Scenes[static_cast<int>(SceneType::TOOL)] = std::make_unique<SceneTool>(L"ToolScene");
-		Scenes[static_cast<int>(SceneType::INTRO)] = std::make_unique<SceneIntro>(L"IntroScene");
-		Scenes[static_cast<int>(SceneType::STAGE_1)] = std::make_unique<SceneStage1>(L"Stage1");
-		Scenes[static_cast<int>(SceneType::GAME_OVER)] = std::make_unique<SceneGameOver>(L"GameOver");
+		Scenes[static_cast<int> (SceneType::Start)] = std::make_unique<SceneStart>(L"StartScene");
+		Scenes[static_cast<int>(SceneType::Tool)] = std::make_unique<SceneTool>(L"ToolScene");
+		Scenes[static_cast<int>(SceneType::Intro)] = std::make_unique<SceneIntro>(L"IntroScene");
+		Scenes[static_cast<int>(SceneType::Stage1)] = std::make_unique<SceneStage1>(L"Stage1");
+		Scenes[static_cast<int>(SceneType::GameOver)] = std::make_unique<SceneGameOver>(L"GameOver");
+		Scenes[static_cast<int>(SceneType::GameWin)] = std::make_unique<SceneWin>(L"GameWin");
 
-		currScene = Scenes[static_cast<int> (SceneType::TOOL)].get();
+		currScene = Scenes[static_cast<int> (SceneType::Tool)].get();
 		currScene->Enter();
 	}
 

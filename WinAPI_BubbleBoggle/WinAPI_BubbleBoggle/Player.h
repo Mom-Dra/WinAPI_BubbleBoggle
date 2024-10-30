@@ -1,5 +1,8 @@
 #pragma once
 #include "Object.h"
+#include "Vector2.h"
+
+using namespace CK;
 
 namespace MomDra
 {
@@ -24,6 +27,8 @@ namespace MomDra
 		static const inline std::wstring ATTACK_RIGHT{ L"Player_Attack_Right" };
 		static const inline std::wstring HIT_RIGHT{ L"Player_Hit_Right" };
 
+		static constexpr inline Vector2 SIZE{ 40.0f, 40.0f };
+
 		static constexpr inline float MOVE_POWER{ 200.0f };
 		static constexpr inline float FALL_MOVE_POWER{ 1.0f };
 		static constexpr inline float JUMP_POWER{ 610.0f };
@@ -34,6 +39,8 @@ namespace MomDra
 		static constexpr inline float DESTROY_TIME{ 1.0f };
 
 		static constexpr inline int LIFE{ 3 };
+
+		static constexpr inline Vector2 SPAWN_POS{ 85.0f, 748.0f };
 	};
 
 	class PlayerState
@@ -141,7 +148,7 @@ namespace MomDra
 		int life{ PlayerSetting::LIFE };
 
 	public:
-		explicit Player(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::PLAYER) noexcept;
+		explicit Player(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::Player) noexcept;
 
 		virtual void Update() noexcept override;
 		virtual void Render(const HDC& hdc) const noexcept override;
@@ -151,8 +158,8 @@ namespace MomDra
 		inline bool IsRight() const noexcept { return forward == Vector2::UnitX; }
 		void Die() noexcept;
 
-		inline void DecreaseLife() noexcept { if (IsDead()) return; --life; }
-		inline bool IsDead() const noexcept { return life == 0; }
+		//inline void DecreaseLife() noexcept { if (IsDead()) return; --life; }
+		//inline bool IsDead() const noexcept { return life == 0; }
 
 		inline void SetIsCollideSideOfGround(bool isCollideSideOfGround) noexcept { this->isCollideSideOfGround = isCollideSideOfGround; }
 		
@@ -176,6 +183,8 @@ namespace MomDra
 		void Attack() const noexcept;
 		void Jump();
 		void CheckFall();
+
+		void ReSpawn();
 
 	private:
 		void ChangeState(PlayerState* state) noexcept;

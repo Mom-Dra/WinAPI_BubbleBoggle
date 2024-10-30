@@ -56,7 +56,7 @@ namespace MomDra
 
 	void Monster::Die() noexcept
 	{
-		EventManager::GetInstance().Instantiate(new Item{ GetPos() });
+		EventManager::GetInstance().Instantiate(new Item{ GetPos(), L"\\texture\\ItemBanana.bmp" });
 		ResourceManager::GetInstance().FindSound(L"\\sound\\AttackMonster.wav")->Play();
 
 		Destroy();
@@ -68,7 +68,7 @@ namespace MomDra
 	{
 		Collider* collider;
 		Ray::DebugRay(GetPos(), upDir * MonsterSetting::UP_RAY_DISTANCE);
-		return Ray::RayCast(GetPos(), upDir * MonsterSetting::UP_RAY_DISTANCE, Layer::GROUND, collider);
+		return Ray::RayCast(GetPos(), upDir * MonsterSetting::UP_RAY_DISTANCE, Layer::Ground, collider);
 	}
 
 	void Monster::ChangeState(MonsterState* state) noexcept
@@ -128,7 +128,7 @@ namespace MomDra
 
 		switch (otherLayer)
 		{
-		case Layer::PROJECTILE:
+		case Layer::Projectile:
 		{
 			Projectile* projectile{ dynamic_cast<Projectile*>(otherObject) };
 
@@ -139,7 +139,7 @@ namespace MomDra
 		}
 		break;
 
-		case Layer::PLAYER:
+		case Layer::Player:
 		{
 			Player* player{ dynamic_cast<Player*>(otherObject) };
 			player->Die();
@@ -179,7 +179,7 @@ namespace MomDra
 		Collider* collider;
 		
 		// ChageDir
-		if (Ray::RayCast(pos, monster.GetForwardDir() * MonsterSetting::DOWN_RAY_DISTANCE, Layer::WALL, collider))
+		if (Ray::RayCast(pos, monster.GetForwardDir() * MonsterSetting::DOWN_RAY_DISTANCE, Layer::Wall, collider))
 		{
 			monster.ChangeDir();
 			WalkAnimation(monster);
@@ -198,7 +198,7 @@ namespace MomDra
 
 		// JumpForward
 		forwardJumpTime += deltaTime;
-		if (!Ray::RayCast(pos, Vector2::UnitY * MonsterSetting::DOWN_RAY_DISTANCE, Layer::GROUND, collider) && monster.GetOnGround() && forwardJumpTime >= MonsterSetting::JUMP_COOL_DOWN)
+		if (!Ray::RayCast(pos, Vector2::UnitY * MonsterSetting::DOWN_RAY_DISTANCE, Layer::Ground, collider) && monster.GetOnGround() && forwardJumpTime >= MonsterSetting::JUMP_COOL_DOWN)
 		{
 			if (Random::GetPossibility(MonsterSetting::FORWARD_JUMP_POSSIBILITY))
 			{
@@ -246,12 +246,12 @@ namespace MomDra
 
 		switch (otherLayer)
 		{
-		case Layer::PLAYER:
+		case Layer::Player:
 		{
 			monster.Die();
 		}
 		break;
-		case Layer::WALL:
+		case Layer::Wall:
 			monster.ChangeToHighState();
 			break;
 		}
@@ -295,7 +295,7 @@ namespace MomDra
 
 		switch (otherLayer)
 		{
-		case Layer::PROJECTILE:
+		case Layer::Projectile:
 		{
 			Projectile* projectile{ dynamic_cast<Projectile*>(otherObject) };
 
@@ -306,7 +306,7 @@ namespace MomDra
 		}
 		break;
 		
-		case Layer::PLAYER:
+		case Layer::Player:
 		{
 			Player* player{ dynamic_cast<Player*>(otherObject) };
 			player->Die();
@@ -344,7 +344,7 @@ namespace MomDra
 
 		Collider* collider;
 		
-		if (Ray::RayCast(pos, monster.GetForwardDir() * MonsterSetting::DOWN_RAY_DISTANCE, Layer::WALL, collider))
+		if (Ray::RayCast(pos, monster.GetForwardDir() * MonsterSetting::DOWN_RAY_DISTANCE, Layer::Wall, collider))
 		{
 			monster.ChangeDir();
 			WalkAnimation(monster);
@@ -363,7 +363,7 @@ namespace MomDra
 
 		// JumpForward
 		forwardJumpTime += deltaTime;
-		if (!Ray::RayCast(pos, Vector2::UnitY * MonsterSetting::DOWN_RAY_DISTANCE, Layer::GROUND, collider) && monster.GetOnGround() && forwardJumpTime >= MonsterSetting::JUMP_COOL_DOWN)
+		if (!Ray::RayCast(pos, Vector2::UnitY * MonsterSetting::DOWN_RAY_DISTANCE, Layer::Ground, collider) && monster.GetOnGround() && forwardJumpTime >= MonsterSetting::JUMP_COOL_DOWN)
 		{
 			if (Random::GetPossibility(MonsterSetting::FORWARD_JUMP_POSSIBILITY))
 			{
@@ -422,7 +422,7 @@ namespace MomDra
 
 		switch (otherLayer)
 		{
-		case Layer::PLAYER:
+		case Layer::Player:
 			monster.Die();
 			break;
 		}

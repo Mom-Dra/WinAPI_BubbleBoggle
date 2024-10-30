@@ -1,5 +1,5 @@
 #pragma once
-#include <vector>
+#include "EventManager.h"
 
 namespace MomDra
 {
@@ -19,10 +19,28 @@ namespace MomDra
 		inline void SetNumOfMonster(int numOfMonster) noexcept { this->numOfMonster = numOfMonster; }
 		inline void SetPlayerLife(int playerLife) noexcept { this->playerLife = playerLife; }
 
-		inline void DecreaseNumOfMonster() noexcept { --numOfMonster; if (numOfMonster == 0) GameWin(); }
+		inline void DecreaseNumOfMonster() noexcept
+		{
+			--numOfMonster;
+			if (numOfMonster == 0) GameWin();
+		}
 
-		inline void GameOver() { EventManager::GetInstance().ChangeScene(SceneType::GAME_OVER); }
-		inline void GameWin() {}
+		inline void DecreasePlayerLife() noexcept
+		{
+			--playerLife;
+			if (playerLife == 0)
+			{
+				GameOver();
+				return;
+			}
+
+			SceneManager::GetInstance().GetCurrentScene()->GetUILayerObject().pop_back();
+		}
+
+		void ReSpawn();
+
+		inline void GameOver() { EventManager::GetInstance().ChangeScene(SceneType::GameOver); }
+		inline void GameWin() { EventManager::GetInstance().ChangeScene(SceneType::GameWin); }
 
 	private:
 		explicit GameManager() noexcept = default;

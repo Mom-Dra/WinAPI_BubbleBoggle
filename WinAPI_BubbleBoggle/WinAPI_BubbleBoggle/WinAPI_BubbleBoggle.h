@@ -58,7 +58,7 @@ namespace MomDra
             case ID_SAVE:
             {
                 const std::vector<std::unique_ptr<Object>>& objects{
-                    SceneManager::GetInstance().GetCurrentScene()->GetLayerObject(Layer::DEFAULT) };
+                    SceneManager::GetInstance().GetCurrentScene()->GetLayerObject(Layer::Default) };
 
                 Animator* animator{ objects[1]->GetAnimator() };
 
@@ -145,7 +145,7 @@ namespace MomDra
             case ID_PLAY:
             {
                 const std::vector<std::unique_ptr<Object>>& objects{
-                    SceneManager::GetInstance().GetCurrentScene()->GetLayerObject(Layer::DEFAULT) };
+                    SceneManager::GetInstance().GetCurrentScene()->GetLayerObject(Layer::Default) };
 
                 Animator* animator{ objects[1]->GetAnimator() };
 

@@ -20,7 +20,7 @@ namespace MomDra
 
 		time += timeManager.GetDeltaTime();
 
-		if(time > duration)
+		if(time > DURATION)
 		{
 			Destroy();
 		}

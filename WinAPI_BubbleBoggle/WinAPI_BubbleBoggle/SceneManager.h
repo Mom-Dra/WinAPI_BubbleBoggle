@@ -11,7 +11,7 @@ namespace MomDra
 	class SceneManager
 	{
 	private:
-		std::array<std::unique_ptr<Scene>, static_cast<int> (SceneType::LAST)> Scenes;
+		std::array<std::unique_ptr<Scene>, static_cast<int> (SceneType::Last)> Scenes;
 		Scene* currScene{ nullptr };
 
 	public:

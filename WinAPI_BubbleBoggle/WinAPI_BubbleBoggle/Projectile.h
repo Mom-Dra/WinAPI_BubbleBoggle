@@ -21,7 +21,12 @@ namespace MomDra
 		static const inline std::wstring PROJECTILE_MOVE_3{ L"Projectile_Move_3" };
 		static const inline std::wstring PROJECTILE_PON{ L"Projectile_Pon" };
 
-		static constexpr inline float ProjectilePower{ 1.0f };
+		static constexpr inline float PROJECTILE_POWER{ 1.0f };
+		static constexpr inline float ATTACK_SPEED{ 300.0f };
+		static constexpr inline float ATTACK_MOVE_TIME{ 0.5f };
+
+		static constexpr inline float MOVE_SPEED{ 100.0f };
+
 	};
 
 	class ProjectileState
@@ -38,8 +43,6 @@ namespace MomDra
 	class ProjectileAttackState : public ProjectileState
 	{
 	private:
-		static constexpr inline float speed{ 300.0f };
-		static constexpr inline float moveTime{ 0.5f };
 		float time{ 0.0f };
 
 	public:
@@ -53,7 +56,7 @@ namespace MomDra
 		inline virtual void OnCollisionStay(Projectile& projectile, const Collider* other) override {}
 		inline virtual void OnCollisionExit(Projectile& projectile, const Collider* other) override {}
 
-		inline virtual void Exit(Projectile& projectile) noexcept override {}
+		inline virtual void Exit(Projectile& projectile) noexcept override { time = 0.0f; }
 
 	private:
 		explicit ProjectileAttackState(ProjectileAttackState&& other) = delete;
@@ -64,9 +67,6 @@ namespace MomDra
 	class ProjectileMovingState : public ProjectileState
 	{
 	private:
-		static constexpr inline float speed{ 100.0f };
-		static constexpr inline float moveTime{ 10.0f };
-		float time{ 0.0f };
 
 	public:
 		explicit ProjectileMovingState() noexcept = default;
@@ -128,7 +128,7 @@ namespace MomDra
 		bool isExplode;
 
 	public:
-		explicit Projectile(const Vector2& pos, const Vector2& scale, const Vector2& initialDir, const Layer& layer = Layer::PROJECTILE);
+		explicit Projectile(const Vector2& pos, const Vector2& scale, const Vector2& initialDir, const Layer& layer = Layer::Projectile);
 
 		inline Vector2 GetInitialDir() const noexcept { return initialDir; }
 		inline bool GetIsExplode() const noexcept { return isExplode; }
@@ -145,7 +145,6 @@ namespace MomDra
 
 		inline void Explode() noexcept;
 		inline void ExplodeSelf() noexcept;
-
 
 		inline void ChangeToAttackState() { ChangeState(&attackState); }
 		inline void ChangeToMovingState() { ChangeState(&movingState); }

@@ -23,8 +23,8 @@ namespace MomDra
 		HDC memDC;
 
 		// 자주 사용하는 GDI Object
-		std::array<HBRUSH, static_cast<int>(BrushType::LAST)> brushes;
-		std::array<HPEN, static_cast<int>(PenType::LAST)> pens;
+		std::array<HBRUSH, static_cast<int>(BrushType::Last)> brushes;
+		std::array<HPEN, static_cast<int>(PenType::Last)> pens;
 
 	public:
 		static Core& GetInstance() noexcept;

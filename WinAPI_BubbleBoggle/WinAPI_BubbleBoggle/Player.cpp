@@ -91,7 +91,7 @@ namespace MomDra
 
 		if (KeyManager::GetInstance().GetKeyDown(Key::A))
 		{
-			EventManager::GetInstance().Instantiate(new Projectile{ GetPos() + forward * 5.0f, Vector2{40.0f, 40.0f}, forward, Layer::PROJECTILE });
+			EventManager::GetInstance().Instantiate(new Projectile{ GetPos() + forward * 5.0f, Vector2{40.0f, 40.0f}, forward, Layer::Projectile });
 			ResourceManager::GetInstance().FindSound(L"\\sound\\PlayerAttack.wav")->Play();
 
 			if (IsRight())
@@ -191,6 +191,12 @@ namespace MomDra
 			ChangeToFallState();
 	}
 
+	void Player::ReSpawn()
+	{
+		SetPos(PlayerSetting::SPAWN_POS);
+		ChangeToIdleState();
+	}
+
 	void Player::ChangeState(PlayerState* state) noexcept
 	{
 		if (currState == state) return;
@@ -254,7 +260,7 @@ namespace MomDra
 
 		switch (otherLayer)
 		{
-		case Layer::GROUND:
+		case Layer::Ground:
 		{
 			Collider* thisCollider{ player.GetCollider() };
 			RigidBody* rigid{ player.GetRigidBody() };
@@ -325,10 +331,7 @@ namespace MomDra
 		else
 			player.GetAnimator()->Play(PlayerSetting::HIT_LEFT, true);
 
-		player.DecreaseLife();
-
-		if (player.IsDead())
-			GameManager::GetInstance().GameOver();
+		GameManager::GetInstance().DecreasePlayerLife();
 	}
 
 	void PlayerDeadState::Update(Player& player)
@@ -340,7 +343,7 @@ namespace MomDra
 
 		if (time >= PlayerSetting::HIT_TIME + PlayerSetting::ROTATE_1_TIME + PlayerSetting::ROTATE_2_TIME + PlayerSetting::DESTROY_TIME)
 		{
-			player.ChangeToIdleState();
+			player.ReSpawn();
 		}
 		else if (time >= PlayerSetting::HIT_TIME + PlayerSetting::ROTATE_1_TIME + PlayerSetting::ROTATE_2_TIME)
 		{

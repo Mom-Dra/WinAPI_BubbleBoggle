@@ -2,6 +2,9 @@
 #include "Object.h"
 #include "AI.h"
 #include "Ray.h"
+#include "Vector2.h"
+
+using namespace CK;
 
 namespace MomDra
 {
@@ -50,6 +53,8 @@ namespace MomDra
 		static const inline std::wstring JUMP_RIGHT{ L"Monster_Jump_Right" };
 		static const inline std::wstring JUMP_ANGRY_LEFT{ L"Monster_Jump_Angry_Left" };
 		static const inline std::wstring JUMP_ANGRY_RIGHT{ L"Monster_Jump_Angry_Right" };
+
+		static constexpr inline Vector2 SPAWN_POS{ 200.0f, 200.0f };
 	};
 
 	class MonsterState
@@ -174,7 +179,7 @@ namespace MomDra
 		bool onGround{ false };
 
 	public:
-		explicit Monster(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::MONSTER);
+		explicit Monster(const Vector2& pos, const Vector2& scale, const Layer& layer = Layer::Monster);
 
 		inline virtual void Update() noexcept override { currState->Update(*this); }
 		virtual void OnCollisionEnter(const Collider* other) override;

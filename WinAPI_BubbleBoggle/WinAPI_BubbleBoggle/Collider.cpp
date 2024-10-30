@@ -35,7 +35,7 @@ namespace MomDra
 			penType = PenType::Red;
 
 		SelectGDI pen{ hdc, penType };
-		SelectGDI brush{ hdc, BrushType::HOLLOW };
+		SelectGDI brush{ hdc, BrushType::Hollow };
 
 		Vector2 renderPos{ Camera::GetInstance().GetRenderPos(finalPos) };
 

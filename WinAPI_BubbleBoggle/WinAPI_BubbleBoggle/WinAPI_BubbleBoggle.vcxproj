@@ -164,6 +164,7 @@
     <ClInclude Include="SceneGameOver.h" />
     <ClInclude Include="SceneIntro.h" />
     <ClInclude Include="SceneStage1.h" />
+    <ClInclude Include="SceneWin.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="TileRectangle.h" />
@@ -219,6 +220,7 @@
     <ClCompile Include="SceneGameOver.cpp" />
     <ClCompile Include="SceneIntro.cpp" />
     <ClCompile Include="SceneStage1.cpp" />
+    <ClCompile Include="SceneWin.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="TileRectangle.cpp" />

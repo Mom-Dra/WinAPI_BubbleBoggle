@@ -17,9 +17,9 @@ namespace MomDra
 
     void CollisionManager::Update() noexcept
     {
-        for (unsigned int row{ 0 }; row < static_cast<unsigned int>(Layer::LAST); ++row)
+        for (unsigned int row{ 0 }; row < static_cast<unsigned int>(Layer::Last); ++row)
         {
-            for (unsigned int col{ row }; col < static_cast<unsigned int>(Layer::LAST); ++col)
+            for (unsigned int col{ row }; col < static_cast<unsigned int>(Layer::Last); ++col)
             {
                 if (checkArr[row] & (1 << col))
                     CollisionLayerUpdate(static_cast<Layer>(row), static_cast<Layer>(col));

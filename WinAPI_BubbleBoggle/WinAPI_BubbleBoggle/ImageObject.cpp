@@ -1,6 +1,7 @@
 #include "ImageObject.h"
 #include "ResourceManager.h"
 #include "KeyManager.h"
+#include "Camera.h"
 
 namespace MomDra
 {
@@ -14,14 +15,11 @@ namespace MomDra
         const Vector2& pos{ GetPos() };
         const Vector2& scale{ GetScale() };
 
-        TransparentBlt(hdc, static_cast<int>(pos.X - (scale.X / 2.0f)), static_cast<int>(pos.Y - (scale.Y / 2.0f)),
+        Vector2 renderPos{ Camera::GetInstance().GetRenderPos(pos) };
+
+        TransparentBlt(hdc, static_cast<int>(renderPos.X - (scale.X / 2.0f)), static_cast<int>(renderPos.Y - (scale.Y / 2.0f)),
             scale.X, scale.Y, texture->GetDC(), 0, 0, texture->GetWidth(), texture->GetHeight(), RGB(255, 0, 255));
 
         Object::Render(hdc);
-    }
-
-    void ImageObject::Update() noexcept
-    {
-        
     }
 }

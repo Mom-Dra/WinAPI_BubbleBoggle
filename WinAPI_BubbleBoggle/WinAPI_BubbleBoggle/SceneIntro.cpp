@@ -12,7 +12,7 @@ namespace MomDra
 	void SceneIntro::Enter() noexcept
 	{
 		AddObject(std::make_unique<BackGround>());
-		AddObject(std::make_unique<ImageObject>(Core::GetInstance().GetResolution() / 2.0f, Vector2::One * 200.0f, L"\\texture\\Title.bmp", Layer::DEFAULT));
+		AddObject(std::make_unique<ImageObject>(Core::GetInstance().GetResolution() / 2.0f, Vector2::One * 200.0f, L"\\texture\\Title.bmp", Layer::Default));
 	}
 
 	void SceneIntro::Update() noexcept
@@ -35,7 +35,7 @@ namespace MomDra
 		time += timeManager.GetDeltaTime();
 
 		if (time >= INTRO_TIME)
-			EventManager::GetInstance().ChangeScene(SceneType::STAGE_1);
+			EventManager::GetInstance().ChangeScene(SceneType::Stage1);
 	}
 
 	void SceneIntro::Exit() noexcept
