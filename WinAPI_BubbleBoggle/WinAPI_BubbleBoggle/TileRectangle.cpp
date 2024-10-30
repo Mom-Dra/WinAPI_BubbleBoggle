@@ -58,14 +58,14 @@ namespace MomDra
 
     void TileRectangle::Render(const HDC& hdc) const noexcept
     {
-        const Vector2& renderPos{ Camera::GetInstance().GetRenderPos(GetPos()) };
-        const Vector2& scale{ GetScale() };
+        //const Vector2& renderPos{ Camera::GetInstance().GetRenderPos(GetPos()) };
+        //const Vector2& scale{ GetScale() };
 
-        SelectGDI color{ hdc, PenType::Green };
-        SelectGDI brush{ hdc, BrushType::Hollow };
-        //BitBlt(hdc, static_cast<int>(renderPos.X), static_cast<int>(renderPos.Y), static_cast<int>(scale.X), static_cast<int>(scale.Y), texture->GetDC(), currCol * TILE_SIZE_X, curRow * TILE_SIZE_Y, SRCCOPY);
-        Rectangle(hdc, static_cast<int>(renderPos.X - scale.X / 2.0f), static_cast<int>(renderPos.Y - scale.Y / 2.0f), static_cast<int>(renderPos.X + scale.X / 2.0f), static_cast<int>(renderPos.Y + scale.Y / 2.0f));
+        //SelectGDI color{ hdc, PenType::Green };
+        //SelectGDI brush{ hdc, BrushType::Hollow };
+        ////BitBlt(hdc, static_cast<int>(renderPos.X), static_cast<int>(renderPos.Y), static_cast<int>(scale.X), static_cast<int>(scale.Y), texture->GetDC(), currCol * TILE_SIZE_X, curRow * TILE_SIZE_Y, SRCCOPY);
+        //Rectangle(hdc, static_cast<int>(renderPos.X - scale.X / 2.0f), static_cast<int>(renderPos.Y - scale.Y / 2.0f), static_cast<int>(renderPos.X + scale.X / 2.0f), static_cast<int>(renderPos.Y + scale.Y / 2.0f));
        
-        Object::Render(hdc);
+        //Object::Render(hdc);
     }
 }

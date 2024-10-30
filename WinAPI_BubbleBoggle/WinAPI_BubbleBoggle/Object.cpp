@@ -52,7 +52,7 @@ namespace MomDra
 		if (animator)
 			animator->Render(hdc);
 
-		if (collider)
-			collider->Render(hdc);
+		/*if (collider)
+			collider->Render(hdc);*/
 	}
 }

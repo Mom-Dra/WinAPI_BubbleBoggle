@@ -32,21 +32,21 @@ namespace MomDra
 
 	void Ray::DebugRay(const Vector2& start, const Vector2& dir)
 	{
-		Vector2 end{ start + dir };
+		/*Vector2 end{ start + dir };
 
-		rays.emplace_back(start, end);
+		rays.emplace_back(start, end);*/
 	}
 
 	void Ray::Render(const HDC& hdc) noexcept
 	{
-		SelectGDI gdi{ hdc, PenType::Red };
+		/*SelectGDI gdi{ hdc, PenType::Red };
 		for (const auto& [start, end] : rays)
 		{
 			MoveToEx(hdc, static_cast<int>(start.X), static_cast<int>(start.Y), nullptr);
 			LineTo(hdc, static_cast<int>(end.X), static_cast<int>(end.Y));
 		}
 
-		rays.clear();
+		rays.clear();*/
 	}
 
 	bool Ray::IntersectRectangle(const Vector2& start, const Vector2& dir, const Rectangle2D& rect)

@@ -1,5 +1,6 @@
 #pragma once
 #include "EventManager.h"
+#include "SceneManager.h"
 
 namespace MomDra
 {

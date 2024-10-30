@@ -25,7 +25,7 @@ namespace MomDra
 		Scenes[static_cast<int>(SceneType::GameOver)] = std::make_unique<SceneGameOver>(L"GameOver");
 		Scenes[static_cast<int>(SceneType::GameWin)] = std::make_unique<SceneWin>(L"GameWin");
 
-		currScene = Scenes[static_cast<int> (SceneType::Tool)].get();
+		currScene = Scenes[static_cast<int> (SceneType::Intro)].get();
 		currScene->Enter();
 	}
 

@@ -6,6 +6,7 @@
 #include "EventManager.h"
 #include "BackGround.h"
 #include "KeyManager.h"
+#include "Camera.h"
 
 namespace MomDra
 {
@@ -13,6 +14,8 @@ namespace MomDra
 	{
 		AddObject(std::make_unique<BackGround>());
 		AddObject(std::make_unique<ImageObject>(Core::GetInstance().GetResolution() / 2.0f, Vector2::One * 200.0f, L"\\texture\\Title.bmp", Layer::Default));
+
+		Camera::GetInstance().SetLookAt(Core::GetInstance().GetResolution() / 2.0f);
 	}
 
 	void SceneIntro::Update() noexcept
