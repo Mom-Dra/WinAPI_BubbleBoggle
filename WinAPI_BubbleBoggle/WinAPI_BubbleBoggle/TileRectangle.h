@@ -52,6 +52,7 @@ namespace MomDra
 		{
 			tileVec.emplace_back(pos, scale);
 		}
+
 		static inline void AddTile(const TileInfo& tileInfo)
 		{
    			tileVec.emplace_back(tileInfo);

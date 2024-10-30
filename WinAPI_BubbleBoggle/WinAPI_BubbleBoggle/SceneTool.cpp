@@ -28,6 +28,40 @@ namespace MomDra
 
 	}
 
+	void SceneTool::Enter() noexcept
+	{
+		AddObject(std::make_unique<ImageObject>(Core::GetInstance().GetResolution() / 2.0f, Core::GetInstance().GetResolution(), L"\\texture\\Stage1.bmp", Layer::Default));
+		AddObject(std::make_unique<AnimationObject>());
+
+		// 타일 생성
+		//CreateTile(5, 5);
+
+		// UI 하나 만들기
+		const Vector2& resolution{ Core::GetInstance().GetResolution() };
+
+		/*std::unique_ptr<PanelUI> panelUI{ std::make_unique<PanelUI>(false, Layer::UI) };
+		panelUI->SetScale(Vector2{ 200.0f, 100.0f });
+		panelUI->SetPos(Vector2{ resolution.X - panelUI->GetScale().X, 0.0f });
+		panelUI->SetName(L"Parent");
+
+		std::shared_ptr<BtnUI> childBtnUI{ std::make_shared<BtnUI>(Vector2{50.0f, 0.0f}, Vector2{100.0f, 40.0f}, false, Layer::UI) };
+		childBtnUI->SetName(L"Child");
+		childBtnUI->SetClickedCallBack([this]() {this->SaveTileData(); });
+
+		panelUI->AddChild(childBtnUI);
+
+		std::unique_ptr<PanelUI> panelUICloned{ std::make_unique<PanelUI>(*panelUI) };
+		panelUICloned->SetPos(panelUICloned->GetPos() + Vector2{ 0.0f, 50.0f });
+
+		ui = panelUICloned.get();
+
+		AddObject(std::move(panelUI));
+		AddObject(std::move(panelUICloned));*/
+
+		// Camera Look At 지정
+		Camera::GetInstance().SetLookAt(resolution / 2.0f);
+	}
+
 	void SceneTool::Update() noexcept
 	{
 		static const KeyManager& keyManager{ KeyManager::GetInstance() };
@@ -66,39 +100,7 @@ namespace MomDra
 		}
 	}
 
-	void SceneTool::Enter() noexcept
-	{
-		AddObject(std::make_unique<ImageObject>(Core::GetInstance().GetResolution() / 2.0f, Core::GetInstance().GetResolution(), L"\\texture\\Stage1.bmp", Layer::Default));
- 		AddObject(std::make_unique<AnimationObject>());
-
-		// 타일 생성
-		//CreateTile(5, 5);
-
-		// UI 하나 만들기
-		const Vector2& resolution{ Core::GetInstance().GetResolution() };
-
-		/*std::unique_ptr<PanelUI> panelUI{ std::make_unique<PanelUI>(false, Layer::UI) };
-		panelUI->SetScale(Vector2{ 200.0f, 100.0f });
-		panelUI->SetPos(Vector2{ resolution.X - panelUI->GetScale().X, 0.0f });
-		panelUI->SetName(L"Parent");
-
-		std::shared_ptr<BtnUI> childBtnUI{ std::make_shared<BtnUI>(Vector2{50.0f, 0.0f}, Vector2{100.0f, 40.0f}, false, Layer::UI) };
-		childBtnUI->SetName(L"Child");
-		childBtnUI->SetClickedCallBack([this]() {this->SaveTileData(); });
-
-		panelUI->AddChild(childBtnUI);
-
-		std::unique_ptr<PanelUI> panelUICloned{ std::make_unique<PanelUI>(*panelUI) };
-		panelUICloned->SetPos(panelUICloned->GetPos() + Vector2{ 0.0f, 50.0f });
-
-		ui = panelUICloned.get();
-
-		AddObject(std::move(panelUI));
-		AddObject(std::move(panelUICloned));*/
-
-		// Camera Look At 지정
-		Camera::GetInstance().SetLookAt(resolution / 2.0f);
-	}
+	
 
 	void SceneTool::Exit() noexcept
 	{

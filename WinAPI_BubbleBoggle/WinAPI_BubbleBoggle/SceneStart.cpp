@@ -50,8 +50,6 @@ namespace MomDra
 		Vector2 resolution{ Core::GetInstance().GetResolution() };
 		Camera::GetInstance().SetLookAt(resolution / 2.0f);
 
-		
-
 		Start();
 	}
 

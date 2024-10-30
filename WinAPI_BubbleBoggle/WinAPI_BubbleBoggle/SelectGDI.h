@@ -15,5 +15,7 @@ namespace MomDra
 		explicit SelectGDI(HDC hdc, PenType penType) noexcept;
 		explicit SelectGDI(HDC hdc, BrushType brushType) noexcept;
 		~SelectGDI();
+
+		inline const HPEN& GetPen() const noexcept { return hDefaultPen; }
 	};
 }

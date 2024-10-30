@@ -131,7 +131,7 @@ namespace MomDra
 		explicit Projectile(const Vector2& pos, const Vector2& scale, const Vector2& initialDir, const Layer& layer = Layer::Projectile);
 
 		inline Vector2 GetInitialDir() const noexcept { return initialDir; }
-		inline bool GetIsExplode() const noexcept{ return isExplode; }
+		inline bool GetIsExplode() const noexcept { return isExplode; }
 
 		inline virtual void Update() noexcept override { currState->Update(*this); }
 		inline virtual void Render(const HDC& hdc) const noexcept override { Object::Render(hdc); }
@@ -145,7 +145,7 @@ namespace MomDra
 
 		inline void Explode() noexcept;
 		inline void ExplodeSelf() noexcept;
-		
+
 
 		inline void ChangeToAttackState() { ChangeState(&attackState); }
 		inline void ChangeToMovingState() { ChangeState(&movingState); }

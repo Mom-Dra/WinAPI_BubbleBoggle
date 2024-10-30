@@ -138,6 +138,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimationObject.h" />
     <ClInclude Include="Animator.h" />
+    <ClInclude Include="BackGround.h" />
     <ClInclude Include="BtnUI.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collider.h" />
@@ -191,6 +192,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimationObject.cpp" />
     <ClCompile Include="Animator.cpp" />
+    <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="BtnUI.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider.cpp" />

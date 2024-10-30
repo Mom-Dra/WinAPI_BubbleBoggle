@@ -7,7 +7,6 @@ namespace MomDra
 	{
 	private:
 
-
 	public:
 		explicit SceneStart() noexcept = default;
 		explicit SceneStart(const std::wstring& name) noexcept : Scene{ name } {}

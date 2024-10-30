@@ -8,7 +8,6 @@ namespace MomDra
 	{
 	private:
 		static constexpr inline float INTRO_TIME{ 8.0f };
-
 		float time{ 0.0f };
 
 	public:

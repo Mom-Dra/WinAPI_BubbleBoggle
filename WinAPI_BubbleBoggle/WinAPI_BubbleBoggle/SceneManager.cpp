@@ -21,7 +21,7 @@ namespace MomDra
 		Scenes[static_cast<int>(SceneType::Intro)] = std::make_unique<SceneIntro>(L"IntroScene");
 		Scenes[static_cast<int>(SceneType::STAGE_1)] = std::make_unique<SceneStage1>(L"Stage1");
 
-		currScene = Scenes[static_cast<int> (SceneType::Intro)].get();
+		currScene = Scenes[static_cast<int> (SceneType::TOOL)].get();
 		currScene->Enter();
 	}
 
