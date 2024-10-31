@@ -8,7 +8,7 @@ namespace MomDra
 	{
 	private:
 		static constexpr inline Vector2 SCORE_SCALE{ 30.0f, 30.0f };
-		static constexpr inline float MOVE_TIME{ 2.0f };
+		static constexpr inline float MOVE_TIME{ 1.5f };
 		static constexpr inline float SPEED{ 30.0f };
 
 		float time{ 0.0f };

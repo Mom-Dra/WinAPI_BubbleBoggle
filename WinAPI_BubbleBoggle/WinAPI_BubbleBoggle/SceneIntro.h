@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Scene.h"
 
 namespace MomDra
@@ -9,7 +8,7 @@ namespace MomDra
 	private:
 		static constexpr inline float INTRO_TIME{ 8.0f };
 		float time{ 0.0f };
-		bool keyPressed{ false };
+		bool isKeyPressed{ false };
 
 	public:
 		explicit SceneIntro() noexcept = default;

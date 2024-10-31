@@ -25,12 +25,12 @@ namespace MomDra
 		static const TimeManager& timeManager{ TimeManager::GetInstance() };
 		static const KeyManager& keyManager{ KeyManager::GetInstance() };
 
-		if (!keyPressed)
+		if (!isKeyPressed)
 		{
 			if (keyManager.GetKeyDown(Key::A) || keyManager.GetKeyDown(Key::S) || keyManager.GetKeyDown(Key::SPACE))
 			{
 				ResourceManager::GetInstance().LoadSound(L"\\sound\\Main.wav")->PlayToBGM(true);
-				keyPressed = true;
+				isKeyPressed = true;
 			}
 			else return;
 		}
@@ -48,6 +48,6 @@ namespace MomDra
 		CollisionManager::GetInstance().Reset();
 
 		time = 0.0f;
-		keyPressed = false;
+		isKeyPressed = false;
 	}
 }
