@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "ResourceManager.h"
 #include "Player.h"
+#include "Score.h"
 
 namespace MomDra
 {
@@ -27,7 +28,9 @@ namespace MomDra
 			GetAnimator()->StopAndPlayOneShot(PlayerSetting::DESTROY);
 		}
 		else if (time >= DESTROY_ANIM_TIME + DESTROY_TIME)
+		{
 			Destroy();
+		}
 
 		if (time >= CAN_COLLISION_TIME)
 			canCollision = true; 
@@ -73,6 +76,7 @@ namespace MomDra
 	{
 		if (isDestroy) return;
 
+		EventManager::GetInstance().Instantiate(new Score{ GetPos(), L"\\texture\\Score.bmp" });
 		ResourceManager::GetInstance().LoadSound(L"\\sound\\Item.wav")->Play();
 		Destroy();
 	}

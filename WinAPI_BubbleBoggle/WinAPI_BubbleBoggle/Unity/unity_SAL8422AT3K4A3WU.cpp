@@ -89,6 +89,12 @@
 #include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\SceneStage1.cpp"
 
 
+#include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\SceneWin.cpp"
+
+
+#include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Score.cpp"
+
+
 #include "C:\Users\inha\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Sound.cpp"
 
 
