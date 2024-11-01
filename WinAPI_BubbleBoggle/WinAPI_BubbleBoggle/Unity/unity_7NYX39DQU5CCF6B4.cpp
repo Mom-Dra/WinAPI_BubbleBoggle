@@ -92,6 +92,9 @@
 #include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\SceneWin.cpp"
 
 
+#include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Score.cpp"
+
+
 #include "C:\Users\HuiYong\source\repos\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\WinAPI_BubbleBoggle\Sound.cpp"
 
 

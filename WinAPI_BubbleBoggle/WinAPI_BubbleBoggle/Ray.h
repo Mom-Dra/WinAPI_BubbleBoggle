@@ -28,11 +28,11 @@ namespace MomDra
 
 	private:
 		explicit Ray() noexcept = delete;
-		explicit Ray(const Ray& other) = delete;
-		explicit Ray(const Ray&& other) = delete;
+		explicit Ray(const Ray& other) noexcept = delete;
+		explicit Ray(Ray&& other) noexcept = delete;
 
-		Ray& operator=(const Ray& other) = delete;
-		Ray& operator=(const Ray&& other) = delete;
+		Ray& operator=(const Ray& other) noexcept = delete;
+		Ray& operator=(Ray&& other) noexcept = delete;
 
 		static bool IntersectRectangle(const Vector2& start, const Vector2& dir, const Rectangle2D& rect);
 	};

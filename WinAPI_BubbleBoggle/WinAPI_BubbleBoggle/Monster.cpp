@@ -30,6 +30,7 @@ namespace MomDra
 		animator->LoadAnimation(L"\\animation\\Monster_InProjectile_2.anim");
 		animator->LoadAnimation(L"\\animation\\Monster_InProjectile_3.anim");
 		animator->LoadAnimation(L"\\animation\\Monster_InProjectile_4.anim");
+		animator->LoadAnimation(L"\\animation\\Monster_Rotate.anim");
 
 		ResourceManager::GetInstance().LoadSound(L"\\sound\\AttackMonster.wav");
 
@@ -57,7 +58,6 @@ namespace MomDra
 	void Monster::Die() noexcept
 	{
 		EventManager::GetInstance().Instantiate(new Item{ GetPos(), L"\\texture\\ItemBanana.bmp" });
-		ResourceManager::GetInstance().FindSound(L"\\sound\\AttackMonster.wav")->Play();
 
 		Destroy();
 
@@ -248,7 +248,7 @@ namespace MomDra
 		{
 		case Layer::Player:
 		{
-			monster.Die();
+			monster.ChangeDeadState();
 		}
 		break;
 		case Layer::Wall:
@@ -429,6 +429,30 @@ namespace MomDra
 		switch (otherLayer)
 		{
 		case Layer::Player:
+			monster.ChangeDeadState();
+			break;
+		}
+	}
+
+	void MonsterDeadState::Enter(Monster& monster) noexcept
+	{
+		ResourceManager::GetInstance().FindSound(L"\\sound\\AttackMonster.wav")->Play();
+		monster.GetAnimator()->Play(MonsterSetting::ROTATE, true);
+		monster.GetRigidBody()->SetGravity(true);
+	}
+
+	void MonsterDeadState::Update(Monster& monster) noexcept
+	{
+
+	}
+
+	void MonsterDeadState::OnCollisionEnter(Monster& monster, const Collider* other)
+	{
+		Object* otherObject{ other->GetObj() };
+
+		switch (const Layer& otherLayer{ otherObject->GetLayer() })
+		{
+		case Layer::Ground:
 			monster.Die();
 			break;
 		}

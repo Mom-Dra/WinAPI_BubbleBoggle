@@ -59,9 +59,9 @@ namespace MomDra
 	private:
 		explicit CommandManager() noexcept = default;
 		explicit CommandManager(const CommandManager& other) = delete;
-		explicit CommandManager(const CommandManager&& other) = delete;
+		explicit CommandManager(CommandManager&& other) = delete;
 		CommandManager& operator=(const CommandManager& other) = delete;
-		CommandManager& operator=(const CommandManager&& other) = delete;
+		CommandManager& operator=(CommandManager&& other) = delete;
 
 	public:
 		static void Execute(std::unique_ptr<Command> command);

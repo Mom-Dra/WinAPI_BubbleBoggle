@@ -54,6 +54,7 @@ namespace MomDra
 		static const inline std::wstring JUMP_RIGHT{ L"Monster_Jump_Right" };
 		static const inline std::wstring JUMP_ANGRY_LEFT{ L"Monster_Jump_Angry_Left" };
 		static const inline std::wstring JUMP_ANGRY_RIGHT{ L"Monster_Jump_Angry_Right" };
+		static const inline std::wstring ROTATE{ L"Monster_Rotate" };
 
 		static constexpr inline Vector2 SPAWN_POS{ 200.0f, 200.0f };
 	};
@@ -163,6 +164,26 @@ namespace MomDra
 		MonsterHighState& operator=(MonsterHighState&& other) = delete;
 	};
 
+	class MonsterDeadState : public MonsterState
+	{
+	private:
+
+	public:
+		explicit MonsterDeadState() noexcept = default;
+		explicit MonsterDeadState(const MonsterDeadState& other) noexcept = default;
+
+		virtual void Enter(Monster& monster) noexcept override;
+		virtual void Update(Monster& monster) noexcept override;
+		virtual void OnCollisionEnter(Monster& monster, const Collider* other) override;
+		virtual void OnCollisionExit(Monster& monster, const Collider* other) override {}
+		inline virtual void Exit(Monster& monster) noexcept override { }
+
+	private:
+		explicit MonsterDeadState(MonsterDeadState&& other) = delete;
+		MonsterDeadState& operator=(const MonsterDeadState& other) = delete;
+		MonsterDeadState& operator=(MonsterDeadState&& other) = delete;
+	};
+
 	class Monster : public Object
 	{
 	private:
@@ -170,6 +191,7 @@ namespace MomDra
 		MonsterAngryState angryState;
 		MonsterHittedState hittedState;
 		MonsterHighState highState;
+		MonsterDeadState deadState;
 		MonsterState* currState{ &moveState };
 
 		// ÈÄ¿¡ Object·Î »©µµ ±¦ÂúÀ» µí
@@ -212,6 +234,7 @@ namespace MomDra
 		inline void ChangeToAngryState() { ChangeState(&angryState); }
 		inline void ChangeToHittedState() { ChangeState(&hittedState); }
 		inline void ChangeToHighState() { ChangeState(&highState); }
+		inline void ChangeDeadState() { ChangeState(&deadState); }
 
 		inline virtual std::unique_ptr<Object> Clone() const override { return std::make_unique<Monster>(*this); }
 
